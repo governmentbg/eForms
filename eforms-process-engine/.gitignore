@@ -1,0 +1,12 @@
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+*.crt
+
+target/
+/.classpath
+/.project
+/.metadata
+.DS_Store
