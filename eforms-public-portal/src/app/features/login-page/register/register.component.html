@@ -1,0 +1,19 @@
+<div class="row w-100">
+    <div class="offset-md-1 col-11">
+        <h2>{{ 'REGISTRATION' | translate }}</h2>
+    </div>
+    <div class="offset-md-1 col-11">
+        <p>
+            {{ 'REGISTER_PARAGRAPH_1' | translate }}<br>
+            {{ 'REGISTER_PARAGRAPH_2' | translate }}<br>
+            {{ 'REGISTER_PARAGRAPH_3' | translate }}<br>
+            {{ 'REGISTER_PARAGRAPH_4' | translate }}
+        </p>
+    </div>
+    <div class="offset-md-1 col-md-5 col-sm-12">
+        <button mat-button id="register-edelivery-button" (click)="openEDelivery()" class="btn-additional-large">{{ 'REGISTRATION_E_DELIVERY' | translate }}</button>
+    </div>
+    <div class="offset-md-1 col-md-5 col-sm-12 ml-0">
+        <button mat-button id="register-epayment-button" (click)="openPay()" class="btn-additional-large">{{ 'REGISTRATION_E_PAYMENT' | translate }}</button>
+    </div>
+</div>

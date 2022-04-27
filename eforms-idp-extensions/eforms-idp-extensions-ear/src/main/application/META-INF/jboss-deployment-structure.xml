@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2022 Digitall Nature Bulgaria
+   
+    This program and the accompanying materials
+    are made available under the terms of the Apache License 2.0
+    which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0
+   
+    Contributors:
+       Stefan Tabakov
+       Nedka Taskova
+       Stanimir Stoyanov
+       Pavel Koev
+       Igor Radomirov
+ -->
+
+<jboss-deployment-structure>
+    <deployment>
+        <dependencies>
+            <module name="org.keycloak.keycloak-core" export="true"/>
+            <module name="org.keycloak.keycloak-server-spi" export="true"/>
+            <module name="org.keycloak.keycloak-server-spi-private" export="true"/>
+            <module name="org.keycloak.keycloak-services" export="true"/>
+            <module name="org.keycloak.keycloak-saml-core" export="true"/>
+            <module name="org.keycloak.keycloak-saml-core-public" export="true"/>
+            <module name="com.google.guava" export="true"/>
+        </dependencies>
+    </deployment>
+</jboss-deployment-structure>

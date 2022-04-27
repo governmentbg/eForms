@@ -1,0 +1,16 @@
+<div class="mobile-nav">
+    <div class="steps-circle-container">
+        <div class="steps-circle" style="background-image: conic-gradient(var(--light-green) {{ stepPercentage }}%, var(--dark-blue-navigation) 0);">
+            <div class="steps-indicator">
+                {{ mainStepNumber }} {{ "OF" | translate }} {{ totalLanes }}
+            </div>
+        </div>
+    </div>
+    <div class="steps-names d-flex overflow-auto">
+        <div class="overflow-ellipsis">{{ currentLaneName }}</div>
+        <div class="px-2"> > </div>
+        <div class="overflow-ellipsis">{{ subStepNumber }} {{ currentSubStepName }}</div>
+    </div>
+    <mat-icon *ngIf="isCollapsed">arrow_drop_down</mat-icon>
+    <mat-icon *ngIf="!isCollapsed">arrow_drop_up</mat-icon>
+</div>

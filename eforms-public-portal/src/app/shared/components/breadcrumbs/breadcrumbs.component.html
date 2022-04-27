@@ -1,0 +1,9 @@
+<ul *ngIf="crumbs$ | async as crumbs" class="list-container">
+    <li *ngFor="let crumb of crumbs; let last = last"
+      [ngClass]="{ 'breadcrumb-active': last }"
+      class="breadcrumb-item"
+    >
+      <a *ngIf="!last" [routerLink]="crumb.path">{{ crumb.text | translate }}</a>
+      <span *ngIf="last">{{ crumb.text | translate }}</span>
+    </li>
+</ul>

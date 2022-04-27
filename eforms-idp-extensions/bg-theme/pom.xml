@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Copyright (c) 2022 Digitall Nature Bulgaria
+   
+    This program and the accompanying materials
+    are made available under the terms of the Apache License 2.0
+    which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0
+   
+    Contributors:
+       Stefan Tabakov
+       Nedka Taskova
+       Stanimir Stoyanov
+       Pavel Koev
+       Igor Radomirov
+ -->
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>eforms-idp-extensions</artifactId>
+        <groupId>com.bulpros</groupId>
+        <version>1.0.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>bg-theme</artifactId>
+
+    <properties>
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+
+</project>

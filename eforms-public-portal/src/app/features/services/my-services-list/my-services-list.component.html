@@ -1,0 +1,19 @@
+<div class="w-100 services-container">
+    <div class="row align-items-center">
+        <div class="back-button" (click)="back()">
+            <mat-icon>arrow_back_ios</mat-icon>
+            <span id="my-services-list-back-button">{{ 'BACK' | translate }}</span>
+        </div>
+        <h2 id="my-services-list-header" class="heading-wrapper w-100">
+            {{ 'SERVICES.MY_SERVICES' | translate }}
+        </h2>
+    </div>
+    <div class="row">
+        <div class="offset-md-1 col-md-4 col-sm-12">
+            <app-action-card id="my-services-list-all" *ngIf="userProfileService.checkUserRolesAndType([roles.user, roles.admin])"  serviceIcon="my-services" serviceLabel="{{ 'SERVICES.ALL_SERVICES' | translate }}" serviceLink="my-services/user-services"></app-action-card>
+            <app-action-card id="my-services-list-in-progress" *ngIf="userProfileService.checkUserRolesAndType([roles.user, roles.admin])"  serviceIcon="in-progress" serviceLabel="{{ 'SERVICES.SERVICES_IN_PROGRESS' | translate }}" serviceLink="my-services/in-progress"></app-action-card>
+            <app-action-card id="my-services-list-requested" *ngIf="userProfileService.checkUserRolesAndType([roles.user, roles.admin])"  serviceIcon="requested" serviceLabel="{{ 'SERVICES.REQUESTED_SERVICES' | translate }}" serviceLink="my-services/in-request"></app-action-card>
+            <app-action-card id="my-services-list-completed" *ngIf="userProfileService.checkUserRolesAndType([roles.user, roles.admin])"  serviceIcon="completed" serviceLabel="{{ 'SERVICES.COMPLETED_SERVICES' | translate }}" serviceLink="my-services/completed"></app-action-card>
+        </div>
+    </div>
+</div>

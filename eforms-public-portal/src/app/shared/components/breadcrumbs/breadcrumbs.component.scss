@@ -1,0 +1,76 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    width: 100%;
+    padding: 2em 2em 2em 1.4em;
+
+    .list-container {
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style-type: none;
+        text-decoration: none;
+        overflow-x: auto;
+        white-space: nowrap;
+        padding: 10px 0;
+
+        &::-webkit-scrollbar {
+            height: 3px;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $medium-gray;
+        }
+    }
+
+    .list-container li {
+        display: inline-block;
+    }
+
+    .breadcrumb-item a {
+        color: $main-dark-blue;
+        font-family: Fira Sans;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        text-decoration: none;
+
+        :link,
+        :visited,
+        :hover,
+        :active {
+            color: $main-dark-blue;
+            text-decoration: none;
+        }
+    }
+
+    .breadcrumb-active span {
+        color: $main-dark-blue;
+        font-family: Fira Sans;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 24px;
+    }
+
+    @media (min-width: $tablet-min-width) {
+        .breadcrumb-item a {
+            color: $white;
+
+            :link,
+            :visited,
+            :hover,
+            :active {
+                color: $white;
+            }
+        }
+
+        .breadcrumb-active span {
+            color: $white;
+        }
+    }
+
+    @media (min-width: $container-max-width) {
+        padding: 2em 2em 2em 0;
+    }
+
+}

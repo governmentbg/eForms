@@ -1,0 +1,20 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    height: 52em;
+
+    @media (max-width: $phone-max-width) {
+        height: fit-content;
+    }
+
+    &>div {
+        height: 100%;
+        background-color: $white;
+    }
+
+    hr.hr-blue{
+        border-top: 2.6px solid $main-light-blue;
+        margin-top: -1.2em;
+    }
+}

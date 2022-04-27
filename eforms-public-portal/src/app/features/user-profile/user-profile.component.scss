@@ -1,0 +1,72 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+
+    .profile-additional {
+        margin: 0 1.5em 1.5em 1.5em;
+        border: 1px solid $formBorder !important;  
+        .fa {
+            margin-right: 4px;
+        }      
+        .table-hide{
+            display: none;
+        }
+    }
+
+    height: calc(100% - #{$desktop-header-height});
+
+    .profile-container {
+        min-height: 46em;
+        background-color: $white;
+
+        @media screen and (max-width: 840px) {
+            div:nth-child(0) {
+                flex-direction: column;
+            }
+
+            .back-button {
+                padding: 8px 0 0 8px;
+                display: flex;
+                align-self: flex-start;
+            }
+        }
+    }
+}
+
+::ng-deep .formio-form {
+    .form-additional-profiles{
+        display: none;
+    }
+
+    .formio-component-submit {
+        display: none;
+    }
+
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #fff;
+        border: none
+    }
+
+    input[type="radio"], input[type="checkbox"] {
+        display: none;
+    }
+    .form-check {
+        display:none;
+        padding-left: 0;
+    }
+    .form-check.radio-selected{
+        display: block;
+    }
+    .form-check.checkbox{
+        display: block;
+    }
+    .formio-collapse-icon {
+        display: none;
+    }
+    .fa-minus-square-o {
+        display: none !important;
+    }
+
+    padding: 0 1.5em 1.5em 1.5em;
+}

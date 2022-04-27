@@ -1,0 +1,12 @@
+{
+    "themes": [
+    {
+        "name": "bg-theme",
+        "types": [
+            "login",
+            "email",
+            "account",
+            "admin"
+        ]
+    }]
+}

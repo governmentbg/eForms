@@ -1,0 +1,44 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="profile-container col-12 p-0">
+        <div class="row align-items-center">
+            <div id="user-data-back-button" class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 class="heading-wrapper w-100">
+                {{ 'PROFILE_DATA' | translate }}
+            </h2>
+        </div>
+        <formio id="user-data-user-form" [form]="formSrc" (ready)="handleFormReady($event)" [readOnly]="true" [refresh]="refreshForm" *ngIf="userProfile"></formio>
+
+        <div class="profile-additional" >
+            <div  ref="header" class="card-header bg-default" (click)="isProfilesOpen=!isProfilesOpen">
+                <span >
+                {{ "PROFILE_ROLES.RELATED_PROFILES" | translate }}
+                </span>                                   
+            </div>
+            <div [ngClass]="{'table-hide' : !isProfilesOpen}">                
+                <app-smart-table
+                id="additional-profiles-table"
+                [tableColumns]="tableColumns"
+                [isPageable]="false"                               
+                [apiCallUrl]="apiCallUrl"   
+                [subData]="subData"                                      
+                ></app-smart-table>
+            </div>
+        </div>
+        
+
+ 
+
+        <app-error *ngIf="errorMsg" [error]="errorMsg"></app-error>
+
+        <div class="pb-3 w-100 d-flex justify-content-center" *ngIf="formSrc">
+            <button mat-button id="user-data-edit-button" class="btn-primary-large" (click)='redirectToEgovMySpace()'>{{ "EDITING" | translate }}</button>
+        </div>
+
+    </div>
+</div>

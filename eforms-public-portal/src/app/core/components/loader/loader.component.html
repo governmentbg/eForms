@@ -1,0 +1,6 @@
+<div *ngIf="loaderService.isLoading | async" class="loader-container-outer">
+    <div  id="loader-container" class="loader-container">
+        <mat-spinner></mat-spinner>
+        <h2 class="mt-3">{{ 'PLEASE_WAIT' | translate }}</h2>
+    </div>
+</div>

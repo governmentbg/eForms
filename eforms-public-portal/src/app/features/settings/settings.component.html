@@ -1,0 +1,52 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="settings-container col-12 p-0">
+        <div class="row align-items-center">
+            <div id="settings-back-button" class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 class="heading-wrapper w-100">
+                {{ 'SETTINGS' | translate }}
+            </h2>
+        </div>
+        <div>
+            <div class="offset-md-1 col-md-4 col-sm-12 mb-4 d-flex flex-column">
+                <label>{{ 'LANGUAGE' | translate }}</label>
+                <mat-radio-group>
+                    <mat-radio-button value="1" [checked]='true'>Български</mat-radio-button>
+                    <mat-radio-button value="2">English</mat-radio-button>
+                </mat-radio-group>
+                <label class="mt-4">{{ 'DATE_TIME_FORMAT' | translate }}</label>
+                <mat-form-field appearance="fill">
+                    <mat-select [(value)]="selectedFirst">
+                        <mat-option selected value='1'>
+                            ЧЧ:ММ:СС
+                        </mat-option>
+                        <mat-option value='2'>
+                            ЧЧ:ММ
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-select [(value)]="selectedSecond">
+                        <mat-option selected value='3'>
+                            ДД.ММ.ГГГГ
+                        </mat-option>
+                        <mat-option selected value='4'>
+                            ММ.ДД.ГГГГ
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <div class="mt-4 pt-4">
+                    <button id="welcome-cancel" mat-button (click)="closeSettings()"
+                        class="btn-additional-medium mr-2">{{ 'CANCEL' | translate}}</button>
+                    <button id="welcome-cancel" mat-button (click)="closeSettings()" class="btn-primary-medium mr-2">{{
+                        'SAVE_CHANGES' | translate}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

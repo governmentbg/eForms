@@ -1,0 +1,55 @@
+@import "variables.scss";
+@import "colors.scss";
+
+.notification-bar-wrapper {
+  line-height: 24px;
+  width: 100%;
+  font-size: 16px;
+
+  .notification-bar {
+    padding: 0.625em 0;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+
+    button.notification-close-button {
+      background: transparent;
+      cursor: pointer;
+      border: 0;
+    }
+
+    .notification-bar-message {
+      width: 95%;
+      padding-left: 1.4em;
+      p {
+        margin: 0;
+      }
+    }
+
+    &.notification-bar-info {
+      background-color: $notification-info;
+    }
+
+    &.notification-bar-new {
+      background-color:$notification-new;
+    }
+
+    &.notification-bar-success {
+      background-color: $notification-success;
+    }
+
+    &.notification-bar-attention {
+      background-color: $notification-attention;
+    }
+
+    &.notification-bar-error {
+      background-color: $notification-error;
+    }
+
+    @media (min-width: $container-max-width) {
+      .notification-bar-message {
+          padding: 0;
+      }
+  }
+  }
+}

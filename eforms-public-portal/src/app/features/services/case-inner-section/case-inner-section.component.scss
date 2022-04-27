@@ -1,0 +1,12 @@
+@import "colors.scss";
+
+.blue-main {
+    color: $main-dark-blue;
+}
+
+.service-wrapper {
+    padding: 16px 16px 16px 32px;
+    @media screen and (max-width: 840px) {
+        padding: 16px;
+    }
+}

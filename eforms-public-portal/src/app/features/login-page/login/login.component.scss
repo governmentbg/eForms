@@ -1,0 +1,21 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+
+    .row{
+
+        height: 400px;
+        @media screen and (max-width: $phone-max-width) {
+            height: max-content;
+        }
+
+        background-color: $white;
+        border-radius: 0;
+
+        h2 {
+            text-align: left;
+            margin-top: 2em;
+        }
+    }
+}

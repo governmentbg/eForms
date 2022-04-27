@@ -1,0 +1,50 @@
+@import "colors.scss";
+
+.mobile-nav {
+    height: 5.714em;
+    background-color: $dark-blue-navigation;
+    color: white;
+    display: flex;
+    align-items: center;
+    border-radius: 7px 7px 0 0;
+    margin-right: 1.0714em;
+}
+
+.steps-names {
+    max-width: 75%;
+}
+
+.steps-indicator {
+    height: 2.8571em;
+    width: 2.8571em;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: $dark-blue-navigation;
+    background: $white;
+}
+
+.steps-circle {
+    --light-green: #{$light-green};
+    --dark-blue-navigation: #{$dark-blue-navigation};
+    height: 3.5em;
+    width: 3.5em;
+    border-radius: 50%;
+    background-image: conic-gradient(
+        $light-green 0%,
+        $dark-blue-navigation 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.steps-circle-container {
+    padding:0 0.2em;
+}
+
+.overflow-ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

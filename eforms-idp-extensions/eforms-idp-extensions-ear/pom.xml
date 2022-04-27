@@ -1,0 +1,124 @@
+<!--
+    Copyright (c) 2022 Digitall Nature Bulgaria
+
+    This program and the accompanying materials
+    are made available under the terms of the Apache License 2.0
+    which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0
+
+    Contributors:
+       Stefan Tabakov
+       Nedka Taskova
+       Stanimir Stoyanov
+       Pavel Koev
+       Igor Radomirov
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>com.bulpros</groupId>
+        <artifactId>eforms-idp-extensions</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.bulpros.eauth2</groupId>
+    <artifactId>eforms-idp-extensions-ear</artifactId>
+    <packaging>ear</packaging>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <maven.compiler.source>11</maven.compiler.source>
+        <maven.compiler.target>11</maven.compiler.target>
+    </properties>
+    
+    <dependencies>
+        <dependency>
+            <groupId>com.bulpros</groupId>
+            <artifactId>bg-theme</artifactId>
+            <type>ejb</type>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bulpros.eauth2</groupId>
+            <artifactId>eauth2-provider</artifactId>
+            <type>ejb</type>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.bulpros</groupId>
+            <artifactId>eforms-theme</artifactId>
+            <type>ejb</type>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+    
+	<profiles>
+		<profile>
+			<id>local</id>
+			<repositories>
+				<repository>
+					<id>central-repository</id>
+					<name>Central Repository</name>
+					<url>https://repo.maven.apache.org/maven2</url>
+				</repository>
+				<repository>
+					<id>bulpros-nexus</id>
+					<url>http://10.191.35.200:8081/repository/bulpros/</url>
+				</repository>
+			</repositories>
+			<properties>
+				<spring.profiles.active>local</spring.profiles.active>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<repositories>
+				<repository>
+					<id>central-repository</id>
+					<name>Central Repository</name>
+					<url>https://repo.maven.apache.org/maven2</url>
+				</repository>
+				<repository>
+					<id>bulpros-nexus</id>
+					<url>http://172.23.130.71:8081/repository/bulpros/</url>
+				</repository>
+			</repositories>
+			<properties>
+				<spring.profiles.active>prod</spring.profiles.active>
+			</properties>
+		</profile>
+	</profiles>
+
+    <build>
+        <finalName>eforms-idp-extensions</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-ear-plugin</artifactId>
+                <version>2.10</version>
+                <configuration>
+                    <version>7</version>
+                    <defaultLibBundleDir>lib</defaultLibBundleDir>
+                    <fileNameMapping>no-version</fileNameMapping>
+<!--                    <source>${maven.compiler.source}</source>-->
+<!--                    <target>${maven.compiler.target}</target>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>3.0.0.Alpha3</version>
+                <configuration>
+                    <skip>false</skip>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+    
+</project>

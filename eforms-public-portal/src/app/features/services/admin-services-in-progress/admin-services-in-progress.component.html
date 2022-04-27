@@ -1,0 +1,37 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="services-container col-12 p-0">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 id="services-in-progress-header" class="heading-wrapper w-100">
+                {{ 'SERVICES.ADMIN.SERVICES_IN_PROGRESS' | translate }}
+            </h2>
+        </div>
+        <div class="row">
+            <formio id="services-in-progress-filter" [form]="formSrc"  (ready)="handleFormReady($event)" class="col-12 p-0 filter-form" (customEvent)="handleFilterEvent($event)"></formio>
+        </div>
+        <div class="row">
+            <app-smart-table
+            id="services-in-progress-table"
+            [tableColumns]="tableColumns"
+            [isPageable]="true"
+            [buttonIcon]="'edit'"
+            [actionColumnName]="'SERVICES.OPTIONS'"
+            [actionButtonName]=""
+            [showButtonIf]="'element.data.processInstanceId'"
+            [apiCallUrl]="apiCallUrl"
+            [classifier]="'?classifier=serviceInRequest&'"
+            [initialSort]="'SERVICES.LAST_CHANGE'"
+            [parameters]="parameters"
+            (rowAction)="handleRowActionEvent($event)"
+            [filterEvent]="filterEventSubject.asObservable()"
+            [fetchOnInit]="false"
+            ></app-smart-table>
+        </div>
+    </div>
+</div>

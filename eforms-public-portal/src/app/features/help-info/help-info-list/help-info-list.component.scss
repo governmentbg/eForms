@@ -1,0 +1,26 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    height: 46em;
+
+    &>div {
+        height: 100%;
+        background-color: $white;
+    }
+
+
+    .help-info-container {
+        @media screen and (max-width: 840px) {
+            div:nth-child(0) {
+                flex-direction: column;
+            }
+
+            .back-button {
+                padding: 8px 0 0 8px;
+                display: flex;
+                align-self: flex-start;
+            }
+        }
+    }
+}

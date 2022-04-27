@@ -1,0 +1,16 @@
+
+@import "variables.scss";
+@import "colors.scss";
+
+@media (max-width: $phone-max-width) {
+    app-login,
+    app-register {
+        padding: 0;
+    }
+
+    :host {
+        div:first-child {
+            padding: 0 !important;
+        }
+    }
+}

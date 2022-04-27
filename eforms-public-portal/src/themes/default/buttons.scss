@@ -1,0 +1,107 @@
+
+button {
+    font-family: Fira Sans;
+    border-radius: 7px !important;
+}
+
+.btn-primary-large,
+.btn-primary-medium,
+.btn-primary-small {
+    background-color: $main-dark-blue;
+    color: $white;
+
+    &:hover {
+        background-color: $main-dark-blue-hover;
+    }
+}
+
+.btn-secondary-large,
+.btn-secondary-medium,
+.btn-secondary-small {
+    background-color: $main-light-blue;
+    color: $main-dark-blue-second;
+
+    &:hover {
+        background-color: $main-light-blue-hover;
+    }
+}
+
+.btn-additional-large,
+.btn-additional-medium,
+.btn-additional-small {
+    color: $main-dark-blue;
+    border: 2px solid $main-dark-blue !important;
+
+    &:hover {
+        background-color: $main-dark-blue;
+        color: $white;
+    }
+}
+
+.btn-special-first-large,
+.btn-special-first-medium,
+.btn-special-first-small {
+    background-color: #90dbaa;
+    color: $dark-gray;
+
+    &:hover {
+        background-color: #78c994;
+    }
+}
+
+.btn-special-second-large,
+.btn-special-second-medium,
+.btn-special-second-small {
+    background-color: #ff7979;
+    color: $dark-gray;
+
+    &:hover {
+        background-color: #ff6666;
+    }
+}
+
+.btn-primary-large,
+.btn-secondary-large,
+.btn-additional-large,
+.btn-special-first-large,
+.btn-special-second-large {
+    height: 55px;
+    font-weight: 600;
+    line-height: 24px;
+    padding: 0px 24px;
+}
+
+.btn-primary-medium,
+.btn-secondary-medium,
+.btn-additional-medium,
+.btn-special-first-medium,
+.btn-special-second-medium {
+    height: 45px;
+    font-weight: 400;
+    line-height: 24px;
+    padding: 0px 24px;
+}
+
+.btn-primary-small,
+.btn-secondary-small,
+.btn-additional-small,
+.btn-special-first-small,
+.btn-special-second-small {
+    height: 35px;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 19.5px !important;
+    padding: 0px 24px;
+}
+
+.btn-disabled {
+    pointer-events: none;
+    background-color: $medium-gray;
+    color: #a1a1a0;
+    border: none;
+}
+
+button:focus, button:active:focus, button.active:focus {
+    outline: none !important;
+    outline-style: none !important;
+}

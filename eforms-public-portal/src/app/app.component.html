@@ -1,0 +1,16 @@
+<div class="h-100 d-block">
+  <mat-sidenav-container [hasBackdrop]="false">
+    <mat-sidenav #sidenav role="navigation" position="end" [autoFocus]="false">
+      <app-mobile-menu (sidenavClose)="handleOnCloseEvent(); sidenav.close()"></app-mobile-menu>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <app-header (sidenavToggle)="sidenav.toggle()" [closeSidenavEvent]="closedEventSubject.asObservable()"></app-header>
+      <div class="w-100 main-background">
+        <div class="container h-100">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+      <app-footer></app-footer>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

@@ -1,0 +1,19 @@
+@import "variables.scss";
+@import "colors.scss";
+:host {
+    display: inline-block;
+    background: $main-light-blue-hover;
+    border-radius: 16.5px;
+    padding: 0.25em 1em;
+    margin-top: 1em;
+
+    p {
+        margin-bottom: 0;
+        font-weight: 600;
+    }
+
+    @media screen and (max-width: $phone-max-width) {
+        margin-top: 0;
+        height: fit-content;
+    }
+}

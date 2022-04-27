@@ -1,0 +1,8 @@
+<div (click)="serviceSelected()" [class]="serviceLink ? 'd-flex align-items-center' : 'd-flex align-items-center service-disabled'">
+    <div class="icon-wrapper">
+        <span class="{{serviceIcon}}"></span>
+    </div>
+    <div class="justify-content-start align-items-center service-label">
+        <h3>{{serviceLabel}}</h3>
+    </div>
+</div>

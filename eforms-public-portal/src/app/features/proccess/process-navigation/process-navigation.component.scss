@@ -1,0 +1,127 @@
+@import "variables.scss";
+@import "colors.scss";
+
+mat-tree {
+    display: flex;
+    flex-direction: column;
+    font-family: Fira Sans;
+    @media screen and (max-width: $phone-max-width) {
+        margin-right: 15px;
+        padding-right: 15px !important;
+    }
+}
+
+.navigation {
+    @media screen and (max-width: 840px) and (min-width: 768px) {      
+        padding: 1em;
+        font-size: 0.85em;
+    }
+    @media screen and (max-width: $phone-max-width) {
+        margin-bottom: 0;
+    }
+}
+
+.content {
+    @media screen and (max-width: $phone-max-width) {
+        border: 1px solid $dark-blue-navigation;
+        padding: 0;
+        margin: 0 15px;
+        border-bottom: none;
+    }
+}
+
+.navigation-skeleton {
+    background-color: $dark-blue-navigation;
+    color: $white;
+}
+
+.main-step {
+    margin: 0.6em 0;
+    display: flex;
+    align-items: center;
+    margin-left: -27px;
+    button {
+        width: 54px;
+        height: 54px;
+    }
+
+    @media screen and (max-width: $phone-max-width) {
+        margin-left: 0;
+    }
+
+}
+
+.step-number,
+.step-completed {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $dark-blue-navigation;
+    font-size: 31px;
+
+    @media screen and (max-width: $phone-max-width) {
+        width: 40px;
+        height: 40px;
+        font-size: 25px;
+    }
+}
+
+.step-number {
+    border: 1px solid $white;
+}
+
+.step-completed {
+    border: 2px solid #78c994;
+    mat-icon {
+        color: #78c994;
+    }
+}
+
+.current-main-step {
+    button {
+        .step-number {
+            background-color: $white;
+            color: $black;
+            border-radius: 50%;
+        }
+    }
+}
+
+.sub-step {
+    display: flex;
+    align-items: center;
+    width: calc(100% - 2.5em);
+    padding: 1.25em 1em 1.25em 2.5em;
+    background-color: $main-dark-blue-second;
+    margin-left: 2.5em;
+}
+
+.current-sub-step {
+    background-color: $white;
+    color: $black;
+    font-weight: 600;
+}
+
+.navigation-buttons {
+    padding: 0.75em 1.5em 0.75em 1.25em;
+    background-color: $white;
+    z-index: 1;
+
+    .button-previous {
+        color: $main-dark-blue;
+    }
+
+    @media screen and (max-width: $phone-max-width) {
+        box-shadow: none;
+        margin-right: 1.0714em;
+        border: 1px solid $dark-blue-navigation;
+        border-top: none;
+        border-radius: 0 0 7px 7px;
+    }
+}
+.form-container{
+    margin-top: 1em;
+}

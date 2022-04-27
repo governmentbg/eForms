@@ -1,0 +1,401 @@
+@import "variables.scss";
+@import "colors.scss";
+
+
+::ng-deep .formio-form{
+    counter-reset: bipCounter; // Set a counter named 'bipCounter', and its initial value is 0.
+
+    .collapse-all-button button, .open-all-button button {
+        background: none;
+        background-color: transparent !important;
+        border: none;
+        color: $dark-gray;
+        font-family: Fira Sans;
+        font-size: 13px;
+
+
+
+        &:active, &:focus, &:focus-within, &:target, &:hover, &:visited, &:focus-visible {
+            background-color: transparent !important;
+            background: none;
+            color: $dark-gray !important;
+            outline: none !important;
+            outline-style: none;
+            box-shadow: none;
+            border-color: transparent;
+            text-decoration: none;
+        }
+    }
+
+
+
+    .formio-component-file{
+        a {
+            color: $hyperlink-blue !important;        
+            text-decoration: none;
+          }                    
+          a:hover {
+            cursor: pointer;
+            border-bottom: .1em solid $hyperlink-blue;
+          }
+    }
+
+    .bullet-indexed-panel {
+
+        margin-left: 0.5em;
+
+        // overwrite collapse icon's content
+        .fa-minus-square-o, .fa-plus-square-o{
+            color: $medium-gray !important;
+            font-weight: bold;
+        }
+        .fa-minus-square-o:before {
+            content: "\f106";
+        }
+        .fa-plus-square-o:before {
+            content: "\f107";
+        }
+
+        .verified {
+            background-color: $dark-green;
+        }
+        .remaining {
+            background-color: $light-gray-hover;
+        }
+        .fa-check {
+            color: $success-green;
+            float: right;
+            margin-right: 20px;
+            line-height: inherit;
+        }
+        .card {
+            border-left: 1.3px solid $light-gray-hover !important;
+            padding-bottom: 1.5rem;
+        }
+        [ref=header] {
+            margin-top: -0.7em;
+            margin-left: 1.8em;
+            padding-left: 0px;
+            padding-top: 0px;
+            padding-bottom: 0px !important;
+            background: none;
+            border: none;
+            border-bottom: 1px solid $medium-gray;
+        }
+
+        [aria-expanded=true] {
+            background-color: $white;
+        }
+        & > div {
+            border: none !important;
+        }
+
+        // remove default generated collapse icon
+        .card-title > i[data-title="Collapse Panel"] {
+            display: inline-block;
+            line-height: inherit;
+            float: right;
+        }
+
+        // style custom added icon
+        .card-title > i[class~=bullet-indexed-panel-icon]:before {
+            counter-increment: bipCounter; // Increment the value of the counter by 1
+            content: counter(bipCounter);
+            padding: 0.5em;
+            display: inline-block;
+            width: 2em;
+            height: 2em;
+            vertical-align: middle;
+            text-align: center;
+            border-radius: 50%;
+            color: $white;
+            background-color: inherit;
+            margin-left: -2.8em;
+        }
+
+        .card-title:hover > i[class~=verified]:before {
+            background-color:lighten($dark-green,10%);
+        }
+        .card-title:hover > i[class~=enabled]:before {
+            content: "\f040";
+        }
+    }
+
+    @media screen and (max-width: $phone-max-width) {
+
+        .formio-component-content{
+            margin-right: 0.5em;        
+            margin-left: 0.5em;    
+        }
+
+        .formio-component-information{
+            margin-left: 0.5em;
+        }
+        .formio-component-number{
+            .col-form-label{
+                margin-left: 0.5em;
+            }
+        }
+        nav[id^="wizard"] {
+            margin-left: 0.2em;
+        }
+    }
+
+    @media screen and (min-width: $tablet-min-width) and (max-width: $tablet-max-width) {
+        .custom-form-label{
+            .col-form-label{
+                width: max-content;
+            }
+        }
+    }
+    
+    .form-control:disabled, .form-control[readonly] {
+        background-color: #fff;
+        cursor: not-allowed;
+    }
+    
+    nav{
+        ul {
+            .page-link {
+                margin-right: 1em;
+                border-radius: 7px !important;
+                color: $main-dark-blue;
+                border: 2px solid $main-dark-blue
+            }
+            .page-item{
+                &.active {
+                    .page-link{
+                        color: $main-dark-blue;
+                        background-color: $main-light-blue;
+                        border: 2px solid $main-light-blue;
+                    }
+                }
+            }
+        }
+    }
+    legend {
+        font-size: 16px;
+        font-weight: 400;
+    }
+    .formio-component-submit{
+        display:none;
+    }
+    .btn-wizard-nav-cancel{
+        display:none;
+    }
+    .btn-wizard-nav-next{
+        display:none;
+    }
+    .btn-wizard-nav-previous{
+        display:none;
+    }
+    .btn-wizard-nav-submit{
+        display:none;
+    }
+    .formio-error-wrapper{
+        background-color: inherit;
+        padding: inherit;
+    }
+    .filed-content{
+        padding-left: 2em;
+    }
+    .formio-component-columns{
+        &.row {
+            margin-right: 0px;
+        }
+    }
+    .card {
+        word-wrap: normal;
+    }
+    .list-group.list-group-striped .list-group-item:nth-child(odd) {
+        background-color: #f9f9f9;
+    }
+    .list-group {
+        padding-left: 0;
+        margin-bottom: 20px;
+    }
+    .selected-payment-container {
+        min-height: 300px;
+        background: $light-gray;
+        padding: 1.5em 1em 1em 1em;
+        border-radius: 7px;
+        position: relative;
+        
+        .selected-payment-label {
+            font-weight: 600;
+        }
+        .selected-payment-header{
+            font-size: 0.8em;
+            color:$sub-header-gray;
+            margin-top: 1.2em;
+        }
+    }
+    .nested-pannel-container{
+        [class*='col-']{
+            display: flex;
+            flex-direction: column;
+            padding: 0 7px;
+            &:first-child {
+                padding: 0 7px 0 0;
+            }
+            &:nth-last-child(2){
+                padding: 0 0 0 7px;
+            }
+            @media (max-width: 640px) {
+                padding: 1px 7px !important;
+            }
+        }
+    }
+    .nested-pannel{
+        width: 100%;
+        margin: 0;
+        position: relative;
+        height: 100%;
+        button{
+            border-radius: 7px 7px 0px 0px !important;
+            font-size: 18px;
+            padding: 0.75em;
+            color: $black;
+            background-color: $medium-gray;
+            border: none;
+            height: 100%;
+            &:focus{
+                box-shadow: none;
+            }
+            &:active {
+                color: $black !important;
+                background-color: $medium-gray !important;
+                box-shadow: none !important;
+            }
+            &.selected{
+                background-color: $main-light-blue-hover;
+                font-weight: 500;
+            }
+            .fa-check{
+                color: $success-green;
+                background: $white;
+                border-radius: 50%;
+                padding: 4px;
+            }
+            .fa-exclamation-triangle{
+                color: $notification-attention;
+                background-color: $white;
+                padding: 4px;
+                border-radius: 50%;
+            }
+        }    
+    }
+    .sign-button{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        background-color: $main-dark-blue;
+        border:$main-dark-blue;
+        &:active {            
+            background-color: $main-dark-blue;
+        }
+    }
+    .check-sign-button{
+        button{
+            background-color: $main-dark-blue;
+            border:$main-dark-blue;
+            &:active {            
+                background-color: $main-dark-blue;
+            }
+        }
+    }
+    .button-after-sign{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%);
+        background-color: transparent;
+        color: $black;
+        border: none;
+        padding: 0;
+        margin: 0;
+        width: 100%;
+        &:active {            
+            background-color: none;
+        }
+        button {
+            opacity: 1;
+        }
+    }
+    .formio-component-multiple{
+        ul{
+            li {
+                display: none;
+            }            
+            li:nth-child(1) {
+                display: block;
+            }
+            li:nth-child(2) {
+                display: block;
+            }
+        }
+    }
+    .hide-errors{
+        & > .formio-errors{
+            display: none !important;
+        }
+        .hide-row-errors{
+            .formio-errors{
+                display: initial !important;
+            }
+        }
+        .editgrid-row-error {
+            display: none;
+        }
+        .formio-component-documentName {
+            .formio-errors{
+                display: none !important;
+            }
+        }
+        .formio-component-formAlias {
+            .formio-errors{
+                display: none !important;
+            }
+        }
+        .formio-component-isConsolidatingForm {
+            .formio-errors{
+                display: none !important;
+            }
+        }
+    }
+    .hide-row-errors{
+        .editgrid-row-error {
+            display: none;
+        }
+    }
+    .card-body {
+        @media (max-width: 640px) {
+            padding: 0.25rem;
+        }
+    }
+    .choices__item.choices__item--selectable {
+        line-height: normal !important;
+        white-space: initial !important;
+    }
+    .has-feedback .form-control {
+        height: auto;
+    }
+    
+    .formio-component-selectboxes {
+        .form-check {
+            margin-right: 1rem;
+        }
+
+        .form-check-inline {
+            margin-right: 1rem;
+        }
+    }
+}
+
+::ng-deep formio-alerts{
+    display: none;
+}
+::ng-deep .formio-loader-wrapper{
+    display:none;
+}

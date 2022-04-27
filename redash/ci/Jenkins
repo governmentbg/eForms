@@ -1,0 +1,6 @@
+@Library('eforms-shared-lib') _
+
+redashbuild {
+    EFORMS_APP = "redash"
+    DEPLOY_JOB = "deploy-redash"
+}

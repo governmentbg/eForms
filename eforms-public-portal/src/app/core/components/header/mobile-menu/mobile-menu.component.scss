@@ -1,0 +1,9 @@
+@import "colors.scss";
+
+:host {
+    .profile-data {
+        color: $white;
+        border-top: 1px solid $main-dark-blue;
+        border-bottom: 1px solid $main-dark-blue;
+    }
+}

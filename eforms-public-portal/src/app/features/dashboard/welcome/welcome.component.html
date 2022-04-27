@@ -1,0 +1,110 @@
+<div class="row h-100 background-white px-mobile-none">
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="row">
+            <div class="col-md-12 my-5 text-center">
+                <h2 id="welcome-header">
+                    {{ 'WELLCOME_TO_EFORMS_SYSTEM' | translate }}
+                </h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-10 offset-md-1">
+        <div class="row">
+            <div class="col-md-12 mb-5">
+                <div class="w-fit-content">
+                    <h1 id="welcome-display-title" class="mb-0"> {{ service.data.serviceName}} </h1>
+                    <span id="welcome-subheader" class="subheader">{{ 'IDENTIFIER_SERVICE' | translate }} </span> <a
+                    id="welcome-arid" class="link" (click)="goToLink(service.data.url)">{{ service.data.arId}} </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-6 offset-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <div> 
+                    <div class="mb-5" *ngIf="suppliersInitialLenght > 0">
+                        <h3 id="welcome-service-supplier-header"> {{ 'SERVICE_PROVIDER' | translate }}</h3>
+                        <mat-form-field class="w-100" appearance="fill" *ngIf="suppliersInitialLenght > 1; else elseBlock">
+                            <mat-label>{{ 'SERVICES.SELECT_SUPPLIER' | translate }}  </mat-label>
+                            <input 
+                              type="text"
+                              matInput
+                              [formControl]="selectedSupplier"
+                              required
+                              [matAutocomplete]="matAutocomplete">
+                            <button *ngIf="selectedSupplier.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectedSupplier()">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <mat-autocomplete #matAutocomplete="matAutocomplete" id="welcome-select-supplier" [displayWith]="displayFnSupplier" >
+                                <mat-option
+                                    *ngFor="let supplier of suppliersFiltered | async" 
+                                    [id]="'welcome-supplier-' + supplier.data.supplierEAS"
+                                    [value]="supplier">
+                                    {{supplier.data.serviceSupplierTitle}}
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <div>
+                            <ng-template #elseBlock>
+                                <div *ngIf="selectedSupplier.value && selectedSupplier.value.data"  [id]="'welcome-supplier-' + suppliers[0].data.code"> {{ suppliers[0].data.title }}
+                                </div>
+                            </ng-template>
+                            <div *ngIf="selectedSupplier.value && selectedSupplier.value.data" >
+                                <span class="subheader">{{ 'IDENTIFIER_SUPLIER' | translate }} </span>
+                                <a class="link" id="welocme-supplier-data-url" (click)="goToLink(selectedSupplier.value.data.url)">
+                                    {{ selectedSupplier.value.data.code }}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div> 
+                    <div *ngIf="!!selectedSupplier.value" class="mb-5">
+                        <div class= "text-center" *ngIf="selectedSupplier.value.easAdministrativeUnitsList && selectedSupplier.value.easAdministrativeUnitsList.length > 0">
+                            <h3> {{ 'CHOOSE_ADMINISTRATIVE_UNIT_FOR_THE_SERVICE' | translate }} </h3>
+                            <mat-form-field appearance="fill" class="w-100"
+                                *ngIf="selectedSupplier.value.easAdministrativeUnitsList.length > 1; else elseBlock1">
+                                <mat-label>{{ 'SERVICES.SELECT_UNIT' | translate }}</mat-label>
+                                <input 
+                                type="text"
+                                matInput
+                                [formControl]="selectedUnit"
+                                required
+                                [matAutocomplete]="matAutocomplete">
+                              <button *ngIf="selectedUnit.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectedUnit()" >
+                                  <mat-icon>close</mat-icon>
+                              </button>
+                              <mat-autocomplete #matAutocomplete="matAutocomplete" id="welcome-select-unit" [displayWith]="displayFnUnit">
+                                <mat-option
+                                    *ngFor="let unit of unitsFiltered | async" 
+                                    [id]="'welcome-supplier-unit-' + unit.administrationUnit"
+                                    [value]="unit">
+                                    {{ unit.administrationUnit }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            </mat-form-field>
+                            <ng-template #elseBlock1>
+                                <div [id]="'welcome-supplier-unit-' + selectedSupplier.value.easAdministrativeUnitsList[0].administrationUnit.administrationUnitID"> {{
+                                    selectedSupplier.value.easAdministrativeUnitsList[0].administrationUnit }} </div>
+                            </ng-template>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 col-md-12 mat-elevation-z8 py-3">
+        <div class="d-flex float-right">
+            <button id="welcome-cancel" mat-button (click)="showDialog()"
+                class="btn-additional-large mr-2">{{ 'CANCEL' | translate}}</button>
+            <button id="welcome-continue" mat-button (click)="acceptService()"
+                [class]="disableNextButton ? 'btn-primary-large ml-2' : 'btn-primary-large disabled-clickable ml-2'">
+                {{ 'CONTINUE' | translate }}
+                <mat-icon inline>
+                    arrow_forward
+                </mat-icon>
+            </button>
+        </div>
+    </div>
+</div>

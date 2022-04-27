@@ -1,0 +1,19 @@
+<div *ngIf="service" class="row py-3">
+    <div class="service-info col-md-8 col-sm-12 pl-0 mb-0">
+        <div class="row align-items-center mb-3">
+            <h3 class="mb-0 mr-2" id="service-header">
+                {{ service.arId }} - {{ service.serviceName }}
+            </h3>
+        </div>
+    </div>
+    <div class="service-buttons col-md-4 col-sm-12 pr-0 text-right">
+        <button mat-button id="service-header-info-button" class="btn-additional-small" (click)="openEpdeauService()">
+            <mat-icon inline="true" class="material-icons-outlined">
+                info
+            </mat-icon>
+            <span id="service-header-service-details">
+                {{ 'SERVICE_DETAILS' | translate }}
+            </span>
+        </button>
+    </div>
+</div>

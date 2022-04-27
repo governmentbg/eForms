@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row background-main-blue">
+        <div class="color-white w-100 header-wrapper">
+            <div class="user-wrapper">
+                <h3 id="service-details-modal-header" class="mr-2 mb-0 text-white">{{ "PROFILE_ROLES.EDIT_ROLES" | translate}}</h3>
+    
+                <app-user id="profile-roles-user" [userName]="data.data.name"></app-user>
+            </div>
+            <button id="service-details-modal-close-button" class="close-button" [mat-dialog-close]="true"><mat-icon>close</mat-icon> {{ "CLOSE" | translate}}</button>
+        </div>
+    </div>
+    <form #roles="ngForm" (ngSubmit)="saveRoles(roles)">
+    <mat-dialog-content>
+    <app-notifications-banner> </app-notifications-banner>
+    <div class="row background-light-gray user-wrapper">
+        <div class="col-12 px-0">
+            <div class="row">
+                <mat-checkbox class="user-checkbox"
+                [disabled]="true"
+                color="primary"
+                name="user"
+                #user="ngModel" 
+                [ngModel] = "isUser"
+                >
+                {{userLabel}}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div class="col-12 px-0">
+            <div class="row">
+                <mat-checkbox class="user-checkbox"
+                [disabled]="true"
+                color="primary"
+                name="admin"
+                #admin="ngModel" 
+                [ngModel] = "isAdmin"
+                >
+                {{adminLabel}}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div class="col-12 px-0">
+            <div class="row">
+                <mat-checkbox class="user-checkbox"
+                name="metadataManager"
+                #metadataManager="ngModel" 
+                [ngModel] = "isMetadataManager"
+                >
+                {{metadataManagerLabel}}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div class="col-12 px-0">
+            <div class="row">
+                <mat-checkbox class="user-checkbox"
+                [checked]="true"      
+                name="serviceManager"
+                #serviceManager="ngModel" 
+                [ngModel] = "isServiceManager"
+                >
+                {{serviceManagerLabel}}
+                </mat-checkbox>
+            </div>
+        </div>
+
+        <div class="offset-md-1 col-md-5 col-sm-12">
+            <button id="update-roles-button" mat-button  class="btn-primary-medium mr-2" >{{
+                'SAVE_CHANGES' | translate}}</button>
+        </div>
+
+    </div>
+  </mat-dialog-content>
+</form>
+</div>

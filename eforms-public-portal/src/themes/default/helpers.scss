@@ -1,0 +1,56 @@
+.background-white {
+    background-color: $white;
+}
+
+.background-wrapper {
+    top: 40%;
+    height: 61%;
+    background-color: $light-gray;
+    position: absolute;
+    right: 0;
+}
+
+.heading-wrapper {
+    padding: 2.5em 0;
+    margin-bottom: 0;
+    text-align: center;
+}
+
+.back-button {
+    position: absolute;
+    padding-left: 2.5em;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+.background-light-gray{
+    background-color: $light-gray;
+}
+
+.background-main-blue{
+    background-color: $main-dark-blue;
+}
+
+.color-white {
+    color: $white
+}
+
+.color-gray {
+    color: $htmlGray
+}
+
+.fw-500{
+    font-weight: 500;
+}
+
+.px-mobile-none {
+    @media only screen and (max-width: $phone-max-width) {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+}
+.hide-mobile {
+    @media only screen and (max-width: $phone-max-width) {
+        display: none;
+    }
+}

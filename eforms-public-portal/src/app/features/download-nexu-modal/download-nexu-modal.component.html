@@ -1,0 +1,52 @@
+<div class="container">
+    <div class="row background-main-blue">
+        <div class="color-white w-100 header-wrapper">
+            <div class="orn-wrapper">
+                <h3 id="service-details-modal-header" class="mr-2 mb-0 text-white"> {{ 'KEP_SIGNATURE' | translate }} </h3>
+            </div>
+            <button id="service-details-modal-close-button" class="close-button" [mat-dialog-close]="true"><mat-icon>close</mat-icon> {{ "CLOSE" | translate}}</button>
+        </div>
+    </div>
+    <mat-dialog-content>
+    <app-notifications-banner> </app-notifications-banner>
+    <div class="row background-light-gray service-wrapper">
+        <div class="col-12 mt-3 px-0">
+            <mat-icon class="mb-4">info</mat-icon>
+
+            <formio id="download-nexu-form" [form]="formSrc" (ready)="handleFormReady($event)"  class="col-12 p-0"></formio>
+        </div>
+
+        <div class="col-12 mt-3 px-0 text-center" *ngIf="!isDownloading && !isDownloaded">
+            <div>{{ 'DOWNLOAD_NEXU_FOR' | translate }}</div>
+            <div class="d-inline-block text-left">
+                <div *ngIf="userOS=='unknown' || userOS=='windows'" class="text-primary download-link" (click)="downloadInstaller('windows')">
+                    <i class="fa fa-windows text-muted mr-2"></i> Windows
+                </div>
+                <div *ngIf="userOS=='unknown' || userOS=='macosx'" class="text-primary download-link" (click)="downloadInstaller('macosx')">
+                    <i class="fa fa-apple text-muted mr-2"></i> Mac OS
+                </div>
+                <div *ngIf="userOS=='unknown' || userOS=='linux'" class="text-primary download-link" (click)="downloadInstaller('linux')">
+                    <i class="fa fa-linux text-muted mr-2"></i> Linux
+                </div>
+                <div *ngIf="userOS != 'unknown'" (click)="userOS = 'unknown'">
+                    <small style="cursor: pointer; text-decoration:underline">{{ 'SHOW_ALL' | translate }}</small>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 mt-3 px-0 text-center" *ngIf="isDownloading && !isDownloaded">
+            <div>{{ 'DOWNLOADING_NEXU' | translate }}</div>
+            <div class="spinner-border text-primary" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+        <div class="col-12 mt-3 px-0 text-center" *ngIf="isDownloaded">
+            <div>{{ 'DOWNLOADED_NEXU' | translate }}</div>
+        </div>
+    </div>
+    </mat-dialog-content>
+    <div class="row">
+        <div class="col-12 py-3 modal-footer d-flex overflow-auto">
+            <button mat-button class="btn-primary-medium" (click)="reloadPage()" >{{ 'REFRESH_PAGE' | translate }}</button>
+        </div>
+    </div>
+</div>

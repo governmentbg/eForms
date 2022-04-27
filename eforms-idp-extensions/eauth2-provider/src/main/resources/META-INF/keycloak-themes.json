@@ -1,0 +1,9 @@
+{
+    "themes": [
+    {
+        "name": "eauth2",
+        "types": [
+            "admin"
+        ]
+    }]
+}

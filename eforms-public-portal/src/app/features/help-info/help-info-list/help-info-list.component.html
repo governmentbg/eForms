@@ -1,0 +1,18 @@
+<div class="w-100 help-info-container">
+    <div class="row align-items-center">
+        <div class="back-button" (click)="back()">
+            <mat-icon>arrow_back_ios</mat-icon>
+            <span id="help-info-list-back-button">{{ 'BACK' | translate }}</span>
+        </div>
+        <h2 id="help-info-list-header" class="heading-wrapper w-100">
+            {{ 'HELP_INFO' | translate }}
+        </h2>
+    </div>
+    <div class="row">
+        <div class="offset-md-1 col-md-4 col-sm-12">
+            <app-action-card id="help-info-center" serviceIcon="help-info-center" serviceLabel="{{ 'FOOTER.CONTACT_CENTER' | translate }}" serviceLink="help-info/help-center"></app-action-card>
+            <app-action-card id="help-info-application-eau" serviceIcon="help-info-application-eau" serviceLabel="{{ 'HELP_INFO_LIST.APPLICATION_TO_EAU' | translate }}" serviceLink="help-info/help-application-eau"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager], [profileTypes.administration])" id="help-info-processing-eau" serviceIcon="help-info-processing-eau" serviceLabel="{{ 'HELP_INFO_LIST.PROCESS_EAU' | translate }}" serviceLink="help-info/help-processing-eau"></app-action-card>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="services-container col-12 p-0">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 id="completed-services-header" class="heading-wrapper w-100">
+                {{ 'SERVICES.COMPLETED_SERVICES' | translate }}
+            </h2>
+        </div>
+        <div class="row">
+            <app-smart-table
+            id="completed-services-table"
+            [tableColumns]="tableColumns"
+            [isPageable]="true"
+            [buttonIcon]="'visibility'"
+            [actionColumnName]="'SERVICES.OPTIONS'"
+            [actionButtonName]=""
+            [apiCallUrl]="apiCallUrl"
+            [classifier]="'?classifier=serviceInCompletion&'"
+            [initialSort]="'SERVICES.LAST_CHANGE'"
+            (rowAction)="handleRowActionEvent($event)"
+            ></app-smart-table>
+        </div>
+    </div>
+</div>

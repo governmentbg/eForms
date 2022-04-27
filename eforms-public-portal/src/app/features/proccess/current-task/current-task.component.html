@@ -1,0 +1,34 @@
+<div class="w-100 d-flex flex-column">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="row" *ngIf="!taskError">
+        <div class="content bg-white mb-0 w-100 pt-4">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 id="current-task-header" class="heading-wrapper w-100">
+                {{ pageTitle }}
+            </h2>
+            <div class="form-container pl-4 pr-4 pb-4" *ngIf="formSrc">
+                <app-io-form-builder [taskId]="process[currentLaneIndex].userTasks[currentUserTaskIndex].id"
+                [formSrc]="formSrc" [formId]="formId" [prevEvent]="prevSubmittedSubject.asObservable()"
+                [skipGetFormSubmition]="true"
+                [nextEvent]="nextSubmittedSubject.asObservable()" (nextSuccessEvent)="next()"
+                (nextErrorEvent)="handleFormError()" [ornNumber]="ornNumber" [projectId]="projectId"></app-io-form-builder>
+            </div>
+        </div>
+    </div>
+    <div class="row pb-4" *ngIf="!taskError">
+        <div class="col-12 p-0">
+            <div class="navigation-buttons d-flex justify-content-end mat-elevation-z8"
+            *ngIf="process[this.currentLaneIndex] &&
+            !(process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isCompletable === 'false')">
+            <button mat-button (click)="callNextOnForm()" [class]="isMobile ? 'btn-primary-small' : 'btn-primary-large'">{{
+                (process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isFinal ? 'FINISH_PROCESS' :
+                'NEXT_STEP') | translate }}</button>
+            </div>
+        </div>
+    </div>
+    <app-error *ngIf="taskError" [error]="taskError"></app-error>
+</div>

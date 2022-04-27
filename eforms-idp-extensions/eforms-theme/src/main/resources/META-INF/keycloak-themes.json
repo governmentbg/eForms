@@ -1,0 +1,9 @@
+{
+    "themes": [
+    {
+        "name": "eforms-theme",
+        "types": [
+            "login"
+        ]
+    }]
+}

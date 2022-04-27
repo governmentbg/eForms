@@ -1,0 +1,125 @@
+@import './colors.scss';
+
+.container {
+    max-width: 1300px !important;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.row {
+    margin: 0 !important;
+}
+
+.col {
+    margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    color: $dark-gray;
+    font-family: Fira Sans;
+}
+
+div,
+span {
+    font-family: Fira Sans;
+}
+
+h1 {
+    font-size: 31px;
+    font-weight: 500;
+    line-height: 34px;
+}
+
+h2 {
+    font-size: 25px;
+    font-weight: 500;
+    line-height: 30px;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 500;
+    line-height: 24px;
+}
+
+h4 {
+    font-size: 20px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+h5 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+}
+
+h6 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+.mat-progress-spinner circle,
+.mat-spinner circle {
+    stroke: $main-light-blue !important;
+}
+
+.col-sm-12 {
+    margin-bottom: 1em;
+}
+
+.mat-dialog-container{
+    padding: 0 !important;
+}
+.mat-dialog-content{
+    padding: 0 !important;
+    margin: 0 !important;
+}
+@media only screen and (max-width: $phone-max-width) {
+    h1 {
+        font-size: 25px;
+        line-height: 30px;
+    }
+
+    h2 {
+        font-size: 20px;
+        line-height: 24px;
+    }
+
+    h3 {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    h4 {
+        font-size: 16px;
+        line-height: 22px;
+    }
+
+    h5 {
+        font-size: 14px;
+    }
+
+    h6 {
+        font-size: 14px;
+    }
+
+    p {
+        font-size: 14px;
+        line-height: 21px;
+    }
+}

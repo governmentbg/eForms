@@ -1,0 +1,19 @@
+.dialog-wrapper{
+    width: 25em;
+}
+
+::ng-deep .full-screen-modal .dialog-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100% !important;
+    height: 100% !important;
+
+    .dialog-body {
+        align-items: center;
+        height: 100%;
+    }
+  
+    .bottom {
+        margin-top: auto !important;
+    }
+}

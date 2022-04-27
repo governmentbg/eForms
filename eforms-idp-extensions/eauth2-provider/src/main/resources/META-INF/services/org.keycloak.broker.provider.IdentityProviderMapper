@@ -1,0 +1,3 @@
+com.bulpros.keycloak.providers.mappers.EauthUserAttributeMapper
+com.bulpros.keycloak.providers.mappers.EAuthUsernameTemplateMapper
+com.bulpros.keycloak.providers.mappers.EAuthCustomNameMapper

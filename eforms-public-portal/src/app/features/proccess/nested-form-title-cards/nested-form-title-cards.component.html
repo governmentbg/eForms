@@ -1,0 +1,16 @@
+<div class="header mb-2"> {{ ((readonly === true)? 'PLEASE_REVIEW_ALL_DOCUMENTS' : 'PLEASE_FILL_OUT_ALL_DOCUMENTS') | translate }} </div>
+<div class="mb-2">{{ ((readonly === true)? 'SELECT_DOCUMENT_TO_REVIEW' : 'SELECT_DOCUMENT_TO_FILL_OUT') | translate }}</div>
+
+<div class="row">
+    <div class="col-md-4" *ngFor="let form of nestedForms">
+        <div class="nested-card" (click)="selectNestedForm(form)">
+            <div class="nested-card-inner">
+                <div> {{ form.label }} </div>
+            </div>
+            <span *ngIf="form.isValid && form.hasBeenActive" class="completed"> {{ 'COMPLETED' |
+                translate }} <i class="fa fa-check"></i></span>
+            <span *ngIf="!form.isValid && form.hasBeenActive" class="completed"> {{ 'INCOMPLETE' |
+                translate }} <i class="fa fa-exclamation-triangle"></i></span>
+        </div>
+    </div>
+</div>

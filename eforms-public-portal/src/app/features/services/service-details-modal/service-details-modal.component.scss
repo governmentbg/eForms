@@ -1,0 +1,60 @@
+@import "colors.scss";
+
+button.close-button {
+    background: transparent;
+    cursor: pointer;
+    border: 0;
+    color: $white;
+    float: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-right: 1em;
+}
+
+.header-wrapper {
+    padding: 16px 16px 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    @media screen and (max-width: 840px) {
+        padding: 16px;
+    }
+}
+
+.label {
+    font-weight: bold;
+    @media screen and (max-width: 840px) {
+        font-weight: initial;
+        font-style: italic;
+    }
+}
+.orn-wrapper {
+    display: flex;
+    align-items: center;
+    app-orn {
+        margin: 0;
+    }
+    @media screen and (max-width: 840px) {
+        flex-direction: column;
+        align-items: flex-start;
+        app-orn {
+            margin-top: 20px;
+        }
+    }
+}
+
+.service-wrapper {
+    padding: 16px 16px 16px 32px;
+    @media screen and (max-width: 840px) {
+        padding: 16px;
+    }
+}
+
+.download-button {
+    border-right: 1px black solid;
+    border-radius: 0px !important;
+}
+
+.download-button.no-border {
+    border: 0;
+}

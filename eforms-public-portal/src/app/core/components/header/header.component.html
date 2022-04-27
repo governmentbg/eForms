@@ -1,0 +1,35 @@
+<div class="container">
+    <div id="header-main" class="row justify-content-between">
+        <div class="d-flex align-items-center px-0">
+            <img id="header-logo-desktop" class="logo desktop-logo" src="../assets/images/logo_lion_line.svg"
+                (click)="openEgov()" alt="">
+            <img id="header-logo-mobile" class="logo mobile-logo" src="../assets/images/logo_small_white_egov.svg"
+                (click)="openEgov()" alt="">
+            <div class="hide-mobile hide-small-screen">
+                <h1 class="mb-0">{{ 'EGOV_BG' | translate }}</h1>
+                <h2 class="mb-0">{{ 'SYSTEM_E_FORMS' | translate }}</h2>
+                <div class="text-muted hide-small-screen">{{ 'DAEU' | translate }}</div>
+            </div>
+        </div>
+        <div class="desktop-header-section-outer">
+            <div class="language text-right" (click)="changeLanguage()">
+                {{ language }}
+            </div>
+            <div class="desktop-header-section-inner">
+                <div class="d-flex align-items-end text-right">
+                    <app-profile-select class="pr-2"></app-profile-select>
+                </div>
+                <div class="text-right pl-2">
+                    <div class="d-flex flex-column">
+                        <app-user-name-header></app-user-name-header>
+                        <app-logout></app-logout>
+                    </div>
+                </div>
+            </div>
+            <button mat-icon-button (click)="toggleMenu()" class="mobile-menu-button">
+                <mat-icon>{{ menuIcon }}</mat-icon>
+            </button>
+        </div>
+    </div>
+</div>
+<app-notifications-banner></app-notifications-banner>

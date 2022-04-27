@@ -1,0 +1,117 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    .container {
+        height: 55px;
+        padding: 0px 15px;
+        background-color: $main-dark-blue-second;
+    }
+
+    #header-main {
+        align-items: center;
+    }
+
+    .logo {
+        margin-right: 12px;
+        cursor: pointer;
+    }
+
+    .desktop-logo {
+        display: none;
+    }
+
+    app-logout {
+        color: $white;
+    }
+
+    .hide-small-screen {
+        display: none;
+    }
+
+    .language {
+        cursor: pointer;
+        color: $white;
+    }
+
+    .desktop-header-section-outer {
+        display: flex;
+        align-items: center;
+    }
+
+    .desktop-header-section-inner {
+        display: none;
+    }
+
+    .mobile-menu-button {
+        display: block;
+        color: $white;
+        margin-left: 1.7142em;
+    }
+
+    @media (min-width: 640px) {
+        #header-main {
+            align-items: center;
+        }
+
+        .desktop-logo {
+            display: block;
+        }
+
+        .mobile-logo {
+            display: none;
+        }
+
+        .container {
+            height: 150px;
+            padding: 25px 19px;
+            background-color: $white;
+        }
+
+        app-logout {
+            color: $black;
+        }
+
+        .language {
+            color: $black;
+        }
+
+        .hide-small-screen {
+            display: block;
+        }
+
+        .mobile-menu-button {
+            color: $black;
+        }
+    }
+
+    @media (min-width: 1000px) {
+        .desktop-header-section-outer {
+            display: block;
+        
+        }
+        .desktop-header-section-inner {
+            display: flex;
+        }
+
+        .mobile-menu-button {
+            display: none;
+        }
+
+        .language {
+            margin-bottom: 1em;
+        }
+    }
+
+    @media (max-width: 770px) {
+        app-user-name-header {
+            display: none;
+        }
+    }
+
+    @media (min-width: $container-max-width) {
+        .container {
+            padding: 25px 0px;
+        }
+    }
+}

@@ -1,0 +1,88 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    width: 100%;
+
+    table {
+        width: 100%;
+    }
+
+    th {
+        font-weight: 600;
+        font-size: 16px;
+        color: $dark-gray;
+    }
+
+    .date-wrapper{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    mat-icon {
+        font-size: 25px;
+    }
+}
+
+:host ::ng-deep .mat-sort-header-container { 
+    display: flex;
+    justify-content: flex-start;
+    div {
+        text-align: left;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    :host {
+        padding: 8px;
+    }
+
+    .mat-header-row {
+        display: none !important;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+        height: fit-content !important;
+        padding: 16px;
+        background-color: $light-gray;
+        margin-bottom: 16px;
+        border-radius: 7px;
+        td {
+            border: none;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: $dark-gray;
+        }
+
+        td:first-of-type {
+            margin-top: 0;
+        }
+
+        td:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    td.mat-cell:first-of-type {
+        padding: 0;
+    }
+
+    td:before{
+        content: attr(data-label);
+        font-style: italic;
+        color: $sub-header-gray;
+        font-size: 13px;
+    }
+
+    .table-container {
+        height: 500px;
+        overflow-y: auto;
+    }
+
+    mat-paginator {
+        display: none;
+    }
+}
+

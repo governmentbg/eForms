@@ -1,0 +1,35 @@
+{
+  "name": "@cubejs-backend/sqlite-driver",
+  "description": "Cube.js Sqlite database driver",
+  "author": "Cube Dev, Inc.",
+  "version": "0.29.7",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cube-js/cube.js.git",
+    "directory": "packages/cubejs-sqlite-driver"
+  },
+  "engines": {
+    "node": "^12.0.0 || ^14.0.0 || >=16.0.0"
+  },
+  "main": "driver/SqliteDriver.js",
+  "typings": "driver/index.d.ts",
+  "scripts": {
+    "lint": "eslint **/*.js"
+  },
+  "dependencies": {
+    "@cubejs-backend/query-orchestrator": "^0.29.7",
+    "sqlite3": "^5.0.2"
+  },
+  "license": "Apache-2.0",
+  "devDependencies": {
+    "@cubejs-backend/linter": "^0.29.0",
+    "mocha": "^8.0.1",
+    "should": "^13.2.3"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "eslintConfig": {
+    "extends": "../cubejs-linter"
+  }
+}

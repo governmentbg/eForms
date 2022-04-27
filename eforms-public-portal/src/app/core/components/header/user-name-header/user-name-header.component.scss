@@ -1,0 +1,13 @@
+@import "colors.scss";
+
+.profile {
+    text-align: right;
+    cursor: pointer;
+    padding-bottom: 1.42857em;
+    color: $white;
+
+    @media (min-width: 1000px) {
+        padding-bottom: 0.5em;
+        color: $black;
+    }
+}

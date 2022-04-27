@@ -1,0 +1,59 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    .main-footer {
+        background-color: $light-gray;
+        a {
+            display: block;
+            margin-bottom: 1rem;
+            color: $dark-gray;
+        }
+    }
+
+    .secondary-footer {
+        background-color: $medium-gray;
+        p {
+            font-size: 13px;
+            line-height: 17px;
+        }
+    }
+
+    .floating-footer {
+        position: sticky;
+        bottom: 0;
+    }
+
+    .container {
+        padding: 2.5em 1.4em;
+        margin-bottom: 0;
+    }
+
+    .row {
+        div {
+            margin-bottom: 1em;
+        }
+    }
+
+    @media (max-width: 770px) {
+        .secondary-footer {
+            .container {
+                div {
+                    flex-direction: column-reverse;
+                }
+            }
+        }
+    }
+
+    @media (min-width: $container-max-width) {
+        .container {
+            padding: 2.5em 0px;
+        }
+
+        .row {
+            div {
+                margin-bottom: 0;
+            }
+        }
+    }
+}

@@ -1,0 +1,48 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    height: calc(100% - #{$desktop-header-height});
+
+    .settings-container {
+        min-height: 46em;
+        background-color: $white;
+
+        @media screen and (max-width: 840px) {
+            .back-button {
+                padding: 8px 0 0 8px;
+                display: flex;
+                align-self: flex-start;
+            }
+        }
+    }
+    .mat-radio-button ~ .mat-radio-button {
+        margin-left: 1em;
+    }
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $main-dark-blue;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    color: $main-dark-blue;
+    background-color: $main-dark-blue;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: $main-dark-blue;
+}
+
+::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
+    border-color: $main-dark-blue;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+    color: $main-dark-blue;
+    background-color: $main-dark-blue;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+    background-color: $main-dark-blue;
+}

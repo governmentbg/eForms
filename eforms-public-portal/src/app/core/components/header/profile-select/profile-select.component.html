@@ -1,0 +1,23 @@
+<div *ngIf="user && user.profiles.length > 0">
+    <div mat-button [matMenuTriggerFor]="menu" class="profiles-dropdown font-weight-bold">
+        {{ 'PROFILE_CHANGE' | translate }}
+        <mat-icon inline>keyboard_arrow_down</mat-icon>
+    </div>
+    <mat-menu #menu="matMenu" xPosition="before">
+        <button mat-menu-item
+                [class.selected-profile-dropdown]="!selectedProfile"
+                (click)="removeSelectedAdditionalProfile()">{{this.user.personName}}</button>
+        <button mat-menu-item 
+                *ngFor="let profile of user.profiles" 
+                [class.selected-profile-dropdown]="profile.identifier === selectedProfile?.identifier"
+                (click)="changeProfile(profile)">
+            {{ profile.title }}
+        </button>
+    </mat-menu>
+    <div *ngIf="user && selectedProfile" class="selected-profile d-flex align-items-center">
+          {{ selectedProfile.title }}
+    </div>
+    <div *ngIf="user && !selectedProfile" class="selected-profile d-flex align-items-center">
+        {{ user.personName }}
+  </div>
+</div>

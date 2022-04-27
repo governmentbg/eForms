@@ -1,0 +1,46 @@
+<div class="row main-footer">
+    <div class="container mb-0">
+        <div class="row mb-0" id="footer-first">
+            <div class="col-md-4 p-0">
+                <h3>{{ 'EGOV_BG' | translate }}</h3>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/uslugi'">{{ 'FOOTER.ADMINISTRATIVE_SERVICES' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/dostavchitsi%20na%20uslugi'">{{ 'FOOTER.BG_INSTITUTIONS' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/aktualno'">{{ 'FOOTER.CURRENT' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/polezni-vrazki'">{{ 'FOOTER.USEFUL_LINKS' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/statistika'">{{ 'FOOTER.STATISTICAL_INFORMATION' | translate }}</a>
+            </div>
+            <div class="col-md-4 p-0">
+                <h3>{{ 'FOOTER.GENERAL_TERMS' | translate }}</h3>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/info-pages/access-policy'">{{ 'FOOTER.ACCESSIBILITY_POLICY' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/info-pages/privacy-policy'">{{ 'FOOTER.PRIVACY_POLICY' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/info-pages/terms-and-conditions'">{{ 'FOOTER.TERMS_OF_USE' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/info-pages/sitemap'">{{ 'FOOTER.SITE_MAP' | translate }}</a>
+            </div>
+            <div class="col-md-4 p-0">
+                <h3>{{ 'DAEU' | translate }}</h3>
+                <a href="https://e-gov.bg/">{{ 'FOOTER.OFFICIAL_AGENCY_SITE' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/info-pages/interoperability'">{{ 'FOOTER.INTEROPERABILITY' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/unified-model/unified-model/home/'">{{ 'FOOTER.UNIFORM_MODEL' | translate }}</a>
+                <a [href]="'https://' + environment.egovBaseURL + '/wps/portal/egov/helpdesk'">{{ 'FOOTER.CONTACT_CENTER' | translate }}</a>
+            </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="showSecondFooter"id="footer-second"
+    [className]="closeableFooter ? 'floating-footer row secondary-footer' : 'fixed-footer row secondary-footer'">
+    <div class="container mb-0">
+        <div *ngIf="closeableFooter" class="text-right">
+            <mat-icon class="btn" (click)="closeSecondFooter()">close</mat-icon>
+        </div>
+        <div class="row">
+            <div class="col-md-7 p-0 m-0 font-italic">
+                <p class="m-0">{{ 'FOOTER.SECOND_FOOTER_TEXT' | translate }}</p>
+            </div>
+            <div class="offset-md-1"></div>
+            <div class="col-md-4 mb-0 p-0">
+                <img src="../assets/images/eu_fund.png" alt="" class="w-50">
+                <img src="../assets/images/logo-bg-right-no-back.png" alt="" class="w-50">
+            </div>
+        </div>
+    </div>
+</div>

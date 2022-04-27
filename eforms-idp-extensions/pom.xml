@@ -1,0 +1,73 @@
+<!--
+    Copyright (c) 2022 Digitall Nature Bulgaria
+   
+    This program and the accompanying materials
+    are made available under the terms of the Apache License 2.0
+    which accompanies this distribution, and is available at
+    https://www.apache.org/licenses/LICENSE-2.0
+   
+    Contributors:
+       Stefan Tabakov
+       Nedka Taskova
+       Stanimir Stoyanov
+       Pavel Koev
+       Igor Radomirov
+ -->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.bulpros</groupId>
+    <artifactId>eforms-idp-extensions</artifactId>
+    <version>1.0.0</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>bg-theme</module>
+        <module>eauth2-provider</module>
+        <module>eforms-theme</module>
+        <module>eforms-idp-extensions-ear</module>
+    </modules>
+    
+    <properties>
+        <sonar.projectName>IdpExtensions</sonar.projectName>
+        <sonar.projectKey>IdpExtensions</sonar.projectKey>
+    </properties>
+    
+    <profiles>
+        <profile>
+            <id>local</id>
+            <repositories>
+                <repository>
+                    <id>central-repository</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                </repository>
+                <repository>
+                    <id>bulpros-nexus</id>
+                    <url>http://10.191.35.200:8081/repository/bulpros/</url>
+                </repository>
+            </repositories>
+            <properties>
+                <spring.profiles.active>local</spring.profiles.active>
+            </properties>
+        </profile>
+        <profile>
+            <id>prod</id>
+            <repositories>
+                <repository>
+                    <id>central-repository</id>
+                    <name>Central Repository</name>
+                    <url>https://repo.maven.apache.org/maven2</url>
+                </repository>
+                <repository>
+                    <id>bulpros-nexus</id>
+                    <url>http://172.23.130.71:8081/repository/bulpros/</url>
+                </repository>
+            </repositories>
+            <properties>
+                <spring.profiles.active>prod</spring.profiles.active>
+            </properties>
+        </profile>
+    </profiles>
+</project>

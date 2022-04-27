@@ -1,0 +1,60 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    width: 100%;
+    .subheader {
+        color: $sub-header-gray;
+        font-style: italic;
+    }
+    .gray-border {
+        border-right: solid $light-gray 2px;
+        @media screen and (max-width: $phone-max-width) {
+            border-right: none;
+        }
+    }
+
+    mat-form-field {
+        width: 100%;
+        @media screen and (min-width: $phone-max-width) {
+            width: 25em;
+        }
+    }
+    .link {
+        color: $hyperlink-blue;
+        cursor: pointer;
+    }
+}
+
+.welcome-user-profile-information {
+    &-label {
+        color: $sub-header-gray;
+        font-style: italic;
+    }
+    &-data {
+        margin-bottom: 16px;
+        padding-left: 5px;
+    }
+}
+
+.mat-option {
+    line-height: normal !important;
+    white-space: initial !important;
+}
+::ng-deep .mat-form-field-required-marker { 
+    color: $notification-error; 
+}
+
+.w-fit-content {
+    width: fit-content;
+}
+
+.disabled-clickable {
+    background-color: $medium-gray;
+    color: #a1a1a0;
+}
+.mob-min-w-100{
+    @media screen and (max-width: $phone-max-width) {
+        min-width: 100%;
+    }
+}

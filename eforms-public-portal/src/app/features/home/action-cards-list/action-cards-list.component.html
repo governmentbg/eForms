@@ -1,0 +1,35 @@
+<div class="w-100">
+    <h2 id="home-header" class="heading-wrapper">
+        {{ 'WELLCOME_TO_EFORMS_SYSTEM' | translate }}
+    </h2>
+    <div class="row">
+        <div id="home-left-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.user, roles.admin])" id="home-my-services" serviceIcon="my-services" serviceLabel="{{ 'SERVICES.MY_SERVICES' | translate }}" serviceLink="my-services"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.user])" id="home-req-service" serviceIcon="req-service" serviceLabel="{{ 'SERVICES.REQUEST_SERVICE' | translate }}" [serviceLink]="'https://' + egovLink + '/wps/portal/egov/nachalo'"></app-action-card>
+            <app-action-card id="home-user-profile" serviceIcon="user-profile" serviceLabel="{{ 'PROFILE_DATA' | translate }}" serviceLink="user-profile"></app-action-card>
+        </div>
+        <div id="home-right-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card id="home-settings" serviceIcon="settings" serviceLabel="{{ 'SETTINGS' | translate }}" serviceLink="settings"></app-action-card>
+            <app-action-card id="home-help-info" serviceIcon="help-info" serviceLabel="{{ 'HELP_INFO' | translate }}" serviceLink="help-info"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.user])" id="home-notifications" serviceIcon="notifications" serviceLabel="{{ 'NOTIFICATIONS' | translate }}" [serviceLink]="fulleDeliveryLink"></app-action-card> 
+        </div>
+    </div>
+
+    <div *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager, roles.admin, roles.metadataManager],[profileTypes.administration])" class="row">
+        <div id="home-row" class="offset-md-1 col-md-9 col-sm-12 mb-0">
+            <hr class="hr-blue">
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="home-left-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager],[profileTypes.administration])" id="admin-services-in-progress" serviceIcon="admin-services-in-progress" serviceLabel="{{ 'SERVICES.ADMIN.SERVICES_IN_PROGRESS' | translate }}" serviceLink="admin-services/in-progress"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="admin-role" serviceIcon="admin-role" serviceLabel="{{ 'PROFILE_ROLES.ADMIN_ROLES' | translate }}" serviceLink="edit-profile-roles"></app-action-card>
+        </div>
+        <div id="home-right-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager],[profileTypes.administration])" id="admin-services-completed" serviceIcon="admin-services-completed" serviceLabel="{{ 'SERVICES.COMPLETED_SERVICES' | translate }}" serviceLink="admin-services/completed"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.metadataManager],[profileTypes.administration])" id="administration-of-services" serviceIcon="administration-of-services" serviceLabel="{{ 'SERVICES.ADMIN.ADMINISTRATION_OF_SERVICES' | translate }}" serviceLink="administration-of-services"></app-action-card>
+        </div>
+    </div>
+
+</div>

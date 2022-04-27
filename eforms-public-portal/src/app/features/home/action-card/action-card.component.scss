@@ -1,0 +1,133 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+
+    margin-bottom: 1.5em;
+
+    &>div {
+        cursor: pointer;
+        border-radius: 7px;
+        background-color: $light-gray;
+        display: inline;
+        padding: 1.25em 0;
+        margin-bottom: 2.5em;
+    }
+
+    &>div:hover {
+        background-color: $medium-gray;
+    }
+
+    .icon-wrapper {
+        margin-left: 2em;
+        width: 62px;
+        height: 55px;
+
+        @media (max-width: $tablet-max-width) {
+            margin-left: 0.5em;
+        }
+    }
+
+    .service-label {
+        margin-left: 1em;
+    }
+
+    .req-service,
+    .my-services,
+    .in-progress,
+    .requested,
+    .completed,
+    .user-profile,
+    .settings,
+    .help-info,
+    .notifications,
+    .admin-services-in-progress,
+    .admin-services-completed, 
+    .help-info-center,
+    .help-info-processing-eau, 
+    .help-info-application-eau,
+    .admin-role,
+    .administration-of-services {
+        background-repeat: no-repeat;
+        background-size: contain;
+
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .req-service {
+        background-image: $req-service-icon;
+    }
+
+    .my-services {
+        background-image: $my-services-icon;
+    }
+
+    .in-progress {
+        background-image: $in-progress-icon;
+    }
+
+    .requested {
+        background-image: $requested-icon;
+    }
+
+    .completed {
+        background-image: $completed-icon;
+    }
+
+    .user-profile {
+        background-image: $user-profile-icon;
+    }
+
+    .settings {
+        background-image: $settings-icon;
+    }
+
+    .help-info {
+        background-image: $help-info-icon;
+    }
+
+    .notifications {
+        background-image: $notifications-icon;
+    }
+
+    .admin-services-in-progress {
+        background-image: $admin-services-in-progress-icon;
+    }
+
+    .admin-services-completed {
+        background-image: $admin-services-completed-icon;
+    }
+
+    .admin-role {
+        background-image: $admin-role-icon;
+    }
+
+    .help-info-center {
+        background-image: $help-info-center-icon;
+    }
+
+    .help-info-processing-eau {
+        background-image: $help-info-processing-eau-icon;
+    }
+
+    .help-info-application-eau {
+        background-image: $help-info-application-eau-icon;
+    }
+
+    .administration-of-services {
+        background-image: $administration-of-services;
+    }
+
+    h3 {
+        margin-bottom: 0;
+    }
+
+    .service-disabled {
+        pointer-events: none;
+        div {
+            opacity: 50%;
+        }
+    }
+}

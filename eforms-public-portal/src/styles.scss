@@ -1,0 +1,195 @@
+/* You can add global styles to this file, and also import other style files */
+@import "bootstrap/dist/css/bootstrap.css";
+@import "themes/default/index.scss";
+@import 'material-icons/iconfont/material-icons.scss';
+
+html,body {
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+}
+.main-background {
+    position: relative;
+    
+    @media (min-width: $tablet-min-width) {
+        background-image: url('./assets/images/background.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+}
+
+.tooltip-show{
+    position: absolute;
+    font-size: 13px;
+    text-align: left;
+    color: $black;
+    padding: 1em 2.5em 1em 1em;
+    background: $white;
+    border-radius: 4px;
+    z-index: 1000;
+    &.notice {
+        border: solid $notification-new 1px;
+    }    
+    &.warning {
+        border: solid $notification-attention 1px;
+    }
+    &.success {
+        border: solid $notification-success 1px;
+    }
+    &.error {
+        border: solid $notification-error 1px;
+    }
+}
+.tooltip-title{
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.tooltip-body{
+    font-size: 13px;
+}
+
+.tooltip-arrow{
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 1000;
+    &.bottom {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-bottom: 8px solid;
+        border-top: none;
+        border-bottom-color: inherit;
+        top: -8px;
+        &.bottom-left{
+            left: 30px;
+        }
+        &.bottom-center {
+            left: calc(50% - 8px);
+        }
+        &.bottom-right {
+            right: 30px;
+        }
+    }
+    &.top {
+        border-left: 8px solid transparent;
+        border-right: 8px solid transparent;
+        border-top: 8px solid;
+        border-bottom: none;
+        border-top-color: inherit;
+        bottom: -8px;
+        &.top-left{
+            left: 30px;
+        }
+        &.top-center {
+            left: calc(50% - 8px);
+        }
+        &.top-right {
+            right: 30px;
+        }
+    }
+    &.left {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-left: 8px solid;
+        border-right: none;
+        border-left-color: inherit;
+        right: -8px;
+        &.left-top{
+            top: 10px;
+        }
+        &.left-center {
+            top: calc(50% - 8px);
+        }
+        &.left-bottom {
+            bottom: 10px;
+        }
+    }
+    &.right {
+        border-top: 8px solid transparent;
+        border-bottom: 8px solid transparent;
+        border-right: 8px solid;
+        border-left: none;
+        border-right-color: inherit;
+        left: -8px;
+        &.right-top{
+            top: 10px;
+        }
+        &.right-center {
+            top: calc(50% - 8px);
+        }
+        &.right-bottom {
+            bottom: 10px;
+        }
+    }
+}
+.tooltip-arrow-inner{
+    position: absolute;
+    width: 0;
+    height: 0;
+    z-index: 2000;
+
+    &.bottom {
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-bottom: 7px solid $white;
+        top: -7px;
+
+        &.bottom-left{
+            left: 31px;
+        }
+        &.bottom-center {
+            left: calc(50% - 7px);
+        }
+        &.bottom-right {
+            right: 31px;
+        }
+    }
+    &.top {
+        border-left: 7px solid transparent;
+        border-right: 7px solid transparent;
+        border-top: 7px solid $white;
+        bottom: -7px;
+        &.top-left{
+            left: 31px;
+        }
+        &.top-center {
+            left: calc(50% - 7px);
+        }
+        &.top-right {
+            right: 31px;
+        }
+    }
+    &.left {
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-left: 7px solid $white;
+        right: -7px;
+        &.left-top{
+            top: 11px;
+        }
+        &.left-center {
+            top: calc(50% - 7px);
+        }
+        &.left-bottom {
+            bottom: 11px;
+        }
+    }
+    &.right {
+        border-top: 7px solid transparent;
+        border-bottom: 7px solid transparent;
+        border-right: 7px solid $white;
+        left: -7px;
+        &.right-top{
+            top: 11px;
+        }
+        &.right-center {
+            top: calc(50% - 7px);
+        }
+        &.right-bottom {
+            bottom: 11px;
+        }
+    }
+}

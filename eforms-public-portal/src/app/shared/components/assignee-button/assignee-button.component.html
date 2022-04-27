@@ -1,0 +1,6 @@
+<p class="m-0">
+    <span class="align-middle">{{currentTask.assigneeFullName}}</span>
+    <button *ngIf="allowAssignment" (click)="assignTask()" mat-icon-button [class]="currentTask.assignee ? '' : 'unassigned d-flex justify-content-center'">
+        <mat-icon>{{ currentTask.assignee ? "highlight_off" : "add_circle_outline"}}</mat-icon>
+    </button>
+</p>

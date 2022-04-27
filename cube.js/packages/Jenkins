@@ -1,0 +1,6 @@
+@Library('eforms-shared-lib') _
+
+cubejsbuild {
+    EFORMS_APP = "cube.js"
+    DEPLOY_JOB = "deploy-cubejs"
+}

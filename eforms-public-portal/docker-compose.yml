@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+    test:
+         container_name: eforms-public-portal-test
+         build:
+             context: '.'
+             dockerfile: './docker/environments/test/Dockerfile'
+         ports:
+             - '5000:5000'
+    dev:
+         container_name: eforms-public-portal-dev
+         build:
+             context: '.'
+             dockerfile: './docker/environments/dev/Dockerfile'
+         ports:
+             - '5000:5000'
+    prod:
+         container_name: eforms-public-portal-prod
+         build:
+             context: '.'
+             dockerfile: './docker/environments/production/Dockerfile'
+         ports:
+             - '5000:5000'   
+    stage:
+         container_name: eforms-public-portal-stage
+         build:
+             context: '.'
+             dockerfile: './docker/environments/stage/Dockerfile'
+         ports:
+             - '5000:5000'

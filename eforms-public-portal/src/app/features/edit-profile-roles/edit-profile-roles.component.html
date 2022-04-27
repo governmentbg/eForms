@@ -1,0 +1,30 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="edit_profile-container col-12 p-0">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 id="edit-profile-header" class="heading-wrapper w-100">
+                {{ 'PROFILE_ROLES.ADMIN_ROLES' | translate }}
+            </h2>
+        </div>
+        <div class="row">
+            <app-smart-table
+            id="edit-profile-table"
+            [tableColumns]="tableColumns"
+            [isPageable]="true"
+            [buttonIcon]="'edit'"
+            [actionColumnName]="'SERVICES.OPTIONS'"
+            [actionButtonName]=""
+            [classifier]="'?'"
+            [apiCallUrl]="apiCallUrl"   
+            [filterEvent]="refreshEventSubject.asObservable()"         
+            (rowAction)="handleRowActionEvent($event)"
+            ></app-smart-table>
+        </div>
+    </div>
+</div>

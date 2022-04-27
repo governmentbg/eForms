@@ -1,0 +1,41 @@
+<div class="col-12 mt-3 px-0">
+    <div id="service-details-modal-case-inner-field" class="text-center text-uppercase"> <h3 class="blue-main"> {{ "SERVICES.CASE_INNER_FIELD" | translate}}</h3> </div>
+</div>
+<div *ngIf="!isServiceCompleted" class="col-12 mb-4 px-0">
+    <div id="service-details-modal-current-task-in-service"><h4 class="blue-main">{{ "SERVICES.CURRENT_TASK_IN_SERVICE" | translate}}</h4></div>
+</div>
+<div *ngIf="!isServiceCompleted" class="col-sm-12 px-0">
+    <div class="row">
+        <app-smart-table        
+        id="case-inner-section-table"
+        [tableColumns]="tableColumns"
+        [buttonIcon]="'arrow_forward'"
+        [actionColumnName]="'SERVICES.ACTIONS'"
+        [actionButtonName]="'SERVICES.TO_TASK'"
+        [assigneeColumnName]="'SERVICES.ASSIGNEE'"
+        [showButtonIf]="'element.assignee && element.assignee === this.userProfile.personIdentifier'"
+        [apiCallUrl]="apiCallUrl"
+        [isPageable]="false"
+        [initialSort]="'modified'"
+        (rowAction)="handleRowActionEvent($event)"
+        ></app-smart-table>
+    </div>
+</div>
+
+<div *ngIf="isServiceCompleted" class="col-12 mb-4 px-0">
+    <div id="service-details-modal-current-task-in-service"><h4 class="blue-main">{{ "SERVICES.COMPLETED_TASK_IN_SERVICE" | translate}}</h4></div>
+</div>
+<div *ngIf="isServiceCompleted" class="col-sm-12 px-0">
+    <div class="row">
+        <app-smart-table        
+        id="case-inner-section-table"
+        [tableColumns]="tableColumns"       
+        [assigneeColumnName]="'SERVICES.ASSIGNEE'"
+        [showButtonIf]="'element.assignee && element.assignee === this.userProfile.personIdentifier'"
+        [allowAssignment]="false"
+        [apiCallUrl]="apiCallUrl"
+        [isPageable]="false"
+        [initialSort]="'modified'"
+        ></app-smart-table>
+    </div>
+</div>

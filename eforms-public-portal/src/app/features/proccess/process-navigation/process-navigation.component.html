@@ -1,0 +1,68 @@
+<div class="row w-100 ">
+  <app-breadcrumbs></app-breadcrumbs>
+</div>
+<div class="w-100 d-flex flex-column pb-4" *ngIf="!serviceError && !taskError">
+  <app-loader></app-loader>
+  <div class="row" #navigationContainer>
+    
+    <app-service-header *ngIf="isMobile" class="col-sm-12"></app-service-header>
+    <div class="navigation col-md-3 col-sm-12 pr-0 mb-0">
+      <app-mobile-navigation [mainStepNumber]="mainStepNumber" [subStepNumber]="subStepNumber" [stepPercentage]="stepPercentage"
+        [currentLaneName]="currentLaneName" [currentSubStepName]="currentSubStepName" [totalLanes]="totalLanes" *ngIf="isMobile"
+        [isCollapsed]="isCollapsed" (click)="isCollapsed = !isCollapsed" class="mobile-navigation"></app-mobile-navigation>
+
+      <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="navigation-skeleton p-0 h-100 py-3"
+        *ngIf="!isMobile || !isCollapsed">
+        <!-- This is the tree node template for leaf nodes -->
+        <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding
+          [className]="node.current ? 'current-sub-step sub-step' : 'sub-step'">
+          {{getSubStepNumber(node)}} {{node.name}}
+        </mat-tree-node>
+        <!-- This is the tree node template for expandable nodes -->
+        <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding
+          [className]="node.current ? 'current-main-step main-step' : 'main-step'">
+          <button mat-icon-button [attr.aria-label]="'Toggle ' + node.name">
+            <div class="step-number" *ngIf="!node.completed; else elseBlock"> {{ getMainStepNumber(node) }} </div>
+            <ng-template #elseBlock>
+              <div class="step-completed">
+                <mat-icon>check</mat-icon>
+              </div>
+            </ng-template>
+          </button>
+          <div class="ml-3">
+            {{node.name}}
+          </div>
+        </mat-tree-node>
+      </mat-tree>
+    </div>
+    <div class="content col-md-9 col-sm-12 bg-white mb-0">
+      <app-service-header id="app-service-header" *ngIf="!isMobile"></app-service-header>
+      <div class="position-relative w-100 h-100">
+        <div class="form-container" *ngIf="formSrc">
+          <app-io-form-builder [taskId]="process[currentLaneIndex].userTasks[currentUserTaskIndex].id"
+            [formSrc]="formSrc" [formId]="formId" [prevEvent]="prevSubmittedSubject.asObservable()"
+            [nextEvent]="nextSubmittedSubject.asObservable()" (nextSuccessEvent)="next()"
+            (nextErrorEvent)="handleFormError()" [ornNumber]="ornNumber" [projectId]="projectId" (shouldShowNextButton)="handleShouldShowNextButtonEvent($event)"
+            [canGoToPrevious]="process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.hasPrevious"></app-io-form-builder>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 pr-0">
+      <div class="navigation-buttons d-flex justify-content-end mat-elevation-z8"
+        *ngIf="process[this.currentLaneIndex] &&
+        !(process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isCompletable === 'false') && showNextButton">
+        <button mat-button *ngIf="process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.hasPrevious" (click)="goToPreviousStep()" [class]="isMobile ? 'btn-additional-small' : 'btn-additional-large'" class="mr-4">
+          {{ 'BACK' | translate }}</button>
+        <button mat-button (click)="callNextOnForm()" [class]="isMobile ? 'btn-primary-small' : 'btn-primary-large'">{{
+          (process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isFinal ? 'FINISH_PROCESS' :
+          'NEXT_STEP') | translate }}</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<assurance-level-error *ngIf="serviceError == 'ASSURANCE_LEVEL_MISSMATCH'" [error]="serviceError" [requiredAssuranceLevel]="requiredAssuranceLevel"></assurance-level-error>
+<app-error *ngIf="taskError" [error]="taskError" [showBackButton]="true"></app-error>

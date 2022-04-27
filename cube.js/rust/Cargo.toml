@@ -1,0 +1,11 @@
+[workspace]
+resolver = "2"
+members = [
+    "cubestore",
+    "cubestore-sql-tests",
+    "cubehll",
+    "cubezetasketch",
+    "cuberpc",
+    "cubeclient",
+    "cubesql"
+]

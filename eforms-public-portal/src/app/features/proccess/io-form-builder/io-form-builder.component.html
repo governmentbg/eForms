@@ -1,0 +1,25 @@
+
+<div *ngIf="formSrc && formLoaded">
+    <formio [id]="io-form-builder-form"
+    class="formio-form-proccess"
+    [form]="formSrc"
+    [refresh]="refreshForm"
+    (ready)="handleFormReady($event)"
+    (render)="handleFormRender($event)"
+    (customEvent)="handleCustomEvent($event)"
+    (change)="handleFormChange($event)"
+    [submission]='formSubmition'>
+</formio>
+    <div *ngIf="errors.length" class="alert alert-danger" role="alert">
+        <div *ngFor="let error of errors">
+            {{ error }}
+        </div>
+    </div>
+</div>
+<div *ngIf="!formLoaded && nestedForms.length">
+    <app-nested-form-title-cards
+            [nestedForms]="nestedForms"
+            [readonly]="readonly"
+            (selectNestedFormEvent)="handleSelectNestedForm($event)"></app-nested-form-title-cards>
+</div>
+

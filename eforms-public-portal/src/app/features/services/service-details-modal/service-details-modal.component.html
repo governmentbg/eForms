@@ -1,0 +1,74 @@
+<div class="container">
+    <div class="row background-main-blue">
+        <div class="color-white w-100 header-wrapper">
+            <div class="orn-wrapper">
+                <h3 id="service-details-modal-header" class="mr-2 mb-0 text-white">{{ "SERVICES.APPLICATION_DECLARATION" | translate}}</h3>
+                <app-orn id="service-details-modal-orn" [ornNumber]="data.data.businessKey"></app-orn>
+            </div>
+            <button id="service-details-modal-close-button" class="close-button" [mat-dialog-close]="true"><mat-icon>close</mat-icon> {{ "CLOSE" | translate}}</button>
+        </div>
+    </div>
+    <mat-dialog-content>
+    <app-notifications-banner> </app-notifications-banner>
+    <div class="row background-light-gray service-wrapper">
+        <div class="col-12 mt-3 px-0">
+            <div id="service-details-modal-official-case" class="text-center text-uppercase"> <h1> {{ "SERVICES.OFFICIAL_CASE" | translate}}</h1> </div>
+        </div>
+        <div class="col-12 mb-4 px-0">
+            <div id="service-details-modal-application-number"> <span class="font-italic"> {{ "SERVICES.APPLICATION_NUMBER" | translate}} </span> - {{ data.data.incomingNumber }}</div>
+        </div>
+        <div class="col-12 px-0">
+            <div class="row">
+                <div class="col-md-12 col-sm-12 px-0"> <div id="service-details-modal-name" class="label mb-1"> {{ "SERVICES.NAME" | translate}}</div> <div id="service-details-modal-name-value"> {{ data.data.serviceId }}  -  {{ data.data.serviceName }}</div></div>
+            </div>
+        </div>
+        <div class="col-sm-12 px-0">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-issue-date" class="label mb-1"> {{ "SERVICES.ISSUE_DATE" | translate}}</div> <div id="service-details-modal-issue-date-value"> <span class="fw-500">{{ data.data.issueDate | date:'d.MM.y' }}</span>  / <span class="color-gray"> {{ data.data.issueDate | date:'HH:mm' }} </span></div></div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-last-change" class="label mb-1"> {{ "SERVICES.LAST_CHANGE" | translate}}</div> <div id="service-details-modal-last-change-value"> <span class="fw-500">{{ data.modified | date:'d.MM.y' }}</span> / <span class="color-gray"> {{ data.modified | date:'HH:mm' }} </span> </div></div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-supplier" class="label mb-1"> {{ "SERVICES.SUPPLIER" | translate}}</div> <div id="service-details-modal-supplier-value"> <span>{{ data.data.serviceSupplierName }}</span><span *ngIf="data.data.administrationUnit">, {{ data.data.administrationUnit }}</span></div></div>
+            </div>
+        </div>
+        <div class="col-sm-12 px-0">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-status" class="label mb-1"> {{ "SERVICES.CHANNEL_TYPE" | translate}}</div> <div id="service-details-modal-status-value"> {{ data.data.channelName }}</div></div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-execution-days" class="label mb-1"> {{ "SERVICES.MAX_EXECUTION_DAYS" | translate}}</div>
+                    <div id="service-details-modal-execution-days-value" *ngIf="data.data.deadlineTerm > 0"> {{ data.data.deadlineTerm }} {{ ( "DEADLINE_UNITS." + data.data.deadlineUnit) | translate }} </div>
+                    <div id="service-details-modal-execution-days-value" *ngIf="data.data.deadlineTerm == 0"> {{ "SERVICES.NO_DEADLINE" | translate }}</div>
+                </div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-stage" class="label mb-1"> {{ "SERVICES.STAGE" | translate}}</div> <div id="service-details-modal-stage-value"> {{ data.data.stageName }}</div></div>
+            </div>
+        </div>
+        <div class="col-sm-12 px-0">
+            <div class="row">
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-status" class="label mb-1"> {{ "SERVICES.STATUS" | translate}}</div> <div id="service-details-modal-status-value"> {{ data.data.statusName }}</div></div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-payment-status" class="label mb-1"> {{ "SERVICES.SERVICE_PAYMENT_STATUS" | translate}}</div> <div id="service-details-modal-payment-status-value"> {{ 'SERVICES.ENUMS.' + data.data.statusFixedTax | translate }} </div></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+
+    </div>
+    <div class="row service-wrapper" *ngIf="data.showInnerSection != false">
+        <app-case-inner-section class="w-100" [processInstanceId]='data.data.processInstanceId' [serviceId]="data.data.serviceId" [serviceStatus]="data.data.statusCode" [projectId]="data.data.projectId"></app-case-inner-section>
+    </div>
+    <h2 class="text-center pt-3 pb-3">{{ "CASE_DOCUMENTS" | translate }}</h2>
+
+    <div class="service-wrapper mr-2 ml-2 mb-2 rounded border">
+        <ng-container *ngFor="let caseDocumentObj of groupedDocuments | keyvalue; index as i">
+            <div class="row pt-2">
+                {{ caseDocumentObj.key }}
+            </div>
+
+            <div [ngClass]="{ 'border-bottom': i != groupedDocumentsLength - 1 }" class="row pb-2">
+                <div class="col-sm-1" *ngFor="let caseDocument of caseDocumentObj.value; index as i">
+                    <button [ngClass]="{ 'no-border' : i === caseDocumentObj.value.length - 1 }" mat-button class="download-button" (click)="downloadCaseDocument(caseDocument)">
+                        <span>{{ caseDocument.fileExtension }}</span>
+                        <mat-icon>download</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+    </mat-dialog-content>
+</div>

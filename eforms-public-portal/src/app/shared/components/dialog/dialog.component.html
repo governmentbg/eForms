@@ -1,0 +1,18 @@
+<div class="dialog-wrapper">
+    <div class="row background-main-blue py-3">
+        <div class="color-white text-uppercase text-center col-12">
+            {{ data.title | translate }}
+        </div>
+    </div>
+    <div class="row text-center py-4 dialog-body">
+        <div class="col-12">
+            <div> {{ data.body | translate }} </div>
+        </div>
+    </div>
+    <div class="row bottom">
+        <div class="col-12 py-3 modal-footer d-flex justify-content-between overflow-auto">
+            <button mat-button class="btn-additional-medium" [mat-dialog-close]="false">{{ 'BACK' | translate }}</button>
+            <button *ngIf="data.canProceed" mat-button class="btn-primary-medium" [mat-dialog-close]="true">{{ 'CONTINUE' | translate }}</button>
+          </div>
+      </div>
+</div>
