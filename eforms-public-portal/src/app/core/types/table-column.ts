@@ -7,4 +7,8 @@ export interface TableColumn {
     isEnum?: boolean;
     enumeration?: string;
     translationPath?: string;
+    classPrefix?: boolean;
+    translateKey?: string;
+    doTranslate?: boolean;
+    isPIN?: boolean;
 }

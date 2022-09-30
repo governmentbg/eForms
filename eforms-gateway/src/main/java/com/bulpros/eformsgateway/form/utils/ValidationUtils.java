@@ -1,7 +1,7 @@
 package com.bulpros.eformsgateway.form.utils;
 
 import com.bulpros.eformsgateway.form.service.CaseStatusClassifierEnum;
-import com.bulpros.eformsgateway.form.service.ServiceStatusEnum;
+import com.bulpros.eformsgateway.form.service.ServiceWithSuppliersStatusEnum;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,7 @@ public class ValidationUtils {
     }
 
     public static boolean isServiceStatusValid(String status) {
-        return Arrays.stream(ServiceStatusEnum.values())
+        return Arrays.stream(ServiceWithSuppliersStatusEnum.values())
                 .anyMatch(e -> e.status.equals(status));
     }
 

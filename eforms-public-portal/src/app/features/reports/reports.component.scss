@@ -1,0 +1,42 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    height: calc(100% - #{$desktop-header-height});
+
+    .reports-container {
+        min-height: 46em;
+        background-color: $white;
+
+        @media screen and (max-width: 840px) {
+            div:nth-child(0) {
+                flex-direction: column;
+            }
+
+            .back-button {
+                padding: 8px 0 0 8px;
+                display: flex;
+                align-self: flex-start;
+            }
+        }
+    }
+    
+    table {
+        width: 100%;
+    }
+
+    th {
+        font-weight: 600;
+        font-size: 16px;
+        color: $dark-gray;
+    }
+
+    .date-wrapper {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+
+    mat-icon {
+        font-size: 25px;
+    }
+}

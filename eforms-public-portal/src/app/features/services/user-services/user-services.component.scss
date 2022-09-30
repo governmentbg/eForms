@@ -22,11 +22,11 @@
     }
 }
 
-::ng-deep .mat-cell:nth-child(4) {
+:host ::ng-deep .mat-cell:nth-child(4) {
     word-break: break-word;
 }
 
-::ng-deep .filter-form {
+:host ::ng-deep .filter-form {
 
     button {
         border-radius: 7px !important;

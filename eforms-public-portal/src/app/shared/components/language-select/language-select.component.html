@@ -1,0 +1,10 @@
+<div [matMenuTriggerFor]="languageMenu">
+    <img class="flag" [src]="selectedLanguage.iconUrl" [alt]="selectedLanguage.language"> <span class="ml-md-1">{{ selectedLanguage.languageLong }}</span> 
+</div>
+
+<mat-menu #languageMenu="matMenu" [xPosition]="menuXPosition">
+    <button mat-menu-item *ngFor="let language of languages"
+            (click)="changeLanguage(language)">
+        <img class="flag" [src]="language.iconUrl"> <span class="offset-md-1">{{ language.languageLong }}</span>
+    </button>
+</mat-menu>

@@ -76,7 +76,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<HistoryTaskResponseDto> getAllHistoryTasksByProcessInstanceId(Authentication authentication, String processInstanceId) {
+    public List<HistoryTaskResponseDto> getAdminHistoryTasksByProcessInstanceId(Authentication authentication, String processInstanceId) {
         var user = userService.getUser(authentication);
         var token = user.getToken();
         List<HistoryTaskDto> historyTaskDtos = taskRepository.getAllHistoryTasksByProcessInstanceId(token, processInstanceId);
@@ -84,6 +84,8 @@ public class TaskServiceImpl implements TaskService {
             log.debug("No history tasks for processInstanceId: {} are found." + processInstanceId);
             return Arrays.asList();
         }
+        historyTaskDtos = historyTaskDtos.stream()
+                .filter(task -> task.getName().contains("PROCESS.ADMINTASK")).collect(Collectors.toList());
         List<HistoryTaskResponseDto> historyTaskResponseDtos = historyTaskDtos.stream()
                 .map(t -> modelMapper.map(t, HistoryTaskResponseDto.class)).collect(Collectors.toList());
         List<String> userIds = historyTaskResponseDtos.stream().map(t -> t.getAssignee()).collect(Collectors.toList());

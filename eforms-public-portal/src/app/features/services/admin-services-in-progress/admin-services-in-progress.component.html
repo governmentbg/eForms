@@ -12,26 +12,141 @@
                 {{ 'SERVICES.ADMIN.SERVICES_IN_PROGRESS' | translate }}
             </h2>
         </div>
-        <div class="row">
-            <formio id="services-in-progress-filter" [form]="formSrc"  (ready)="handleFormReady($event)" class="col-12 p-0 filter-form" (customEvent)="handleFilterEvent($event)"></formio>
+        <div *ngIf="!isLoading" class="row">
+            <div [formGroup]="filterFormGroup" class="w-100 services-filter-form">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div>
+                            {{'PROFILE_ROLES.STATUS'|translate}} <span class="text-danger">*</span>
+                        </div>
+                        <mat-form-field class="w-100">
+                            <mat-select formControlName="statusCode" (closed)="handleStatusBlur()" (selectionChange)="handleStatusChange()" multiple disableOptionCentering panelClass="dropdown-pannel">
+                                <mat-option *ngFor="let s of availableStatuses" [value]="s.data.code">
+                                {{s.data.value | translate}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-error *ngIf="filterFormGroup.controls.statusCode.hasError('required')" class="mb-1">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-6" [class]="!availableEAUs ? 'disabled' : ''">
+                        <div>
+                            {{'ADMINISTRATIVE_UNIT'|translate}}
+                        </div>
+                        <mat-form-field class="w-100">
+                            <input 
+                              type="text"
+                              matInput
+                              formControlName="administrationUnitEDelivery"
+                              [matAutocomplete]="matAutocomplete">
+                              <button *ngIf="filterFormGroup.value.administrationUnitEDelivery" matSuffix mat-icon-button aria-label="Clear" (click)="clearUnitValue($event)" >
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <mat-autocomplete #matAutocomplete="matAutocomplete">
+                                <mat-option *ngFor="let u of filteredEAUs  | async" [value]="u.administrationUnit">
+                                    {{u.administrationUnit }}
+                                    </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                        <mat-error *ngIf="filterFormGroup.controls.administrationUnitEDelivery.hasError('no_units_found')" class="mb-1">{{ 'INVALID_VALUE'| translate}}</mat-error>
+
+                    </div>
+                    <div class="col-12 col-md-3" [appTooltip]="'METADATA_REVIEW.DATE_FORMAT'" placement="bottom-right">
+                        <div class="signee-field-label">{{'ADMIN_SERVICES.VALID_FROM' | translate}} <span class="text-danger">*</span></div>
+                        <mat-form-field class="w-100">
+                            <input matInput [matDatepicker]="fromFilter" formControlName="fromFilter" (dateChange) = "handleDateChange()">
+                            <mat-datepicker-toggle matSuffix [for]="fromFilter"></mat-datepicker-toggle>
+                            <mat-datepicker #fromFilter></mat-datepicker>
+                        </mat-form-field>
+                        <mat-error *ngIf="filterFormGroup.controls.fromFilter.hasError('required')" class="mb-1">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                    </div>                    
+                    <div class="col-12 col-md-3" [appTooltip]="'METADATA_REVIEW.DATE_FORMAT'" placement="bottom-right">
+                        <div class="signee-field-label">{{'ADMIN_SERVICES.VALID_TO' | translate}}</div>
+                        <mat-form-field class="w-100">
+                            <input matInput [matDatepicker]="toFilter" formControlName="toFilter" (dateChange) = "handleDateChange()">
+                            <mat-datepicker-toggle matSuffix [for]="toFilter"></mat-datepicker-toggle>
+                            <mat-datepicker #toFilter></mat-datepicker>
+                        </mat-form-field>
+                        <mat-error *ngIf="filterFormGroup.controls.toFilter.hasError('toFilterMustBeBiggerFromFilter')">
+                            {{ 'ERRORS.VALID_FROM_MUST_BE_BEFORE_VALID_TO'| translate}}
+                        </mat-error>
+                    </div> 
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <div>
+                            {{'SERVICE'|translate}}
+                        </div>
+                        <mat-form-field class="w-100">
+                            <mat-select formControlName="serviceDropdown" disableOptionCentering panelClass="dropdown-pannel">
+                                <mat-option *ngFor="let s of availableServices" [value]="s.serviceId">
+                                {{ s.serviceName }}
+                                </mat-option>
+                            </mat-select>
+                            <button *ngIf="filterFormGroup.value.serviceDropdown" matSuffix mat-icon-button aria-label="Clear" (click)="clearServiceValue($event)" >
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-md-4">
+                        <div>
+                            {{'REQUESTOR_IDENTIFIER'|translate}}
+                        </div>
+                        <mat-form-field class="w-100">
+                            <input matInput formControlName="requestor"/>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div>
+                            {{'ON_BEHAVE_OF'|translate}}
+                        </div>
+                        <mat-form-field class="w-100">
+                            <input matInput formControlName="onBehalfOf"/>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-12 col-md-4">
+                        <div>
+                            {{'CASE_NUMBER'|translate}}
+                        </div>
+                        <mat-form-field class="w-100" >
+                            <input matInput formControlName="uinFilter"/>
+                        </mat-form-field>
+
+                    </div>
+                </div>                
+                <div class="row">
+                    <div class="col-12 pr-0 text-right">
+                        <button type="button" (click)="handleFilterEvent()" mat-button class="filter-button" [disabled]="!filterFormGroup.valid">
+                            {{ 'APPLY_FILTER' | translate }}
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <app-smart-table
-            id="services-in-progress-table"
-            [tableColumns]="tableColumns"
-            [isPageable]="true"
-            [buttonIcon]="'edit'"
-            [actionColumnName]="'SERVICES.OPTIONS'"
-            [actionButtonName]=""
-            [showButtonIf]="'element.data.processInstanceId'"
-            [apiCallUrl]="apiCallUrl"
-            [classifier]="'?classifier=serviceInRequest&'"
-            [initialSort]="'SERVICES.LAST_CHANGE'"
-            [parameters]="parameters"
-            (rowAction)="handleRowActionEvent($event)"
-            [filterEvent]="filterEventSubject.asObservable()"
-            [fetchOnInit]="false"
-            ></app-smart-table>
+        <div class="w-100 pt-3">
+            <div class="row">
+                <app-smart-table
+                id="services-in-progress-table"
+                [tableColumns]="tableColumns"
+                [isPageable]="true"
+                [actionColumnName]="'SERVICES.OPTIONS'"
+                [actionButtonName]=""
+                [apiCallUrl]="apiCallUrl"
+                [classifier]="'?'"
+                [initialSort]="'SERVICES.ISSUE_DATE'"
+                [parameters]="parameters"
+                (rowAction)="handleRowActionEvent($event)"
+                [filterEvent]="filterEventSubject.asObservable()"
+                [fetchOnInit]="false"
+                [isAdmin]="true"
+                ></app-smart-table>
+            </div>
         </div>
     </div>
 </div>

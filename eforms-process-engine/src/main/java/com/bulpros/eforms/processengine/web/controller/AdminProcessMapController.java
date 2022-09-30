@@ -1,56 +1,56 @@
 package com.bulpros.eforms.processengine.web.controller;
 
-import com.bulpros.eforms.processengine.security.AssuranceLevelEnum;
+import com.bulpros.eforms.processengine.camunda.model.Process;
+import com.bulpros.eforms.processengine.camunda.model.enums.AdditionalProfileRoleEnum;
+import com.bulpros.eforms.processengine.camunda.model.enums.UserStageTypeEnum;
+import com.bulpros.eforms.processengine.camunda.service.ProcessService;
+import com.bulpros.eforms.processengine.camunda.service.UserProfileService;
+import com.bulpros.eforms.processengine.exeptions.NotSatisfiedAssuranceLevel;
 import com.bulpros.eforms.processengine.security.UserService;
+import com.bulpros.eforms.processengine.web.dto.ProcessDto;
+import com.bulpros.eforms.processengine.web.exception.EFormsProcessEngineException;
+import com.bulpros.eforms.processengine.web.exception.SeverityEnum;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.DocumentContext;
+import com.jayway.jsonpath.JsonPath;
+import io.micrometer.core.annotation.Timed;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.bulpros.eforms.processengine.camunda.model.AdditionalProfileRoleEnum;
-import com.bulpros.eforms.processengine.camunda.model.Process;
-import com.bulpros.eforms.processengine.camunda.service.ProcessService;
-import com.bulpros.eforms.processengine.camunda.service.UserProfileService;
-import com.bulpros.eforms.processengine.camunda.service.UserStageTypeEnum;
-import com.bulpros.eforms.processengine.web.dto.ProcessDto;
-import com.bulpros.eforms.processengine.web.exception.EFormsProcessEngineException;
-import com.jayway.jsonpath.Configuration;
-import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.Option;
-
-import lombok.AllArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-import java.util.Locale;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping({ "/eforms-rest/admin/process-definition" })
+@RequestMapping({"/eforms-rest/admin/process-definition"})
 public class AdminProcessMapController extends AbstractProcessMapController {
 
-    private final ProcessService processService;
     private final ModelMapper modelMapper;
     private final UserProfileService userProfileService;
+    private final Configuration jsonPathConfiguration;
 
-    public AdminProcessMapController(ProcessService processService, ModelMapper modelMapper,
-                                UserProfileService userProfileService, UserService userService) {
-        super(userService);
-        this.processService = processService;
+    public AdminProcessMapController(ModelMapper modelMapper, UserProfileService userProfileService,
+                                     UserService userService, ProcessService processService,
+                                     Configuration jsonPathConfiguration) {
+        super(userService, processService);
         this.modelMapper = modelMapper;
         this.userProfileService = userProfileService;
+        this.jsonPathConfiguration = jsonPathConfiguration;
+
     }
 
+    @Timed(value = "eforms-process-engine-get-admin-default-tasks.time")
     @GetMapping(path = "/{processInstanceId}/map", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ProcessDto> getAdminDefaultTasks(@PathVariable String processInstanceId,
-            @RequestParam(required = false) String applicant) {
+                                                    @RequestParam(required = false) String applicant) {
 
-        if (!isValidRequest(applicant, processInstanceId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        try {
+            if (!isValidRequest(applicant, processInstanceId)) {
+                return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+            }
+        } catch (NotSatisfiedAssuranceLevel e) {
+            throw new EFormsProcessEngineException(SeverityEnum.ERROR, "NOT_SATISFIED_ASSURANCE_LEVEL");
         }
         try {
             Process process = processService.getProcess(processInstanceId, UserStageTypeEnum.ADMINISTRATION);
@@ -59,27 +59,23 @@ public class AdminProcessMapController extends AbstractProcessMapController {
             return ResponseEntity.ok(processDto);
         } catch (Exception exception) {
             log.error(exception.getMessage(), exception);
-            throw new EFormsProcessEngineException(exception.getMessage());
+            throw new EFormsProcessEngineException(SeverityEnum.ERROR, "MAP", exception.getMessage());
         }
     }
 
     private boolean isValidRequest(String applicant, String processInstanceId) {
         var context = processService.getProcessVariables(processInstanceId);
-        Configuration pathConfiguration = Configuration.builder().options(Option.DEFAULT_PATH_LEAF_TO_NULL).build();
-        String projectId = JsonPath.using(pathConfiguration).parse(context).read("$.context.formioBaseProject");
-        String supplierEik = JsonPath.using(pathConfiguration).parse(context)
-                .read("$.context.serviceSupplier.data.eik");
+        DocumentContext documentContext = JsonPath.using(jsonPathConfiguration).parse(context);
+        String projectId = documentContext.read("$.context.formioBaseProject");
+        String supplierEik = documentContext.read("$.context.serviceSupplier.data.eik");
 
-        if(!checkAssuranceLevel(context)) return false;
+        if (!checkAssuranceLevel(context)) throw new NotSatisfiedAssuranceLevel("Assurance level is not satisfied");
 
         if (applicant == null)
             return false;
         var userProfile = userProfileService.getUserProfileData(projectId);
-        if ((userProfileService.hasUserRole(userProfile, applicant, AdditionalProfileRoleEnum.ServiceManager)
-        || userProfileService.hasUserRole(userProfile, applicant, AdditionalProfileRoleEnum.MetadataManager))
-                && applicant.equals(supplierEik)) {
-            return true;
-        }
-        return false;
+        return (userProfileService.hasUserRole(userProfile, applicant, AdditionalProfileRoleEnum.ServiceManager)
+                || userProfileService.hasUserRole(userProfile, applicant, AdditionalProfileRoleEnum.MetadataManager))
+                && applicant.equals(supplierEik);
     }
 }

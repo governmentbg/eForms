@@ -1,6 +1,16 @@
 @import "variables.scss";
 @import "colors.scss";
 
+::ng-deep .scroll-mat-option {
+    overflow: visible !important;
+    text-overflow: unset !important;
+}
+
+::ng-deep .scroll-mat-option .mat-option-text {
+    overflow: visible !important;
+    text-overflow: unset !important;
+}
+
 :host {
     width: 100%;
     .subheader {
@@ -24,37 +34,32 @@
         color: $hyperlink-blue;
         cursor: pointer;
     }
-}
-
-.welcome-user-profile-information {
-    &-label {
-        color: $sub-header-gray;
-        font-style: italic;
+    .welcome-user-profile-information {
+        &-label {
+            color: $sub-header-gray;
+            font-style: italic;
+        }
+        &-data {
+            margin-bottom: 16px;
+            padding-left: 5px;
+        }
     }
-    &-data {
-        margin-bottom: 16px;
-        padding-left: 5px;
+    
+    .mat-option {
+        line-height: normal !important;
+        white-space: initial !important;
     }
-}
-
-.mat-option {
-    line-height: normal !important;
-    white-space: initial !important;
-}
-::ng-deep .mat-form-field-required-marker { 
-    color: $notification-error; 
-}
-
-.w-fit-content {
-    width: fit-content;
-}
-
-.disabled-clickable {
-    background-color: $medium-gray;
-    color: #a1a1a0;
-}
-.mob-min-w-100{
-    @media screen and (max-width: $phone-max-width) {
-        min-width: 100%;
+    ::ng-deep .mat-form-field-required-marker { 
+        color: $notification-error; 
+    }
+    
+    .w-fit-content {
+        width: fit-content;
+    }
+    
+    .mob-min-w-100{
+        @media screen and (max-width: $phone-max-width) {
+            min-width: 100%;
+        }
     }
 }

@@ -1,0 +1,55 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+
+  height: calc(100% - #{$desktop-header-height});
+
+  .translate-container {
+    min-height: 46em;
+    background-color: $white;
+
+    @media screen and (max-width: 840px) {
+      div:nth-child(0) {
+        flex-direction: column;
+      }
+
+      .back-button {
+        padding: 8px 0 0 8px;
+        display: flex;
+        align-self: flex-start;
+      }
+    }
+  }
+
+  @media screen and (min-width: 840px) {
+    .translate-inner-container {
+      width: 85%;
+      margin: 0 auto;
+    }
+  }
+
+}
+
+.flag {
+    width: 30px;
+}
+
+textarea {
+  display: block;
+  width: 100%;
+}
+label {
+  width: 100%;
+}
+.separator {
+  height: 4rem;
+}
+.row {
+  padding-bottom: 1rem;
+}
+
+.disabled-clickable, .disabled-clickable:hover {
+  background-color: $medium-gray;
+  color: $white;
+}

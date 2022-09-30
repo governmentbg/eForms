@@ -8,8 +8,20 @@
                 <span>{{ 'BACK' | translate }}</span>
             </div>
             <h2 id="current-task-header" class="heading-wrapper w-100">
-                {{ pageTitle }}
+                {{ pageTitle | translate }}
             </h2>
+            <div class="custom-page-container-wrapper pl-4 pr-4 pb-4" *ngIf="showCustomContent">
+            <app-signing-container
+                *ngIf="showSignContent"
+                [ornNumber]="ornNumber"
+                [formId]="formId"
+                [taskId]="process[currentLaneIndex].userTasks[currentUserTaskIndex].id"
+                [processId]="processId"
+                [nextStep]="nextSubmittedSubject.asObservable()"
+                (nextSuccessEvent)="next()"
+                (nextErrorEvent)="handleFormError()"
+                [isOnlineObservable]="isOnlineSubject.asObservable()"></app-signing-container>
+            </div>
             <div class="form-container pl-4 pr-4 pb-4" *ngIf="formSrc">
                 <app-io-form-builder [taskId]="process[currentLaneIndex].userTasks[currentUserTaskIndex].id"
                 [formSrc]="formSrc" [formId]="formId" [prevEvent]="prevSubmittedSubject.asObservable()"
@@ -23,9 +35,9 @@
         <div class="col-12 p-0">
             <div class="navigation-buttons d-flex justify-content-end mat-elevation-z8"
             *ngIf="process[this.currentLaneIndex] &&
-            !(process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isCompletable === 'false')">
+                   !(process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isCompletable === 'false')">
             <button mat-button (click)="callNextOnForm()" [class]="isMobile ? 'btn-primary-small' : 'btn-primary-large'">{{
-                (process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isFinal ? 'FINISH_PROCESS' :
+                (process[this.currentLaneIndex].userTasks[this.currentUserTaskIndex].properties.isFinal === 'true' ? 'FINISH_PROCESS' :
                 'NEXT_STEP') | translate }}</button>
             </div>
         </div>

@@ -24,7 +24,7 @@ import { ForbiddenComponent } from './components/forbidden/forbidden.component';
     UserNameHeaderComponent,
     ProfileSelectComponent,
     MobileMenuComponent,
-    ForbiddenComponent,
+    ForbiddenComponent
   ],
   imports: [
     FeaturesModule,

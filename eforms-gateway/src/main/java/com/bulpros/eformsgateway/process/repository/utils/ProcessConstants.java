@@ -11,6 +11,9 @@ public interface ProcessConstants {
     String EDELIVERY_JSON = "eDeliveryJson_";
     String EDELIVERY_XML = "eDeliveryXml_";
     String EDELIVERY_ATTACHMENTS = "eDeliveryAttachments_";
+    String FORMA_REQUEST_SUFFIX = "_forma_request";
+    String FORMA_RESPONSE_SUFFIX = "_forma_response";
+    String EDELIVERY_FILES_PACKAGE = "eDeliveryFilesPackage_";
 
     String SUB = "sub";
     String PREFERRED_USERNAME = "preferred_username";

@@ -1,0 +1,249 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ServiceRequest>
+    <requestURI>
+        <identifier>#{/data/businessKey}</identifier>
+        <identifierType>
+            <code>1006-100001</code>
+            <name>Идентификатор на заявление за услуга</name>
+        </identifierType>
+    </requestURI>
+    <requestDateTime>#{/data/issueDateCaseIdentifier}</requestDateTime>
+    <publicService>
+        <identifier>
+            <identifier>#{/data/caseDataSource/data/serviceId ?? ""}</identifier>
+            <identifierType>
+                <code>1006-100008</code>
+                <name>Идентификатор на публична услуга</name>
+            </identifierType>
+        </identifier>
+        <name>#{/data/caseDataSource/data/serviceName ?? ""}</name>
+        <language>
+            <code>BG</code>
+            <name>Български</name>
+        </language>
+        <status>
+            <code>1006-050001</code>
+            <name>Активна</name>
+        </status>
+    </publicService>
+    <serviceProvider>
+        <legalIdentifier>
+            <identifier>#{/data/caseDataSource/data/supplier ?? ""}</identifier>
+            <identifierType>
+                <code>1006-100003</code>
+                <name>БУЛСТАТ</name>
+            </identifierType>
+        </legalIdentifier>
+        <identifier>
+            <identifier>#{/data/caseDataSource/data/serviceSupplierId ?? ""}</identifier>
+            <identifierType>
+                <code>1006-100007</code>
+                <name>Идентификатор на публична организация</name>
+            </identifierType>
+        </identifier>
+        <preferredLabel>#{/data/caseDataSource/data/serviceSupplierName ?? ""}</preferredLabel>
+        <organizationType>
+            <code>#{/data/caseDataSource/data/serviceSupplierTypeCode ?? ""}</code>
+            <name>#{/data/caseDataSource/data/serviceSupplierTypeName ?? ""}</name>
+        </organizationType>
+        <administrativeUnits>
+            <legalIdentifier>
+                <identifier>#{/data/caseDataSource/data/administrationUnitEDelivery ?? ""}</identifier>
+                <identifierType>
+                    <code>1006-100003</code>
+                    <name>БУЛСТАТ</name>
+                </identifierType>
+            </legalIdentifier>
+            <identifier>
+                <identifier>#{/data/caseDataSource/data/serviceSupplierId ?? ""}</identifier>
+                <identifierType>
+                    <code>1006-100007</code>
+                    <name>Идентификатор на публична организация</name>
+                </identifierType>
+            </identifier>
+            <preferredLabel>#{/data/caseDataSource/data/administrationUnit ?? ""}</preferredLabel>
+            <organizationType>
+                <code>#{/data/caseDataSource/data/serviceSupplierTypeCode ?? ""}</code>
+                <name>#{/data/caseDataSource/data/serviceSupplierTypeName ?? ""}</name>
+            </organizationType>
+        </administrativeUnits>
+    </serviceProvider>
+    <requestType>
+        <code>0006-000121</code>
+        <name>Първоначално заявление за предоставяне на електронна административна услуга</name>
+    </requestType>
+    <resultChannel>
+        <identifier>#{/data/channel/channelType}</identifier>
+        <channelType>
+            <code>#{/data/channel/channelType}</code>
+            <name>#{/data/channel/channelName}</name>
+        </channelType>
+    </resultChannel>
+    <processTime>
+        <processTimeType>
+            <code>#{/data/deadline/deadlineType/deadlineTypeType ?? 0006-000083}</code>
+            <name>#{/data/deadline/deadlineType/deadlineTypeName ?? Нормална услуга}</name>
+        </processTimeType>
+        <processTimeUnit>
+            <code>#{/data/deadline/deadlineUnit/deadlineUnitType ?? workDays}</code>
+            <name>#{/data/deadline/deadlineUnit/deadlineUnitName ?? Работни дни}</name>
+        </processTimeUnit>
+        <processTime>#{/data/deadline/deadlineValue ?? 0}</processTime>
+    </processTime>
+    <tax>
+        <amount>#{/data/tax/taxAmount ?? 0}</amount>
+        <currency>
+            <code>#{/data/tax/taxCurrency}</code>
+            <name>#{/data/tax/taxCurrency}</name>
+        </currency>
+        <validFrom type="date">#{/data/tax/validFrom}</validFrom>
+        <validТо type="date">#{/data/tax/validTo}</validТо>
+    </tax>
+    <communicationChannel>
+        <contactType>
+            <code>1006-030006</code>
+            <name>Електронна поща</name>
+        </contactType>
+        <contact>#{/data/applicantEmailAddress}</contact>
+    </communicationChannel>
+    <communicationChannel>
+        <contactType>
+            <code>1006-030005</code>
+            <name>Телефон</name>
+        </contactType>
+        <contact>#{/data/applicantPhoneNumber}</contact>
+    </communicationChannel>
+    <applicant>
+        <person>
+            <identifier>
+                <identifier>#{/data/applicantPhysicalIdentifier}</identifier>
+                <identifierType>
+                    <code>#{/data/applicantPhysicalIdentifierType}</code>
+                    <name>#{/data/applicantPhysicalIdentifierType}</name>
+                </identifierType>
+            </identifier>
+            <fullName>#{/data/applicantPhysicalFirstName} #{/data/applicantPhysicalMiddleName} #{/data/applicantPhysicalFamilyName}</fullName>
+            <firstName>#{/data/applicantPhysicalFirstName}</firstName>
+            <middleName>#{/data/applicantPhysicalMiddleName}</middleName>
+            <familyName>#{/data/applicantPhysicalFamilyName}</familyName>
+            <gender>
+                <code>#{/data/applicantGenderCode}</code>
+                <name>#{/data/applicantGender}</name>
+            </gender>
+            <fullNameLatin>#{/data/applicantPhysicalFirstNameLatin} #{/data/applicantPhysicalMiddleNameLatin} #{/data/applicantPhysicalFamilyNameLatin}</fullNameLatin>
+            <firstNameLatin>#{/data/applicantPhysicalFirstNameLatin}</firstNameLatin>
+            <middleNameLatin>#{/data/applicantPhysicalMiddleNameLatin}</middleNameLatin>
+            <familyNameLatin>#{/data/applicantPhysicalFamilyNameLatin}</familyNameLatin>
+            <identificationDocument>
+                <documentType>
+                    <code>#{/data/applicantPhysicalDocumentTypeCode}</code>
+                    <name>#{/data/applicantPhysicalDocumentType}</name>
+                </documentType>
+                <documentNumber>#{/data/applicantPhysicalDocumentNumber}</documentNumber>
+                <issueDate>#{/data/applicantPhysicalDocumentIssueDate}</issueDate>
+                <issuer>#{/data/applicantPhysicalDocumentIssuer}</issuer>
+                <regix>
+                    <synchronized>#{/data/applicantIdentificationDocumentRegix}</synchronized>
+                    <dateTime>#{/data/applicantIdentificationDocumentRegixDateTime}</dateTime>
+                </regix>
+            </identificationDocument>
+            <permanentAddress>
+                <country>
+                    <code>#{/data/applicantPhysicalPermAddrCountryCode}</code>
+                    <name>#{/data/applicantPhysicalPermAddrCountry}</name>
+                </country>
+                <address>
+                    <district>
+                        <code>#{/data/applicantPhysicalPermAddrDistrictSelect/districtCode}</code>
+                        <name>#{/data/applicantPhysicalPermAddrDistrictSelect/districtName}</name>
+                    </district>
+                    <municipality>
+                        <code>#{/data/applicantPhysicalPermAddrMunicipalitySelect/municipalityCode}</code>
+                        <name>#{/data/applicantPhysicalPermAddrMunicipalitySelect/municipalityName}</name>
+                    </municipality>
+                    <settlement>
+                        <code>#{/data/applicantPhysicalPermAddrSettlementSelect/settlementCode}</code>
+                        <name>#{/data/applicantPhysicalPermAddrSettlementSelect/settlementName}</name>
+                    </settlement>
+                    <locationName>#{/data/applicantPhysicalPermAddrLocationName}</locationName>
+                    <buildingNumber>#{/data/applicantPhysicalPermAddrBuildingNumber}</buildingNumber>
+                    <entrance>#{/data/applicantPhysicalPermAddrEntrance}</entrance>
+                    <floor>#{/data/applicantPhysicalPermAddrFloor}</floor>
+                    <apartment>#{/data/applicantPhysicalPermAddrApartment}</apartment>
+                    <fullAddress>#{/data/applicantPhysicalPermAddrFullAddress}</fullAddress>
+                </address>
+                <regix>
+                    <synchronized>#{/data/applicantPermAddrRegix}</synchronized>
+                    <dateTime>#{/data/applicantPermAddrRegixDateTime}</dateTime>
+                </regix>
+            </permanentAddress>
+            <presentAddress>
+                <country>
+                    <code>#{/data/applicantPhysicalPresAddrCountryCode}</code>
+                    <name>#{/data/applicantPhysicalPresAddrCountry}</name>
+                </country>
+                <address>
+                    <district>
+                        <code>#{/data/applicantPhysicalPresAddrDistrictSelect/districtCode}</code>
+                        <name>#{/data/applicantPhysicalPresAddrDistrictSelect/districtName}</name>
+                    </district>
+                    <municipality>
+                        <code>#{/data/applicantPhysicalPresAddrMunicipalitySelect/municipalityCode}</code>
+                        <name>#{/data/applicantPhysicalPresAddrMunicipalitySelect/municipalityName}</name>
+                    </municipality>
+                    <settlement>
+                        <code>#{/data/applicantPhysicalPresAddrSettlementSelect/settlementCode}</code>
+                        <name>#{/data/applicantPhysicalPresAddrSettlementSelect/settlementName}</name>
+                    </settlement>
+                    <locationName>#{/data/applicantPhysicalPresAddrLocationName}</locationName>
+                    <buildingNumber>#{/data/applicantPhysicalPresAddrBuildingNumber}</buildingNumber>
+                    <entrance>#{/data/applicantPhysicalPresAddrEntrance}</entrance>
+                    <floor>#{/data/applicantPhysicalPresAddrFloor}</floor>
+                    <apartment>#{/data/applicantPhysicalPresAddrApartment}</apartment>
+                    <fullAddress>#{/data/applicantPhysicalPresAddrFullAddress}</fullAddress>
+                </address>
+                <regix>
+                    <synchronized>#{/data/applicantPresAddrRegix}</synchronized>
+                    <dateTime>#{/data/applicantPresAddrRegixDateTime}</dateTime>
+                </regix>
+            </presentAddress>
+            <regix>
+                <synchronized>#{/data/applicantMainDataRegix}</synchronized>
+                <dateTime>#{/data/applicantMainDataRegixDateTime}</dateTime>
+            </regix>
+        </person>
+    </applicant>
+    <requestAuthor>
+        <person>
+            <identifier>
+                <identifier>#{/data/requestorIdentifier}</identifier>
+                <identifierType>
+                    <code>#{/data/requestorIdentifierType}</code>
+                    <name>#{/data/requestorIdentifierType}</name>
+                </identifierType>
+            </identifier>
+            <fullName>#{/data/requestorFirstName} #{/data/requestorMiddleName} #{/data/requestorFamilyName}</fullName>
+            <firstName>#{/data/requestorFirstName}</firstName>
+            <middleName>#{/data/requestorMiddleName}</middleName>
+            <familyName>#{/data/requestorFamilyName}</familyName>
+            <gender>
+                <code>#{/data/requestorGenderCode}</code>
+                <name>#{/data/requestorGender}</name>
+            </gender>
+            <fullNameLatin>#{/data/requestorPhysicalFirstNameLatin} #{/data/requestorPhysicalMiddleNameLatin} #{/data/requestorPhysicalFamilyNameLatin}</fullNameLatin>
+            <firstNameLatin>#{/data/requestorPhysicalFirstNameLatin}</firstNameLatin>
+            <middleNameLatin>#{/data/requestorPhysicalMiddleNameLatin}</middleNameLatin>
+            <familyNameLatin>#{/data/requestorPhysicalFamilyNameLatin}</familyNameLatin>
+            <regix>
+                <synchronized>#{/data/requestorMainDataRegix}</synchronized>
+                <dateTime>#{/data/requestorMainDataRegixDateTime}</dateTime>
+            </regix>
+        </person>
+        <authorType>
+            <code>#{/data/requestorTypeSelect/authorTypeCode ?? 1006-020001}</code>
+            <name>#{/data/requestorTypeSelect/authorType ?? Титуляр}</name>
+        </authorType>
+    </requestAuthor>
+    <dataProcessingAgreement>#{/data/dataProcessingAgreement ?? true}</dataProcessingAgreement>
+    <specificContent>#{/data/specificContent/*}</specificContent>
+</ServiceRequest>

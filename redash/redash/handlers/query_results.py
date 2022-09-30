@@ -16,6 +16,7 @@ from redash.permissions import (
     require_any_of_permission,
     view_only,
 )
+from redash.security import get_supplier_info, get_profile_info, is_eik_in_profiles
 from redash.tasks import Job
 from redash.tasks.queries import enqueue_query
 from redash.utils import (
@@ -302,6 +303,47 @@ class QueryResultResource(BaseResource):
         if has_access(
             query, self.current_user, allow_executing_with_view_only_permissions
         ):
+
+            ##########WORKING HERE
+
+            applicant = parameter_values.get('applicant', None)
+            bearerToken = request.headers.get('X-Auth', None)
+
+            # An applicant field is supplied
+            if applicant and bearerToken:
+                logging.info("Checking permissions of applicant {applicant}".format(applicant=applicant))
+                # No bearer token supplied
+                #if not bearerToken:
+                    #return error_messages["no_permission"]
+
+                supplier_json = get_supplier_info(applicant, bearerToken)
+
+                # If supplier_json is not defined or an empty array
+                # something went wrong abort
+                if supplier_json is None or not supplier_json:
+                    return error_messages["no_permission"]
+
+                # Get eik from supplier info,
+                # We use [0] because we expect only one element to be returned
+                # if no eik is found 403
+                supplier = supplier_json[0]
+                eik = supplier.get('data', {}).get('eik')
+                logging.info(eik)
+                if eik is None:
+                    return error_messages["no_permission"]
+
+                # Get user profiles
+                profile_json = get_profile_info(bearerToken)
+                # Quit if return object has no profiles,
+                # or returned array is empty
+                profiles = profile_json.get('profiles')
+                logging.info('profiles')
+                if profiles is None or not profiles:
+                    return error_messages["no_permission"]
+
+                if not is_eik_in_profiles(eik, profiles):
+                    return error_messages["no_permission"]
+
             return run_query(
                 query.parameterized,
                 parameter_values,

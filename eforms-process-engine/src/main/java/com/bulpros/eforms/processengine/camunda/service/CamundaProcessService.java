@@ -2,7 +2,9 @@ package com.bulpros.eforms.processengine.camunda.service;
 
 import com.bulpros.eforms.processengine.camunda.model.Lane;
 import com.bulpros.eforms.processengine.camunda.model.Process;
+import com.bulpros.eforms.processengine.camunda.model.enums.UserStageTypeEnum;
 import com.bulpros.eforms.processengine.camunda.repository.CamundaProcessRepository;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +18,7 @@ public class CamundaProcessService implements ProcessService {
     private final CamundaLaneService camundaLaneService;
     private final CamundaProcessRepository camundaProcessRepository;
 
+    @Timed(value = "eforms-process-engine-get-process-method.time")
     @Override
     public Process getProcess(String processInstanceId, UserStageTypeEnum userStageTypeEnum) {
         ArrayList<Lane> lanes = camundaLaneService.getLanesByStageForUser(processInstanceId, userStageTypeEnum);

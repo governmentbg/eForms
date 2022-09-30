@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import PlainButton from "@/components/PlainButton";
+import { t } from "@/locales/config.jsx";
 
 export default class FavoritesControl extends React.Component {
   static propTypes = {
@@ -28,7 +29,7 @@ export default class FavoritesControl extends React.Component {
   render() {
     const { item, onChange } = this.props;
     const icon = item.is_favorite ? "fa fa-star" : "fa fa-star-o";
-    const title = item.is_favorite ? "Remove from favorites" : "Add to favorites";
+    const title = item.is_favorite ? t("Remove from favorites") : t("Add to favorites");
     return (
       <PlainButton
         title={title}

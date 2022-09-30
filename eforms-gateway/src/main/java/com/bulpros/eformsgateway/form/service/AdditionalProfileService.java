@@ -14,4 +14,6 @@ public interface AdditionalProfileService {
     Page<ResourceDto> getAdditionalProfiles(String projectId, Authentication authentication, UserProfileDto userProfile,
                                             String applicant, Long page, Long size, String sort);
     void updateAdditionalProfile(String projectId, Authentication authentication, FullAdditionalProfileDto additionalProfile);
+
+    ResourceDto getAdditionalProfileNameByApplicant(String projectId, Authentication authentication, String applicant);
 }

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/Document"
+        xmlns="http://eform.e-gov.bg/dictionary/Document"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+
+	<xsd:complexType name="Document">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+			Приложен документ
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Идентификатор
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="type" type="code:Code" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Тип на приложен документ. Номенклатура „Вид приложен документ – резултат от ЕАУ“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Свободен текст за описание на резултата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="attached_document" type="xsd:base64Binary" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Приложеният документ в бинарен формат, вкл. подписа
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

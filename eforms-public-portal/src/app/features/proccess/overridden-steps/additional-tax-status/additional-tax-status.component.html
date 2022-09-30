@@ -1,0 +1,32 @@
+<div class="row">
+    <div [formGroup]="paymentStatusForm" class="w-100 additional-payment">
+        <div class="row" *ngIf="epaymentStatus?.value">
+            <div class="col-12">
+                <div class="mb-5">
+                    <div class="fw-500 mb-3 mt-4">
+                        {{'EPAYMENT_STATUS'|translate}}
+                    </div>
+                    <span class="epayment-status" [class]="epaymentStatus.color"> {{ epaymentStatus.value }}</span>
+                    <button type="button" mat-button class="status-button" (click)="fetchPaymentStatus()">
+                        {{ 'TRY_AGAIN' | translate }} <mat-icon>replay</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 col-md-6">
+                <label class="mr-2 va-sub">
+                    {{'PAYMENT_STATUS'|translate}} <span class="text-danger">*</span>
+                </label>
+                <mat-form-field class="w-100" appearance="outline">
+                    <mat-select formControlName="statusCode" disableOptionCentering panelClass="dropdown-pannel" (selectionChange)="handleStatusCodeeChange()" >
+                        <mat-option *ngFor="let s of availableStatuses" [value]="s.value">
+                        {{ s.label }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-error *ngIf="paymentStatusForm.controls.statusCode.hasError('required')"> {{ 'REQUIRED_FIELD'| translate}}</mat-error>
+            </div>
+        </div>
+    </div>
+</div>

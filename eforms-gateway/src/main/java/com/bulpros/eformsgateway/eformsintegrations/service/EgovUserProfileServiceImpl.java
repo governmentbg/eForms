@@ -33,7 +33,7 @@ public class EgovUserProfileServiceImpl implements EgovUserProfileService {
         try {
             return AES_GCM_Utils.decrypt(encryptedText, secretKey);
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return null;
     }

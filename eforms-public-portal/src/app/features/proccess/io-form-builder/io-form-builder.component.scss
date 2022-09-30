@@ -1,8 +1,7 @@
 @import "variables.scss";
 @import "colors.scss";
 
-
-::ng-deep .formio-form{
+:host ::ng-deep .formio-form{
     counter-reset: bipCounter; // Set a counter named 'bipCounter', and its initial value is 0.
 
     .collapse-all-button button, .open-all-button button {
@@ -27,7 +26,14 @@
         }
     }
 
-
+    .custom-button-color button {
+        background-color: $main-light-blue;
+        color: $main-dark-blue;
+        font-weight: 400 !important;
+        box-shadow: none !important;
+        outline: none !important;
+        border: none !important;
+    }
 
     .formio-component-file{
         a {
@@ -121,6 +127,47 @@
         }
     }
 
+    .awaiting-sign-document-status, .signing-document-status, .signed-document-status, .error-document-status {
+        display: block !important;
+        border-radius: 20px !important;
+        width: 12em;
+        height: 2em;
+        text-align: center;
+
+        button {
+            opacity: 1;
+        }
+    }
+
+    .filename {
+        opacity: 1;
+    }
+
+    .awaiting-sign-document-status {
+        background-color: #A0A0A0;
+    }
+
+    .signing-document-status {
+        background-color: #FFD669;
+    }
+
+    .signed-document-status {
+        background-color: #78C994;
+    }
+
+    .error-document-status {
+        background-color: #ED5656;
+    }
+
+    .download-button button {
+        border-right: 1px black solid;
+        border-radius: 0px !important;
+    }
+
+    .download-button.no-border button {
+        border: 0;
+    }
+
     @media screen and (max-width: $phone-max-width) {
 
         .formio-component-content{
@@ -194,7 +241,7 @@
     }
     .formio-error-wrapper{
         background-color: inherit;
-        padding: inherit;
+        padding: 0;
     }
     .filed-content{
         padding-left: 2em;
@@ -231,6 +278,7 @@
         }
     }
     .nested-pannel-container{
+        margin-bottom: 2em !important;
         [class*='col-']{
             display: flex;
             flex-direction: column;
@@ -244,6 +292,9 @@
             @media (max-width: 640px) {
                 padding: 1px 7px !important;
             }
+        }
+        .col-md-0{
+            padding: 0;
         }
     }
     .nested-pannel{
@@ -286,14 +337,18 @@
         }    
     }
     .sign-button{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%);
-        background-color: $main-dark-blue;
-        border:$main-dark-blue;
-        &:active {            
+        button {
             background-color: $main-dark-blue;
+            border:$main-dark-blue;
+            &:active, &:focus, &:focus-within, &:target, &:hover, &:visited, &:focus-visible {
+                background-color: $main-dark-blue;
+                border:$main-dark-blue;
+                outline: none !important;
+                outline-style: none;
+                box-shadow: none;
+                border-color: transparent;
+                text-decoration: none;
+            }
         }
     }
     .check-sign-button{
@@ -306,20 +361,17 @@
         }
     }
     .button-after-sign{
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%);
-        background-color: transparent;
-        color: $black;
-        border: none;
-        padding: 0;
-        margin: 0;
-        width: 100%;
-        &:active {            
-            background-color: none;
-        }
-        button {
+        button{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%);
+            background-color: transparent;
+            color: $black;
+            border: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
             opacity: 1;
         }
     }
@@ -378,6 +430,9 @@
         line-height: normal !important;
         white-space: initial !important;
     }
+    .choices__list--dropdown {
+        z-index: 20002;
+    }
     .has-feedback .form-control {
         height: auto;
     }
@@ -391,11 +446,46 @@
             margin-right: 1rem;
         }
     }
+
+    .field-required:after, .tab-error:after {
+        display: none;
+    }
+
+    .field-required:before, .tab-error:before {
+        content: " *";
+        color: red;
+    }
+
+    .form-control.selection.dropdown
+    {
+        min-height: 2.35rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    ::ng-deep formio-alerts{
+        display: none;
+    }
+    ::ng-deep .formio-loader-wrapper{
+        display:none;
+    }
+
+    .row-seperator{
+        margin: 0 0 1em 0 !important;
+        padding: 0 0 1em 0;
+        border-bottom: 2px solid $medium-gray;
+    }
+    ::ng-deep mat-select.init-document-select {
+        border: solid 2px;
+        border-radius: 7px;
+        padding: 0.5em 0.3em;
+        color: $main-dark-blue;
+    }
+
+    .init-document-select-label {
+        padding: 0.5em 0;
+    }
 }
 
-::ng-deep formio-alerts{
-    display: none;
-}
-::ng-deep .formio-loader-wrapper{
-    display:none;
-}
+
+

@@ -11,6 +11,7 @@ import com.bulpros.eformsgateway.user.model.User;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -22,8 +23,8 @@ public class AbstractProcessController {
     protected final UserProfileService userProfileService;
     private final BusinessKeyService businessKeyService;
     protected final ProcessService processService;
-    protected final ConfigurationProperties configurationProperties;
 
+    @Timed(value = "eforms-gateway-get_profile.time")
     protected UserProfileDto getUserProfile(Authentication authentication, StartProcessInstanceRequestDto startProcessInstanceRequestDto) {
         String startProcessVariables = new JSONObject(startProcessInstanceRequestDto.getVariables()).toString();
         Configuration pathConfiguration = Configuration.builder().options(Option.DEFAULT_PATH_LEAF_TO_NULL).build();
@@ -32,7 +33,7 @@ public class AbstractProcessController {
         return this.userProfileService.getUserProfileData(projectId, authentication);
     }
 
-
+    @Timed(value = "eforms-gateway-start_process.time")
     protected ResponseEntity<StartProcessInstanceResponseDto> startProcess(Authentication authentication, String processKey,
                                                                            StartProcessInstanceRequestDto startProcessInstanceRequestDto,
                                                                            String applicant, boolean singleInstance,

@@ -1,21 +1,20 @@
-import { AfterViewInit, Component, ViewChild, OnInit, Input, Output, EventEmitter, HostListener, ViewChildren, QueryList } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { TableColumn } from 'src/app/core/types/table-column';
-import { SmartTableService } from 'src/app/core/services/smart-table.service'
-import {merge, Observable, of as observableOf, Subscription} from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
-import { MatPaginatorIntl } from '@angular/material/paginator';
-import {LangChangeEvent, TranslateService} from '@ngx-translate/core';
-import { NotificationsBannerService } from 'src/app/core/services/notifications-banner.service';
-import * as moment from 'moment';
-import { NotificationBarType } from '../notifications-banner/notification-banner.model';
-import { UserProfileService } from 'src/app/core/services/user-profile.service';
-import { roles } from 'src/app/core/types/roles';
-import { profileTypes } from 'src/app/core/types/profileTypes';
-import { enumTypes } from 'src/app/core/types/enumTypes';
+import { AfterViewInit, Component, EventEmitter, HostListener, Input, OnInit, Output, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
+import { merge, Observable, of as observableOf, Subscription } from 'rxjs';
+import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { NotificationsBannerService } from 'src/app/core/services/notifications-banner.service';
+import { SmartTableService } from 'src/app/core/services/smart-table.service';
+import { UserProfileService } from 'src/app/core/services/user-profile.service';
+import { enumTypes } from 'src/app/core/types/enumTypes';
+import { profileTypes } from 'src/app/core/types/profileTypes';
+import { roles } from 'src/app/core/types/roles';
+import { TableColumn } from 'src/app/core/types/table-column';
+import { NotificationBarType } from '../notifications-banner/notification-banner.model';
+import { get, set } from 'lodash';
 
 @Component({
   selector: 'app-smart-table',
@@ -41,6 +40,8 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
   privatewrapperSubscription = new Subscription();
   userProfile;
   selectedProfile;
+  langChangeSubscription: Subscription;
+  noDataMessage: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -65,9 +66,11 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
   @Input() assigneeColumn = "";
   @Input() filterEvent: Observable<any>;
   @Input() fetchOnInit = true;
+  @Input() isAdmin = false;
   @Input() serviceSupplierDropdownColumn = "";
   @Input() supplierStatusColumn = "";
   @Output() rowAction: EventEmitter<any> = new EventEmitter<any>();
+  @Output() tableElementsLoaded: EventEmitter<any> = new EventEmitter<any>();
 
   columnsCount = 0;
 
@@ -91,9 +94,8 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
   }
 
   updateTableLabels() {
-
     this.paginatorIntl.itemsPerPageLabel = this.translateService.instant("PAGINATOR.ITEMS_PER_PAGE");
-
+    
     const originalGetRangeLabel = this.paginatorIntl.getRangeLabel;
     this.paginatorIntl.getRangeLabel = (page: number, size: number, len: number) => {
 
@@ -103,20 +105,14 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
 
     this.paginatorIntl.changes.next();
   }
-  
-  ngOnInit() {
 
+  ngOnInit() {
     this.innerWidth = window.innerWidth;
     this.isMobile = this.innerWidth < 840;
     this.userProfile = this.userProfileService.currentUser
     this.selectedProfile = this.userProfileService.selectedProfile
-
-    this.translateService.getTranslation('bg').subscribe((translatedLabel: string) => {
-      // forced update when translateService loads translations from server
-      this.updateTableLabels()
-    });
-
-    this.translateService.onLangChange.subscribe((langChanged: LangChangeEvent) => {
+    
+    this.langChangeSubscription = this.translateService.onLangChange.subscribe((langChanged: LangChangeEvent) => {
       // forced update when translateService changes language
       this.updateTableLabels()
     });
@@ -138,7 +134,7 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
     }
     this.columnsCount = 100/(this.tableColumns.length + Number(!!this.actionColumnName) + Number(!!this.assigneeColumnName) + Number(!!this.serviceSupplierDropdownColumn) + Number(!!this.supplierStatusColumn));
     if (this.filterEvent) {
-      this.filterEventSubscription.add(this.filterEvent.subscribe((filtersData) => {                  
+      this.filterEventSubscription.add(this.filterEvent.subscribe((filtersData) => {
             if(this.filterSubscription){
               this.filterSubscription.unsubscribe()
             }            
@@ -155,6 +151,10 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
         this.filterSubscription.unsubscribe()
       }      
       this.filterEventSubscription.unsubscribe();
+    }
+
+    if (this.langChangeSubscription) {
+      this.langChangeSubscription.unsubscribe();
     }
   }
 
@@ -175,6 +175,7 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
         this.showNonPageableData();
       }
     }
+
   }
 
   showNonPageableData() {
@@ -186,8 +187,12 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
            }
            this.setEnumerationLabel(data);
            this.setRolesEnumerationLabel(data);
-           this.tableDataSource = new MatTableDataSource<any>(data)      
+           this.tableDataSource = new MatTableDataSource<any>(data)
+
+           // emit table elements loaded
+           this.tableElementsLoaded.emit(this.tableDataSource.data);
         });
+        
     if (this.filterEvent) {
       this.filterSubscription = filterSubscr
     }
@@ -211,28 +216,32 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
             .pipe(catchError(() => observableOf(null)));
         }),
         map(data => {
+
           this.setEnumerationLabel(data);
           this.setRolesEnumerationLabel(data);
+          this.setPIN(data);
           this.isRateLimitReached = data === null;
           if (data.totalElements === 0) {
-            if(this.userProfileService.checkUserRolesAndType([roles.serviceManager],[profileTypes.administration])) {
-              this.notificationsBannerService.show({message: "SERVICES.ERRORS.SERVICE_NOT_FOUND", type: NotificationBarType.Info});
+            if(this.userProfileService.checkUserRolesAndType([roles.admin, roles.serviceManager],[profileTypes.administration])) {
+              this.noDataMessage = "SERVICES.ERRORS.SERVICE_NOT_FOUND";
             } else {
             switch (this.classifier) {
               case "?":
-                this.notificationsBannerService.show({message: "SERVICES.ERRORS.SERVICE_NOT_FOUND", type: NotificationBarType.Info});
+                this.noDataMessage = "SERVICES.ERRORS.SERVICE_NOT_FOUND";
                 break;
               case "?classifier=serviceInApplication&":
-                this.notificationsBannerService.show({message: "SERVICES.NO_SERVICES_IN_APPLICATION", type: NotificationBarType.Info});
+                this.noDataMessage = "SERVICES.NO_SERVICES_IN_APPLICATION";
                 break;
               case "?classifier=serviceInRequest&":
-                this.notificationsBannerService.show({message: "SERVICES.NO_REQUESTED_SERVICES", type: NotificationBarType.Info});
+                this.noDataMessage = "SERVICES.NO_REQUESTED_SERVICES";
                 break;
               case "?classifier=serviceInCompletion&":
-                this.notificationsBannerService.show({message: "SERVICES.NO_COMPLETED_SERVICES", type: NotificationBarType.Info});
+                this.noDataMessage = "SERVICES.NO_COMPLETED_SERVICES";
                 break;
               }
             }
+
+            this.notificationsBannerService.show({message: this.noDataMessage, type: NotificationBarType.Info});
           }
 
           if (data === null) {
@@ -241,18 +250,25 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
           this.totalPages = data.totalPages;
           return data;
         })
-      ).subscribe(data => this.setTableDataSource(data));
+      )
+        .subscribe((data: any) => {
+
+          this.setTableDataSource(data)
+
+          this.updateTableLabels()
+    });
 
     if (this.filterEvent) {
      this.filterSubscription = filterSubscr
     }
   }
 
-  setTableDataSource(data: any) {
+  setTableDataSource(data: any, updateTotalElements: boolean = true) {
     if(!data.elements){
       data.elements = data;
     };    
-    this.totalElements = data.totalElements;
+    this.totalElements = (updateTotalElements)? data.totalElements : this.totalElements;
+
       if (this.isMobile) {
         if (data.totalPages >= this.paginator.pageIndex && data.totalPages>0 ) {
           this.paginator.pageIndex ++;         
@@ -273,13 +289,20 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
           }
         })
       }
+      
+      // emit table elements loaded
+      this.tableElementsLoaded.emit(this.tableDataSource.data);
+
       this.isLoading = false;
   }
 
   applyFilter(event: Event) {
   }
 
-  emitRowAction(rowElement: any) {
+  emitRowAction(rowElement: any, index: any) {
+
+    rowElement.smartTableIndex = index;
+
     this.rowAction.emit(rowElement);
   }
 
@@ -294,24 +317,43 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
   }
 
   setEnumerationLabel(dataInput){
+
     let data;
+
     if(dataInput.elements){
       data = dataInput.elements
     } else {
       data = dataInput
     }
+
     if(!Array.isArray(data)) {
       return
     }
-    for (var row of data) {
-      for (let key in row) {
-        let columnDetail = this.tableColumns.find(obj => obj.dataKey === key);
-        if(columnDetail && columnDetail.isEnum){               
-          let label = enumTypes[columnDetail.enumeration].getDisplayByCode(row[key]).label;
-          row[key] = this.translateService.instant(label);
+
+    for (let row of data) {
+      for (let prop in row) {
+        if (prop === 'data') {
+          for (let propInner in row[prop]) {
+
+            row[prop][propInner] = this.getTranslationLabelIfEnum(row[prop][propInner], propInner)
+          }
+        } else {
+
+          row[prop] = this.getTranslationLabelIfEnum(row[prop], prop)
         }
       }
-     }
+    }
+
+  }
+
+  private getTranslationLabelIfEnum(simpleValue, propertyKey){
+    let columnDetail = this.tableColumns.find(obj => obj.translateKey === propertyKey);
+    if(columnDetail && columnDetail.isEnum){
+
+      let label = enumTypes[columnDetail.enumeration].getDisplayByCode(simpleValue).label;
+      return label;
+    }
+    return simpleValue;
   }
 
   setRolesEnumerationLabel(dataInput) {
@@ -323,7 +365,7 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
       data = dataInput
     }
     // Case for user profile roles : Transform enum to string values
-    if(data.length > 0 && (data[0].roles || data[0]?.data.roles)) {  
+    if(data.length > 0 && (data[0].roles || data[0]?.data?.roles)) {  
       let  dataLength = Object.keys(data).length;          
       for (let d = 0; d < dataLength; d++) { 
         let dataRoles = data[d].data ? data[d].data.roles : data[d].roles 
@@ -357,6 +399,31 @@ export class SmartTableComponent implements OnInit, AfterViewInit {
     if (enumObject) {
       return enumObject.icon
     }
+  }
+
+  formatLabelAsCssClass(label: string){
+    return label.replace(/\./g, '-').replace(/\_/g, '-').toLowerCase();
+  }
+
+  setPIN(dataInput) {
+    let data;
+    if(dataInput.elements){
+      data = dataInput.elements
+
+    } else {
+      data = dataInput
+    }
+    
+    this.tableColumns.forEach(column => {
+      if(column.isPIN){
+        data.forEach(element => {
+          let value = get(element, column.dataKey);
+          if(value.split('-').length) {
+            set(element, column.dataKey, value.split('-')[1] )
+          }
+        })
+      }
+    })
   }
   
 }

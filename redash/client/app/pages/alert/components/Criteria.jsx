@@ -45,11 +45,11 @@ export default function Criteria({ columnNames, resultValues, alertOptions, onCh
     }
 
     if (isNaN(alertOptions.value)) {
-      return "Value column type doesn't match threshold type.";
+      return t("Value column type doesn't match threshold type.");
     }
 
     if (isNaN(columnValue)) {
-      return "Value column isn't supported by condition type.";
+      return t("Value column isn't supported by condition type.");
     }
 
     return null;

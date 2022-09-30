@@ -5,21 +5,22 @@ import PropTypes from "prop-types";
 import "./ErrorMessage.less";
 import DynamicComponent from "@/components/DynamicComponent";
 import { ErrorMessageDetails } from "@/components/ApplicationArea/ErrorMessageDetails";
+import { t } from "@/locales/config.jsx";
 
 function getErrorMessageByStatus(status, defaultMessage) {
   switch (status) {
     case 404:
-      return "It seems like the page you're looking for cannot be found.";
+      return t("It seems like the page you're looking for cannot be found.");
     case 401:
     case 403:
-      return "It seems like you don’t have permission to see this page.";
+      return t("It seems like you don’t have permission to see this page.");
     default:
       return defaultMessage;
   }
 }
 
 function getErrorMessage(error) {
-  const message = "It seems like we encountered an error. Try refreshing this page or contact your administrator.";
+  const message = t("It seems like we encountered an error. Try refreshing this page or contact your administrator.");
   if (isObject(error)) {
     // HTTP errors
     if (error.isAxiosError && isObject(error.response)) {

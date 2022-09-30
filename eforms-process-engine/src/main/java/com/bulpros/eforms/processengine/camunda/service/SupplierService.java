@@ -5,5 +5,6 @@ import com.bulpros.eforms.processengine.egov.model.supplier.Suppliers;
 
 public interface SupplierService {
     Suppliers getAllSuppliers();
+
     SupplierDetailsInfo getSupplierDetails(String code);
 }

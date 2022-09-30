@@ -4,6 +4,8 @@ import com.bulpros.auditlog.model.AuditlogRequest;
 import com.bulpros.auditlog.model.AuditlogServiceRequest;
 import com.bulpros.auditlog.model.EventTypeEnum;
 import com.bulpros.eforms.processengine.configuration.ConfigurationProperties;
+import com.bulpros.eforms.processengine.web.exception.EFormsProcessEngineException;
+import com.bulpros.eforms.processengine.web.exception.SeverityEnum;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RuntimeService;
@@ -43,6 +45,7 @@ public class AuditlogRepositoryImpl implements AuditlogRepository {
             }
         } catch (Exception exception) {
             log.error(exception.getMessage(), exception);
+            throw new EFormsProcessEngineException(SeverityEnum.ERROR, "AUDITLOG.COMMUNICATION", exception.getMessage());
         }
     }
 

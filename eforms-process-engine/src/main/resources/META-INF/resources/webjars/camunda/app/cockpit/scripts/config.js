@@ -5,6 +5,7 @@ export default {
   },
   customScripts: [
     'custom/logout',
+    'custom/fixTranslations',
     'custom/deployModal/dist/plugin'
   ]
 };

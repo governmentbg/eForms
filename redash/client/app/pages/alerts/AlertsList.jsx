@@ -64,12 +64,12 @@ class AlertsList extends React.Component {
     Columns.custom.sortable(
       (text, alert) => (
         <div>
-          <span className={`label ${STATE_CLASS[alert.state]}`}>{toUpper(alert.state)}</span>
+          <span className={`label ${STATE_CLASS[alert.state]}`}>{toUpper(alert.state_label)}</span>
         </div>
       ),
       {
         title: "State",
-        field: "state",
+        field: "state_label",
         width: "1%",
         className: "text-nowrap",
       }
@@ -80,6 +80,8 @@ class AlertsList extends React.Component {
 
   render() {
     const { controller } = this.props;
+
+    controller.pageItems.forEach(item => item.state_label = t(item.state));
 
     return (
       <div className="page-alerts-list">

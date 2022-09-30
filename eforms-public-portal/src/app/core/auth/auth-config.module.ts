@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 export function configureAuth(oidcConfigService: OidcConfigService): () => Promise<any> {
     return () =>
         oidcConfigService.withConfig({
-              stsServer: environment.stsServer,
+              stsServer: environment.stsServer + '/auth/realms/eforms',
               redirectUrl: window.location.origin + '/login',
               postLogoutRedirectUri: window.location.origin + '/login',
               clientId: environment.clientId,
@@ -14,7 +14,7 @@ export function configureAuth(oidcConfigService: OidcConfigService): () => Promi
               silentRenew: true,
               useRefreshToken: true,
               renewTimeBeforeTokenExpiresInSeconds: 30,
-              logLevel: environment.production ? LogLevel.None : LogLevel.Debug,
+              logLevel: LogLevel.None,
               startCheckSession: false,
               triggerAuthorizationResultEvent: true,
               historyCleanupOff: true,

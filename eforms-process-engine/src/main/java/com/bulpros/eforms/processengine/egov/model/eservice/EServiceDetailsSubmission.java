@@ -18,11 +18,8 @@ public class EServiceDetailsSubmission {
     private String serviceName="";
     private String requiredSecurityLevel="";
     private String serviceDescription="";
-    private List<String> meansOfIdentification;
-    private String provisionEAddress="";
-    private String processDefinitionId="";
     private String serviceOID="";
-    private String url="";
     private String status="";
+    private Boolean isInternalAdminService;
 
 }

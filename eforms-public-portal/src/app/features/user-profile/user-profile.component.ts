@@ -4,6 +4,10 @@ import { FormIoService } from 'src/app/core/services/form-io.service';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { TableColumn } from 'src/app/core/types/table-column';
 import { environment } from 'src/environments/environment';
+import { TranslateService } from "@ngx-translate/core";
+import { NotificationsBannerService } from 'src/app/core/services/notifications-banner.service';
+import { NotificationBarType } from '../../shared/components/notifications-banner/notification-banner.model';
+import { Formio } from 'formiojs';
 
 @Component({
   selector: 'app-user-profile',
@@ -24,9 +28,17 @@ export class UserProfileComponent implements OnInit {
   subData
 
 
-  constructor(private router: Router, private userProfileService: UserProfileService, private formioService: FormIoService) { }
+  constructor(
+    private router: Router, 
+    private userProfileService: UserProfileService, 
+    private formioService: FormIoService,
+    private notificationsBannerService: NotificationsBannerService,
+    private translateService: TranslateService
+    ) { }
 
   ngOnInit() {
+    this.notificationsBannerService.show({message: "USER_PROFILE_WARNING", type: NotificationBarType.Warn })
+
     this.apiCallUrl = `/api/projects/${environment.formioBaseProject}/user-profile/update/`;
     this.subData = "profiles";
     this.initializeColumns();
@@ -37,6 +49,8 @@ export class UserProfileComponent implements OnInit {
       this.userProfile.personIdentifier = this.userProfile.personIdentifier.split('-')[1];
       this.userProfileService.setUserProfile(this.userProfile);
         this.formioService.getFormByAlias('common/component/user-profile', environment.formioBaseProject).subscribe(result => {
+        let baseUrl = `${environment.apiUrl}/project/${environment.formioBaseProject}`;
+        Formio.setBaseUrl(baseUrl);
         this.formSrc = result;
         this.formSrc.context = {
           selectedProfile: this.userProfileService.selectedProfile
@@ -48,6 +62,9 @@ export class UserProfileComponent implements OnInit {
       }
       if (error.status === 400 && error.message === "MISSING_USER_PIN") {
         this.errorMsg = "USER_PROFILE_ERRORS." + error.message;
+      }
+      if (error.status === 404 && error.message === "ERROR.GATEWAY.RESOURCE_NOT_FOUND") {
+        this.errorMsg = error.message;
       }
     });
     this.environment = environment;
@@ -79,6 +96,14 @@ export class UserProfileComponent implements OnInit {
         dataKey: 'profileType',
         isEnum : true,
         enumeration: "profileTypeEnum",
+        translateKey: 'profileType',
+        position: 'left',
+        isSortable: false,
+        doTranslate: true
+      },
+      {
+        name: 'PROFILE_ROLES.EIK',
+        dataKey: 'identifier',
         position: 'left',
         isSortable: false
       },
@@ -89,8 +114,8 @@ export class UserProfileComponent implements OnInit {
         isSortable: false
       },
       {
-        name: 'PROFILE_ROLES.EIK',
-        dataKey: 'identifier',
+        name: 'PROFILE_ROLES.ROLES',
+        dataKey: 'roles.display',
         position: 'left',
         isSortable: false
       },
@@ -100,13 +125,10 @@ export class UserProfileComponent implements OnInit {
         isEnum : true,
         enumeration: "profileStatusEnum",
         position: 'left',
-        isSortable: false
-      },
-      {
-        name: 'PROFILE_ROLES.ROLES',
-        dataKey: 'roles.display',
-        position: 'left',
-        isSortable: false
+        classPrefix: true,
+        translateKey: 'status',
+        isSortable: false,
+        doTranslate: true
       }
     ];
   }

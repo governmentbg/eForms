@@ -15,10 +15,7 @@
         <div>
             <div class="offset-md-1 col-md-4 col-sm-12 mb-4 d-flex flex-column">
                 <label>{{ 'LANGUAGE' | translate }}</label>
-                <mat-radio-group>
-                    <mat-radio-button value="1" [checked]='true'>Български</mat-radio-button>
-                    <mat-radio-button value="2">English</mat-radio-button>
-                </mat-radio-group>
+                <app-language-select menuXPosition="after" class="pointer"></app-language-select>
                 <label class="mt-4">{{ 'DATE_TIME_FORMAT' | translate }}</label>
                 <mat-form-field appearance="fill">
                     <mat-select [(value)]="selectedFirst">

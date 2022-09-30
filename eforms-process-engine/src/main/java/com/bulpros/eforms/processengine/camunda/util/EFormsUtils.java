@@ -1,7 +1,6 @@
 package com.bulpros.eforms.processengine.camunda.util;
 
 import com.bulpros.eforms.processengine.camunda.model.ProcessConstants;
-import com.bulpros.eforms.processengine.configuration.ConfigurationProperties;
 import com.google.common.base.CaseFormat;
 import org.apache.commons.lang3.StringUtils;
 
@@ -31,7 +30,7 @@ public final class EFormsUtils {
     }
 
     public static String getFormDataSubmissionKeyFromVariableName(String variableName) {
-        return variableName.replace(ProcessConstants.SUBMISSION_DATA,"");
+        return variableName.replace(ProcessConstants.SUBMISSION_DATA, "");
     }
 
     public static String getFormApiPathFromSubmissionKey(String submissionKey) {

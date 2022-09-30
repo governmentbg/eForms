@@ -2,10 +2,18 @@ package com.bulpros.eforms.processengine.camunda.listener;
 
 import com.bulpros.eforms.processengine.camunda.model.EDeliveryFilesPackage;
 import com.bulpros.eforms.processengine.camunda.model.ProcessConstants;
+import com.bulpros.eforms.processengine.camunda.repository.CamundaProcessRepository;
+import com.bulpros.eforms.processengine.configuration.ConfigurationProperties;
 import com.bulpros.eforms.processengine.minio.model.MinioFile;
+import com.bulpros.eforms.processengine.minio.service.MinioService;
+import com.bulpros.eforms.processengine.security.AuthenticationFacade;
+import com.bulpros.eforms.processengine.security.UserService;
+import com.bulpros.formio.service.SubmissionService;
+import com.jayway.jsonpath.Configuration;
+import org.camunda.bpm.engine.FormService;
 import org.camunda.bpm.engine.delegate.DelegateTask;
 import org.camunda.bpm.engine.delegate.TaskListener;
-import org.camunda.spin.Spin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -14,6 +22,16 @@ import java.util.Optional;
 
 @Component
 public class MultiInstanceSignTaskCompleteListener extends AbstractTaskCompleteListener implements TaskListener {
+
+    @Autowired
+    public MultiInstanceSignTaskCompleteListener(FormService formService, SubmissionService submissionService,
+                                                 Configuration jsonPathConfiguration,
+                                                 MinioService minioService, CamundaProcessRepository processService,
+                                                 ConfigurationProperties processConfProperties,
+                                                 AuthenticationFacade authenticationFacade, UserService userService) {
+        super(formService, submissionService, jsonPathConfiguration,
+                minioService, processService, processConfProperties, authenticationFacade, userService);
+    }
 
     @Override
     public void notify(DelegateTask delegateTask) {
@@ -29,11 +47,9 @@ public class MultiInstanceSignTaskCompleteListener extends AbstractTaskCompleteL
     @Override
     @SuppressWarnings("unchecked")
     protected void addAttachmentFiles(DelegateTask task, String documentKey, String formKey, List<MinioFile> minioFiles) {
-        EDeliveryFilesPackage currentSignedFiles = Optional.ofNullable(task.getVariable(
+        EDeliveryFilesPackage currentSignedFiles = (EDeliveryFilesPackage) Optional.ofNullable(task.getVariable(
                 ProcessConstants.EDELIVERY_SIGNED_FILES_PACKAGE +
-                        (documentKey != null ? documentKey : formKey)))
-                .map(obj -> Spin.JSON(obj).mapTo(EDeliveryFilesPackage.class))
-                .orElse(null);
+                        (documentKey != null ? documentKey : formKey))).orElse(null);
 
         if (currentSignedFiles != null) {
             for (MinioFile minioFile : minioFiles) {
@@ -44,11 +60,11 @@ public class MultiInstanceSignTaskCompleteListener extends AbstractTaskCompleteL
             }
             task.setVariable(ProcessConstants.EDELIVERY_SIGNED_FILES_PACKAGE +
                             (documentKey != null ? documentKey : formKey),
-                    Spin.JSON(currentSignedFiles));
+                    currentSignedFiles);
         } else {
             task.setVariable(ProcessConstants.EDELIVERY_SIGNED_FILES_PACKAGE +
                             (documentKey != null ? documentKey : formKey),
-                    Spin.JSON(new EDeliveryFilesPackage(true, minioFiles)));
+                    new EDeliveryFilesPackage(true, minioFiles));
         }
     }
 

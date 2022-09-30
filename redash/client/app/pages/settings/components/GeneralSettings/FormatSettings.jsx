@@ -22,7 +22,7 @@ export default function FormatSettings(props) {
             data-test="DateFormatSelect">
             {clientConfig.dateFormatList.map(dateFormat => (
               <Select.Option key={dateFormat} data-test={`DateFormatSelect:${dateFormat}`}>
-                {dateFormat}
+                {t(dateFormat)}
               </Select.Option>
             ))}
           </Select>
@@ -37,7 +37,7 @@ export default function FormatSettings(props) {
             onChange={value => onChange({ time_format: value })}
             data-test="TimeFormatSelect">
             {clientConfig.timeFormatList.map(timeFormat => (
-              <Select.Option key={timeFormat}>{timeFormat}</Select.Option>
+              <Select.Option key={timeFormat}>{t(timeFormat)}</Select.Option>
             ))}
           </Select>
         )}

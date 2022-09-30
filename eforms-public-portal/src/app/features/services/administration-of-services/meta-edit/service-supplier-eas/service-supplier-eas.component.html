@@ -1,0 +1,124 @@
+<form [formGroup]="easForm">
+    <div [formGroup]="easForm">
+        <label id="example-radio-group-label" class="mt-3">{{'METADATA_REVIEW.SERVICE_BY_WHICH_SUPPLIERS'|translate}}
+            :</label>
+        <mat-radio-group (change)="handleHasAdministrativeUnitsChange($event)"
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                formControlName="hasAdministrativeUnits">
+            <div>
+                <mat-radio-button class="example-radio-button" [value]="'yes'">
+                    {{'YES'|translate}}
+                </mat-radio-button>
+            </div>
+            <div>
+                <mat-radio-button class="example-radio-button" [value]="'no'">
+                    {{'NO'|translate}}
+                </mat-radio-button>
+            </div>
+        </mat-radio-group>
+    </div>
+    <ng-container *ngIf="easForm.controls?.hasAdministrativeUnits?.value === 'yes' && availableAdministrativeUnitsList.length > 0">
+        <div class="w-100" *ngIf="easForm.value.administrativeUnits.length > 1">
+            <mat-form-field class="w-50">
+                <input matInput formControlName="searchBar" />
+                <mat-label> {{'SEARCHING' | translate}}</mat-label>
+                <button matSuffix mat-icon-button (click)="filter()">
+                    <mat-icon>search</mat-icon>
+                </button>
+                <button matSuffix mat-icon-button  (click)="clearFilter()">
+                    <mat-icon>close</mat-icon>
+                  </button>
+            </mat-form-field>
+        </div>
+        <div class="row mb-2" *ngIf="easForm.value.administrativeUnits.length > 1">
+            <div class="my-3 text-left col-lg-6">
+                <a class="mr-5" role="button" (click)="toggleAll(true)">{{'ADD_ALL' | translate}}</a>
+                <a class="mr-5" role="button" (click)="toggleAll(false)">{{'REMOVE_ALL' | translate}}</a>
+            </div>
+            <div class="my-3 text-right col-lg-6">
+                <a class="mr-5" role="button" (click)="openAllCollapsable()">{{'METADATA_REVIEW_SERVICE.SHOW_ALL' | translate}}</a>
+                <a class="mr-5" role="button"
+                (click)="closeAllCollapsable()">{{'METADATA_REVIEW_SERVICE.CLOSE_ALL' | translate}}</a>
+            </div>
+        </div>
+        <ng-container formArrayName="administrativeUnits">
+            <ng-container *ngFor="let unit of easForm.controls.administrativeUnits.controls">
+                <ng-container *ngIf="unit.value.visible" [formGroup]="unit">
+                    <app-collapsable-card #channelsInUnit [isGrey]="true" [forceOpen]="eventOpenAllCollapsable.asObservable()" [forceClose]="eventCloseAllCollapsable.asObservable()" [toggleOnlyOnIcon]="true" [hasError]="!isUnitValid(unit)">
+                        <span app-card-title><mat-checkbox formControlName="selected"></mat-checkbox></span>
+                        <span app-card-toggle> {{ unit.controls.unit.value.administrationUnit }} </span>
+                        <div class="font-weight-bold ml-3 pl-1">
+                            {{'METADATA_REVIEW.SERVICE_SUPPLIER_ID'|translate}}
+                        </div>
+                        <div class="mb-3 ml-3 pl-1">{{unit.controls.unit.value.administrationUnitEDelivery}}</div>
+                        <div class="font-weight-bold ml-3 pl-1 mt-5 mb-3">{{'METADATA_REVIEW.TAX.INFO'|translate}}</div>
+                        <div>
+                            <ng-container formArrayName="channelsAndTermsList">
+                                <ng-container>
+                                    <div class="table-container d-md-block d-none">
+                                        <table mat-table [dataSource]="unit.controls.channelsAndTermsList.controls" [class]="isGrey ? 'bg-light' : ''">
+        
+                                            <ng-container matColumnDef="actions">
+                                                <th mat-header-cell *matHeaderCellDef></th>
+                                                <td mat-cell *matCellDef="let element" [formGroup]="element">
+                                                    <mat-checkbox formControlName="selected">  </mat-checkbox>
+                                                </td>
+                                            </ng-container>
+        
+                                            <ng-container matColumnDef="typeChannel">
+                                                <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.TYPE_CHANNEL' | translate}}</th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    {{element.controls.channelsAndTerms.value.channel.channelName}}
+                                                </td>
+                                            </ng-container>
+        
+                                            <ng-container matColumnDef="typeTerm">
+                                                <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.TYPE_DEADLINE'|translate}}</th>
+                                                <td mat-cell *matCellDef="let element"> {{ getDeadlineLabel (element.controls.channelsAndTerms.value.deadlineType) }} </td>
+                                            </ng-container>
+                                    
+                                            <ng-container matColumnDef="term">
+                                                <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.DEADLINE'|translate}}</th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <ng-container *ngIf="element.controls.channelsAndTerms.value.deadlineUnit && element.controls.channelsAndTerms.value.deadlineTerm">
+                                                        {{element.controls.channelsAndTerms.value.deadlineTerm}} {{ getDeadlineUnitLabel(element.controls.channelsAndTerms.value.deadlineUnit, element.controls.channelsAndTerms.value.deadlineTerm) }} 
+                                                    </ng-container>
+                                                </td>
+                                            </ng-container>
+                                                                        
+                                            <ng-container matColumnDef="amount">
+                                                <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.AMOUNT' | translate}}</th>
+                                                <td mat-cell *matCellDef="let element"> 
+                                                    <ng-container *ngIf="element.controls.channelsAndTerms.value.taxAmount && element.controls.channelsAndTerms.value.currency">
+                                                        {{element.controls.channelsAndTerms.value.taxAmount}} {{element.controls.channelsAndTerms.value.currency}}
+                                                    </ng-container>
+                                                </td>
+                                            </ng-container>
+                                                            
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    
+                                        </table>
+                                    </div>
+                                </ng-container>
+                            </ng-container>
+                        </div>
+                        <div class="ml-3 pl-1 pt-2">
+                            <mat-error *ngIf="!isUnitValid(unit)" >{{ 'REMOVE_UNIT_OR_ADD_CHANNEL'| translate}}</mat-error>
+                        </div>
+                    </app-collapsable-card>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+        <div class="row mb-2" *ngIf="easForm.value.administrativeUnits.length > 1">
+            <div class="my-3 text-right col-lg-12">
+                <a class="mr-5" role="button" (click)="openAllCollapsable()">{{'METADATA_REVIEW_SERVICE.SHOW_ALL' | translate}}</a>
+                <a class="mr-5" role="button"
+                (click)="closeAllCollapsable()">{{'METADATA_REVIEW_SERVICE.CLOSE_ALL' | translate}}</a>
+            </div>
+
+        </div>
+    </ng-container>
+</form>
+

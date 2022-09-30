@@ -26,6 +26,7 @@ export class DashboardComponent implements OnInit {
   isValidAssuranceLevel: boolean = false;
   iseDeliveryActive = true;
   requiredAssuranceLevel;
+  stateCustomError: string;
 
   constructor(
     public oidcSecurityService: OidcSecurityService,
@@ -36,7 +37,9 @@ export class DashboardComponent implements OnInit {
     private notificationsBannerService: NotificationsBannerService,
     public userProfileService: UserProfileService,
     private daefService: DAEFService
-  ) { }
+  ) {
+    this.stateCustomError = this.router.getCurrentNavigation().extras.state?.customError;
+  }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((params: ParamMap) => {
@@ -63,6 +66,14 @@ export class DashboardComponent implements OnInit {
         if (this.daefServiceData.eDeliveryStatus === "PROFILE_NOT_FOUND") {
           this.existUserProfile = false;
           this.notificationsBannerService.show({message: "SERVICES.ERRORS.USER_PROFILE_NOT_FOUND", type: NotificationBarType.Error, actionText: "HERE", url: `https://${environment.edeliveryURL}`, openInNewTab: true })
+
+        } else if (this.daefServiceData.eDeliveryStatus === "ERROR.GATEWAY.EDELIVERY.NOT_AUTHORIZED") {
+          this.stateCustomError = this.daefServiceData.eDeliveryStatus
+          this.showServiceError(null)
+
+        } else if (this.daefServiceData.eDeliveryStatus !== "OK") {
+          this.existUserProfile = false;
+          this.notificationsBannerService.show({message: this.daefServiceData.eDeliveryStatus , type: NotificationBarType.Error})
         }
 
         this.requiredAssuranceLevel = this.daefServiceData.service.data.requiredSecurityLevel;
@@ -73,14 +84,6 @@ export class DashboardComponent implements OnInit {
             this.serviceError = "ASSURANCE_LEVEL_MISSMATCH";
           }
         }
-        if (this.daefServiceData.eDeliveryStatus === "NOT_AUTHORIZED") {
-          this.existUserProfile = false;
-          this.notificationsBannerService.show({message: "SERVICES.ERRORS.USER_PROFILE_NOT_AUTHORIZED", type: NotificationBarType.Error})
-        }
-        if (this.daefServiceData.eDeliveryStatus === "SERVICE_NOT_AVAILABLE") {
-          this.iseDeliveryActive = false;
-          this.notificationsBannerService.show({message: "SERVICES.ERRORS.EDELIVERY_NOT_AVAILABLE", type: NotificationBarType.Error })
-        }
       }, (error) => {
         this.showServiceError(error);
       })
@@ -88,12 +91,13 @@ export class DashboardComponent implements OnInit {
   }
 
   showServiceError(error: any) {
-    if (error.status === 400 && error.message === "SERVICE_NOT_ACTIVE") {
-      return this.serviceError = "SERVICES.ERRORS." + error.message;
+    if (this.stateCustomError) {
+      return this.serviceError = this.stateCustomError;
     }
-    if (error.status === 404 && error.message === "RESOURCE_NOT_FOUND") {
-      return this.serviceError = "SERVICES.ERRORS." + error.message;
+    if (error?.message) {
+      return this.serviceError = error?.message;
     }
+
     return this.router.navigate(['home']);
   }
 

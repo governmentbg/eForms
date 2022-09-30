@@ -14,9 +14,6 @@
         <div class="col-12 mt-3 px-0">
             <div id="service-details-modal-official-case" class="text-center text-uppercase"> <h1> {{ "SERVICES.OFFICIAL_CASE" | translate}}</h1> </div>
         </div>
-        <div class="col-12 mb-4 px-0">
-            <div id="service-details-modal-application-number"> <span class="font-italic"> {{ "SERVICES.APPLICATION_NUMBER" | translate}} </span> - {{ data.data.incomingNumber }}</div>
-        </div>
         <div class="col-12 px-0">
             <div class="row">
                 <div class="col-md-12 col-sm-12 px-0"> <div id="service-details-modal-name" class="label mb-1"> {{ "SERVICES.NAME" | translate}}</div> <div id="service-details-modal-name-value"> {{ data.data.serviceId }}  -  {{ data.data.serviceName }}</div></div>
@@ -24,7 +21,8 @@
         </div>
         <div class="col-sm-12 px-0">
             <div class="row">
-                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-issue-date" class="label mb-1"> {{ "SERVICES.ISSUE_DATE" | translate}}</div> <div id="service-details-modal-issue-date-value"> <span class="fw-500">{{ data.data.issueDate | date:'d.MM.y' }}</span>  / <span class="color-gray"> {{ data.data.issueDate | date:'HH:mm' }} </span></div></div>
+                <div class="col-md-4 col-sm-12 px-0" *ngIf="data.data.deliveryDate && data.data.deliveryDate != '1970-01-01T00:00:00.000Z'"> <div id="service-details-modal-issue-date" class="label mb-1"> {{ "SERVICES.ISSUE_DATE" | translate}}</div> <div id="service-details-modal-issue-date-value"> <span class="fw-500">{{ data.data.deliveryDate | date:'d.MM.y' }}</span>  / <span class="color-gray"> {{ data.data.deliveryDate | date:'HH:mm' }} </span></div></div>
+                <div class="col-md-4 col-sm-12 px-0" *ngIf="!data.data.deliveryDate || data.data.deliveryDate == '1970-01-01T00:00:00.000Z'"> <div id="service-details-modal-issue-date" class="label mb-1"> {{ "SERVICES.COMPLETE_DATE" | translate}}</div> <div id="service-details-modal-issue-date-value"> <span class="fw-500">{{ data.data.completeDate | date:'d.MM.y' }}</span>  / <span class="color-gray"> {{ data.data.completeDate | date:'HH:mm' }} </span></div></div>
                 <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-last-change" class="label mb-1"> {{ "SERVICES.LAST_CHANGE" | translate}}</div> <div id="service-details-modal-last-change-value"> <span class="fw-500">{{ data.modified | date:'d.MM.y' }}</span> / <span class="color-gray"> {{ data.modified | date:'HH:mm' }} </span> </div></div>
                 <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-supplier" class="label mb-1"> {{ "SERVICES.SUPPLIER" | translate}}</div> <div id="service-details-modal-supplier-value"> <span>{{ data.data.serviceSupplierName }}</span><span *ngIf="data.data.administrationUnit">, {{ data.data.administrationUnit }}</span></div></div>
             </div>
@@ -42,15 +40,13 @@
         <div class="col-sm-12 px-0">
             <div class="row">
                 <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-status" class="label mb-1"> {{ "SERVICES.STATUS" | translate}}</div> <div id="service-details-modal-status-value"> {{ data.data.statusName }}</div></div>
-                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-payment-status" class="label mb-1"> {{ "SERVICES.SERVICE_PAYMENT_STATUS" | translate}}</div> <div id="service-details-modal-payment-status-value"> {{ 'SERVICES.ENUMS.' + data.data.statusFixedTax | translate }} </div></div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-payment-status" class="label mb-1"> {{ "SERVICES.SERVICE_PAYMENT_STATUS_FIXED" | translate}}</div> <div id="service-details-modal-payment-status-value"> {{ 'SERVICES.ENUMS.' + data.data.statusFixedTax | translate }} </div></div>
+                <div class="col-md-4 col-sm-12 px-0"> <div id="service-details-modal-payment-status" class="label mb-1"> {{ "SERVICES.SERVICE_PAYMENT_STATUS_ADDITIONAL" | translate}}</div> <div id="service-details-modal-payment-status-value"> {{ 'SERVICES.ENUMS.' + data.data.statusCalculatedTax | translate }} </div></div>
             </div>
         </div>
     </div>
     <div class="row">
 
-    </div>
-    <div class="row service-wrapper" *ngIf="data.showInnerSection != false">
-        <app-case-inner-section class="w-100" [processInstanceId]='data.data.processInstanceId' [serviceId]="data.data.serviceId" [serviceStatus]="data.data.statusCode" [projectId]="data.data.projectId"></app-case-inner-section>
     </div>
     <h2 class="text-center pt-3 pb-3">{{ "CASE_DOCUMENTS" | translate }}</h2>
 
@@ -69,6 +65,10 @@
                 </div>
             </div>
         </ng-container>
+    </div>
+
+    <div class="row service-wrapper" *ngIf="data.showInnerSection != false">
+        <app-case-inner-section class="w-100" [caseData]="data.data" [businessKey]='data.data.businessKey' [processInstanceId]='data.data.processInstanceId' [serviceId]="data.data.serviceId" [serviceStatus]="data.data.statusCode" [projectId]="data.data.projectId"></app-case-inner-section>
     </div>
     </mat-dialog-content>
 </div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/Agent"
+        xmlns="http://eform.e-gov.bg/dictionary/Agent"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:po="http://eform.e-gov.bg/dictionary/PublicOrganization"
+        xmlns:person="http://eform.e-gov.bg/dictionary/Person"
+        xmlns:legal="http://eform.e-gov.bg/dictionary/LegalEntity">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicOrganization" schemaLocation="PublicOrganization.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Person" schemaLocation="Person.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/LegalEntity" schemaLocation="LegalEntity.xsd"/>
+
+	<xsd:complexType name="Agent">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+			Agent представлява всеки ресурс, който действа или има правомощия да изпълнява определена роля във връзка с услугата. Това включва хора, организации и групи. Негови подкласове са класовете Public Organisation, Person и Legal Entity
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:choice minOccurs="1" maxOccurs="1">
+			<xsd:element name="publicOrganization" type="po:PublicOrganization"/>
+			<xsd:element name="person" type="person:Person"/>
+			<xsd:element name="legalEntity" type="legal:LegalEntity"/>
+		</xsd:choice>
+	</xsd:complexType>
+
+</xsd:schema>

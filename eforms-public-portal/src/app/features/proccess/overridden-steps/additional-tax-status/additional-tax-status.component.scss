@@ -1,0 +1,73 @@
+@import "colors.scss";
+.additional-payment {
+    ::ng-deep {
+        .mat-form-field-appearance-outline .mat-form-field-outline {
+            color: $main-dark-blue;
+        }
+
+        .mat-form-field-wrapper{
+            padding-bottom: 0;
+            margin:0;
+        }
+
+        .mat-focused {
+            color: $main-dark-blue;
+        }
+
+        /* Font color */
+        input.mat-input-element {
+            color: $main-dark-blue;
+        }
+
+        .mat-select-arrow {
+            color: $main-dark-blue
+        }
+
+        .mat-optgroup-label {
+            border-bottom: 1px solid $light-gray;
+            border-width: 80%;
+        }
+
+        .mat-select-panel {
+            border: 1px solid $main-dark-blue;
+        }
+
+        .mat-form-field-infix {
+            border-top-width: 0;
+        }
+        .mat-form-field-appearance-outline .mat-select-arrow-wrapper {
+            transform: none !important;
+        }
+        .mat-select{
+            vertical-align: sub;
+        }
+    }
+    .epayment-status {
+        border-radius: 25px;
+        padding: 8px 3em;
+        margin-right: 2em;
+        display: inline;
+        &.gray{
+            background-color: $medium-gray;
+        }
+        &.green{
+            background-color: $light-green;
+        }
+        &.yellow{
+            background-color: $notification-attention;
+        }
+    }
+    .status-button {
+        border-radius: 7px !important;
+        background-color: $white;
+        border: solid $main-dark-blue 2px;
+        color: $main-dark-blue;
+        font-weight: 400;
+        line-height: 24px;
+        height: 2.5em;
+        .mat-icon{
+            font-size: 22px;
+        }
+    }
+}
+

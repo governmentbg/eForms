@@ -1,5 +1,6 @@
 package com.bulpros.eformsgateway.security;
 
+import static com.bulpros.eformsgateway.process.repository.camunda.TaskRepositoryImpl.GET_ALL_HISTORY_TASKS_BY_PROCESS_INSTANCE_ID_CACHE;
 import static com.bulpros.eformsgateway.process.repository.camunda.TaskRepositoryImpl.GET_ALL_TASKS_BY_ASSIGNEE_CACHE;
 import static com.bulpros.eformsgateway.process.repository.camunda.TaskRepositoryImpl.GET_ALL_TASKS_BY_PROCESS_INSTANCE_ID_CACHE;
 import static com.bulpros.eformsgateway.process.repository.camunda.TaskRepositoryImpl.GET_TASK_BY_ID_CACHE;
@@ -67,6 +68,8 @@ public class ClaimTaskRequestGatewayFilterFactory extends AbstractCompleteReques
                 }
                 
                 // Invalidate caches
+                boolean getAllHistoryTasksByProcessInstanceIdEvicted = cacheService
+                        .evictIfPresent(GET_ALL_HISTORY_TASKS_BY_PROCESS_INSTANCE_ID_CACHE, processInstanceId);
                 boolean getTaskByIdEvicted = cacheService.evictIfPresent(GET_TASK_BY_ID_CACHE, taskId);
                 boolean getAllTasksByAssigneeEvicted = cacheService.evictIfPresent(GET_ALL_TASKS_BY_ASSIGNEE_CACHE,
                         userProfile.getPersonIdentifier());
@@ -87,6 +90,9 @@ public class ClaimTaskRequestGatewayFilterFactory extends AbstractCompleteReques
                             }
                             if (getAllTasksByProcessInstanceIdEvicted) {
                                 taskService.getAllTasksByProcessInstanceId(authentication, processInstanceId);
+                            }
+                            if (getAllHistoryTasksByProcessInstanceIdEvicted) {
+                                taskService.getAdminHistoryTasksByProcessInstanceId(authentication, processInstanceId);
                             }
                         });
                     }

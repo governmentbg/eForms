@@ -1,0 +1,33 @@
+@import "colors.scss";
+
+::ng-deep {
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        color: $main-dark-blue;
+    }
+
+    .mat-focused {
+        color: $main-dark-blue;
+    }
+
+    /* Font color */
+    input.mat-input-element {
+        color: $main-dark-blue;
+    }
+
+    .mat-select-arrow {
+        color: $main-dark-blue
+    }
+
+    .mat-optgroup-label {
+        border-bottom: 1px solid $light-gray;
+        border-width: 80%;
+    }
+
+    .mat-select-panel {
+        border: 1px solid $main-dark-blue;
+    }
+
+    .mat-form-field-infix {
+        padding: 0.6em 0 0.6em 0 !important;
+    }
+}

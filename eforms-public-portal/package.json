@@ -1,6 +1,6 @@
 {
   "name": "public-portal",
-  "version": "1.4.0",
+  "version": "1.6.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -18,6 +18,7 @@
     "@angular/forms": "~11.2.9",
     "@angular/localize": "~11.2.9",
     "@angular/material": "^11.2.9",
+    "@angular/material-moment-adapter": "^11.2.13",
     "@angular/platform-browser": "~11.2.9",
     "@angular/platform-browser-dynamic": "~11.2.9",
     "@angular/router": "~11.2.9",
@@ -28,8 +29,9 @@
     "bootstrap": "^4.6.0",
     "dotenv": "^10.0.0",
     "font-awesome": "^4.7.0",
-    "formiojs": "^4.14.0-rc.15",
+    "formiojs": "4.14.0-rc.15",
     "jquery": "^3.6.0",
+    "lint": "^0.7.0",
     "lodash": "^4.17.21",
     "material-icons": "^0.7.6",
     "moment": "^2.29.1",
@@ -48,7 +50,7 @@
     "typescript": "~4.1.5"
   },
   "optionalDependencies": {
-    "@formio/angular": "^5.1.0",
+    "@formio/angular": "5.1.0",
     "@formio/premium": "^1.16.4"
   }
 }

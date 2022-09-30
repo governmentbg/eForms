@@ -42,7 +42,7 @@ public class EGovUserAdministrationsAuthorizationRepositoryImpl extends BaseRepo
             var responseEntity = restTemplate.getForEntity(request.toUriString(), UserAdministrationsAuthorization.class);
             return responseEntity.getBody();
         } catch (ResourceAccessException | HttpServerErrorException e) {
-            log.error(e.getMessage());
+            log.error(e.getMessage(), e);
         }
         return null;
     }

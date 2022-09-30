@@ -558,6 +558,12 @@
     "PASSWORD_POLICY_SPECIAL": "{{minSpecial}} special characters",
     "PASSWORD_POLICY_USER_DATA": "It must not contain any user data",
     "FIRST_LOGIN_INFO": "It looks like this is your first time using the webapps. Check out the <a href=\"/camunda-welcome\">Camunda Welcome Page</a> for a quick overview.",
-    "FIRST_LOGIN_HEADING": "Welcome to Camunda"
+    "FIRST_LOGIN_HEADING": "Welcome to Camunda",
+    "ALL" : "ALL",
+    "NONE" : "NONE",
+    "FIRST" : "First",
+    "PREVIOUS" : "Previous",
+    "NEXT" : "Next",
+    "LAST" : "Last"
   }
 }

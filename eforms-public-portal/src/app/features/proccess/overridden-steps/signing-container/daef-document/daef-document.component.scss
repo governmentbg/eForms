@@ -1,0 +1,116 @@
+@import "variables.scss";
+@import "colors.scss";
+
+
+.daef-document-error-border {
+    border-color: $notification-error !important;
+}
+
+.daef-document-wrapper {
+    border: 2px solid $main-dark-blue;
+    border-radius: 7px;
+    margin-top: 16px;
+
+    mat-expansion-panel-header {
+        height: auto;
+        padding-left: 0 !important;
+    }
+
+    .reset-row-wrapper {
+        position: relative !important;
+        width: 100%;
+    }
+
+    .daef-document-name {
+        font-size: 20px;
+        color:$main-dark-blue;
+        margin-bottom: 0px;
+        margin-left: 15px;
+        margin-top: 15px;
+    }
+
+    .daef-document-download-column {
+
+        border-right: 1px solid $sub-header-gray;
+
+        &:last-child {
+            border-right: none;
+        }
+    }
+
+    .daef-document-download-button {
+        padding: 0px;
+        color: $sub-header-gray;
+    }
+    
+    .document-status {
+        display: inline-flex !important;
+        border-radius: 20px !important;
+        width: 12em;
+        height: 2em;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow:hidden;
+        
+        p {
+            margin-bottom: 0px;
+            z-index: 1;
+        }
+
+        &.awaiting-sign-document-status {
+            background-color: $light-gray-hover;
+
+            .loading-bar {
+                display: none;
+            }
+        }
+
+        &.signing-document-status {
+            background-color: $notification-attention;
+
+            .loading-bar {
+                background: repeating-linear-gradient(
+                    -55deg,
+                    #FFE49B,
+                    #FFE49B 10px,
+                    $notification-attention 10px,
+                    $notification-attention 20px
+                );
+                width: 30%;
+                height: 100%;
+                position: absolute;
+                left: 0;
+                -webkit-transition: width 1s;
+                transition: width 1s;
+            }
+        }
+
+        &.signed-document-status {
+            background-color: $light-green;
+
+            &::after {
+                margin-left: 0.5em;
+                content: "\2713"
+            }
+
+            .loading-bar {
+                display: none;
+            }
+        }
+
+        &.error-document-status {
+            background-color: #ED5656;
+
+            .loading-bar {
+                display: none;
+            }
+        }
+    }
+
+    .daef-document-content-wrapper {
+        padding-left: 10px;
+        padding-top: 25px;
+        border-top: 1px solid $light-gray-hover;
+    }
+}

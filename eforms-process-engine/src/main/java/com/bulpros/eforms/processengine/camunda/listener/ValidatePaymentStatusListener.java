@@ -1,13 +1,12 @@
 package com.bulpros.eforms.processengine.camunda.listener;
 
 import com.bulpros.eforms.processengine.camunda.model.ProcessConstants;
-import com.bulpros.eforms.processengine.epayment.model.PaymentRequestStatusRequest;
-import com.bulpros.eforms.processengine.epayment.model.PaymentRequestStatusResponse;
-import com.bulpros.eforms.processengine.epayment.model.PaymentRequestsById;
+import com.bulpros.eforms.processengine.epayment.model.PaymentStatusResponse;
+import com.bulpros.eforms.processengine.epayment.model.enums.PaymentStatusType;
 import com.bulpros.eforms.processengine.web.exception.EFormsProcessEngineException;
+import com.bulpros.eforms.processengine.web.exception.SeverityEnum;
 import com.jayway.jsonpath.Configuration;
 import com.jayway.jsonpath.JsonPath;
-import com.jayway.jsonpath.Option;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -18,10 +17,10 @@ import org.camunda.bpm.engine.delegate.TaskListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Arrays;
 import java.util.Map;
 
 @Getter
@@ -37,6 +36,7 @@ public class ValidatePaymentStatusListener implements TaskListener {
     private String ePaymentPath;
 
     private final RestTemplate restTemplate;
+    private final Configuration jsonPathConfiguration;
 
     private Expression eServiceClientId;
     private Expression ePaymentId;
@@ -44,37 +44,36 @@ public class ValidatePaymentStatusListener implements TaskListener {
 
     @Override
     public void notify(DelegateTask delegateTask) {
-        Map<String,Object> processContext = (Map<String, Object>) delegateTask.getVariable(ProcessConstants.CONTEXT);
-        Configuration pathConfiguration = Configuration.builder().options(Option.DEFAULT_PATH_LEAF_TO_NULL).build();
-        String hasFixedPayment = JsonPath.using(pathConfiguration).parse(processContext)
+        Map<String, Object> processContext = (Map<String, Object>) delegateTask.getVariable(ProcessConstants.CONTEXT);
+        String hasFixedPayment = JsonPath.using(jsonPathConfiguration).parse(processContext)
                 .read("$.serviceSupplier.data.hasFixedPayment");
         if (!"beforeDelivery".equals(hasFixedPayment)) {
             return;
         }
 
-        String eServiceClientId = (String) this.getEServiceClientId().getValue(delegateTask);
         String ePaymentId = (String) this.getEPaymentId().getValue(delegateTask);
 
-        PaymentRequestStatusRequest statusRequest = new PaymentRequestStatusRequest();
-        statusRequest.setEServiceClientId(eServiceClientId);
-        PaymentRequestsById requestIds = new PaymentRequestsById();
-        requestIds.setRequestIds(Arrays.asList(ePaymentId));
-        statusRequest.setRequestIds(requestIds);
         try {
-            PaymentRequestStatusResponse response = restTemplate.postForObject(
+            PaymentStatusResponse response = restTemplate.getForObject(
                     UriComponentsBuilder.fromHttpUrl(this.ePaymentUrl + this.ePaymentPath)
-                            .path("/payment-request-status").toUriString(),
-                    statusRequest, PaymentRequestStatusResponse.class);
-            if (response.getPaymentStatuses().size() > 0) {
-                String paymentStatus = response.getPaymentStatuses().get(0).getStatus();
-                delegateTask.setVariable("ePaymentStatus", paymentStatus);
-                if ("pending".equals(paymentStatus)) {
-                    throw new EFormsProcessEngineException("PAYMENT_IS_STILL_PENDING");
+                            .path("/payment-status").queryParam("paymentId", ePaymentId).toUriString(),
+                    PaymentStatusResponse.class);
+            if (response != null) {
+                PaymentStatusType paymentStatus = response.getStatus();
+                delegateTask.setVariable("ePaymentStatus", paymentStatus.toString());
+                if (PaymentStatusType.pending.equals(paymentStatus) ||
+                        PaymentStatusType.inProcess.equals(paymentStatus)) {
+                    throw new EFormsProcessEngineException(SeverityEnum.WARN, "PAYMENT_IS_STILL_PENDING");
                 }
             }
+        } catch (RestClientResponseException e) {
+            delegateTask.setVariable("failure", "Failed request: " + e.getMessage());
+            log.error(e.getMessage(), e);
+            throw e;
         } catch (RestClientException e) {
             delegateTask.setVariable("failure", "Failed request: " + e.getMessage());
             log.error(e.getMessage(), e);
+            throw new EFormsProcessEngineException(SeverityEnum.ERROR, "INTEGRATIONS.UNAVAILABLE", e.getMessage());
         }
     }
 }

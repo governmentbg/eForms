@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { DAEFService } from 'src/app/core/services/daef-service.service';
 import { FormIoService } from 'src/app/core/services/form-io.service';
 import { UserProfileService } from 'src/app/core/services/user-profile.service';
 import { environment } from 'src/environments/environment';
@@ -21,7 +23,9 @@ export class ServiceDetailsModalComponent {
   constructor(@Inject(MAT_DIALOG_DATA) public data: any,
     private formioService: FormIoService,
     private userProfileService: UserProfileService,
-    private http: HttpClient) {}
+    private deafService: DAEFService,
+    private http: HttpClient,
+    private router: Router) {}
 
   ngOnInit(): void {
     if (this.data.data.deadlineTerm == 1) {
@@ -33,7 +37,8 @@ export class ServiceDetailsModalComponent {
         this.caseDocuments = response
         let urlParts = [];
         let caseDocumentNameSplit = [];
-        let downloadUrl = `api/project/${environment.formioBaseProject}/file?businessKey=${this.data.data.businessKey}&formId=`;
+        this.router.url.includes('admin-services') 
+        let downloadUrl = `api/${this.router.url.includes('admin-services') ? 'admin/' : '' }project/${environment.formioBaseProject}/file?businessKey=${this.data.data.businessKey}&formId=`;
         this.caseDocuments.forEach((caseDocumentData, index) => {
           urlParts = caseDocumentData.url.split('/');
           caseDocumentData.downloadUrl = downloadUrl;
@@ -52,7 +57,7 @@ export class ServiceDetailsModalComponent {
             this.groupedDocuments[key] = [];
           }
 
-          caseDocumentData.fileExtension = caseDocumentNameSplit[1].toUpperCase();
+          caseDocumentData.fileExtension = caseDocumentNameSplit.pop().toUpperCase();
 
           this.groupedDocuments[key].push(caseDocumentData);
 

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:agent="http://eform.e-gov.bg/dictionary/Agent"
+        xmlns:po="http://eform.e-gov.bg/dictionary/PublicOrganization"
+        xmlns:ps="http://eform.e-gov.bg/dictionary/PublicService"
+        xmlns:rauth="http://eform.e-gov.bg/dictionary/RequestAuthor"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:ident="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns:contact="http://eform.e-gov.bg/dictionary/ContactPoint"
+        xmlns:channel="http://eform.e-gov.bg/dictionary/Channel"
+        xmlns:pt="http://eform.e-gov.bg/dictionary/ProcessTime"
+        xmlns:tax="http://eform.e-gov.bg/dictionary/Tax"
+        xmlns:doc="http://eform.e-gov.bg/dictionary/Document">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Agent" schemaLocation="Agent.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicOrganization" schemaLocation="PublicOrganization.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicService" schemaLocation="PublicService.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/RequestAuthor" schemaLocation="RequestAuthor.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Identifier" schemaLocation="Identifier.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ContactPoint" schemaLocation="ContactPoint.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Channel" schemaLocation="Channel.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ProcessTime" schemaLocation="ProcessTime.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Tax" schemaLocation="Tax.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Document" schemaLocation="Document.xsd"/>
+	
+	<xsd:element name="ServiceRequest">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Заявление за предоставяне на електронна услуга
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestURI" type="ident:Identifier" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Уникален номер на заявка - представлява референтен номер на операцията (Operation Reference Number - ORN), генериран от системата за ORN
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="requestDateTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Дата и време на изпращане на заявлението
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="publicService" type="ps:PublicService" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Заявена електронна услуга
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="serviceProvider" type="po:PublicOrganization" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Доставчик на услугата, вкл. звено, ако се предоставя от звено
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="requestType" type="code:Code" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Вид на заявлението според обстоятелството дали то се подава за първи път или е последващ документ.
+							Номенклатура „Вид заявление според това дали се подава за първи път“
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="resultChannel" type="channel:Channel" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Начин на предоставяне на резултата от услугата и тип предоставяне на ЕАУ (обикновена/бърза/експресна)
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="processTime" type="pt:ProcessTime" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Вид срок за изпълнение: обикновена, бърза, експресна.
+							Номенклатура „Видове срокове за изпълнение на услуга“
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="tax" type="tax:Tax" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Такса за електронната услуга в лева (BGN).
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="resultContactPoint" type="contact:ContactPoint" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Информация за контакт с доставчика на електронната услуга:
+							адрес, електронна поща, телефон, профил в еВръчване
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="communicationChannel" type="contact:ContactPoint" minOccurs="1" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Данни за кореспонденция със заявителя. Задължително е наличието на адрес на електронна поща.
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="applicant" type="agent:Agent" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Заявител на електронната услуга – физическо лице или юридическо лице.
+							Agent е абстрактен клас, чрез който се задава връзка към Физическо лице (Person) или Юридическо лице (LegalEntity)
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="requestAuthor" type="rauth:RequestAuthor" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Автор на заявлението
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="attachedDocument" type="doc:Document" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Приложени документи
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="dataProcessingAgreement" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Потвърждение за съгласие за обработка на данните на заявителя и извличане на данни за заявителя от ПАД
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="specificContent" type="xsd:anyType" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Контейнер за специфична информация за дадената електронна услуга. 
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="language" type="code:Code" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Езикът, на който e заявена публичната услуга.
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

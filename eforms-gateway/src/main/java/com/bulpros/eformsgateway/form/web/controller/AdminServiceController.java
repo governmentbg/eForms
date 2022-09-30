@@ -1,6 +1,5 @@
 package com.bulpros.eformsgateway.form.web.controller;
 
-import com.bulpros.eformsgateway.eformsintegrations.model.EDeliveryStatusEnum;
 import com.bulpros.eformsgateway.eformsintegrations.service.LegalPersonRegistrationService;
 import com.bulpros.eformsgateway.eformsintegrations.service.SubjectRegistrationService;
 import com.bulpros.eformsgateway.form.service.ServiceService;
@@ -9,11 +8,10 @@ import com.bulpros.eformsgateway.form.service.UserProfileService;
 import com.bulpros.eformsgateway.form.utils.ValidationUtils;
 import com.bulpros.eformsgateway.form.web.controller.dto.*;
 import com.bulpros.formio.dto.ResourceDto;
-import com.bulpros.formio.exception.InvalidCaseStatusClassifierException;
 import com.bulpros.formio.exception.InvalidServiceStatusException;
-import com.bulpros.formio.model.User;
 import com.bulpros.formio.security.FormioUserService;
 import com.bulpros.formio.utils.Page;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,6 +52,7 @@ public class AdminServiceController {
         this.serviceSupplierService = serviceSupplierService;
     }
 
+    @Timed(value = "eforms-gateway-admin-get-service-submission-pagination.time")
     @GetMapping(path = "/projects/{projectId}/eas", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Page<ResourceDto>> getServiceSubmissionWithPagination(Authentication authentication,
                                                                          @PathVariable String projectId,
@@ -81,16 +80,16 @@ public class AdminServiceController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    @Timed(value = "eforms-gateway-admin-get-service-submission-by-case-status.time")
     @GetMapping(path = "/projects/{projectId}/eas/identifiers", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ServiceIdAndNameDto>> getServiceSubmissionByCaseStatusClassifier(Authentication authentication,
                                                                                          AdminServiceFilter serviceFilter,
                                                                                          @PathVariable String projectId,
-                                                                                         @RequestParam String classifier) {
+                                                                                         @RequestParam (name="caseStatus") List<Integer> caseStatuses,
+                                                                                         @RequestParam (name = "fromIssueDate", required = false) String fromIssueDate,
+                                                                                         @RequestParam (name = "toIssueDate", required = false) String toIssueDate,
+                                                                                         @RequestParam (name = "administrationUnitEDelivery", required = false) String caseAdministrativeUnit) {
         UserProfileDto userProfile = userProfileService.getUserProfileData(projectId, authentication);
-        if (ValidationUtils.getValidCaseClassifiers(classifier).isEmpty()) {
-            log.error("Invalid classifier.");
-            throw new InvalidCaseStatusClassifierException("Invalid case status classifier: " + classifier + ".");
-        }
         if (isNotPresent(serviceFilter.getApplicant())) {
            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
@@ -101,7 +100,8 @@ public class AdminServiceController {
                 return getEmptyListResponse();
             }
             serviceFilter.setServiceSupplierId(serviceSupplier.getCode());
-            List<ServiceIdAndNameDto> response = serviceService.getServicesByCaseStatusClassifierAndName(projectId, authentication, serviceFilter, classifier);
+            List<ServiceIdAndNameDto> response = serviceService.getServicesByCaseStatusAndName(projectId, authentication, serviceFilter,
+                    caseStatuses, caseAdministrativeUnit, fromIssueDate, toIssueDate);
             return ResponseEntity.ok(response);
         }
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();

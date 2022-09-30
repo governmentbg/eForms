@@ -52,9 +52,12 @@ function initPlotUpdater() {
 export default function initChart(container: any, options: any, data: any, additionalOptions: any, onError: any) {
   const handleError = createErrorHandler(onError);
 
+  let lang = navigator.language === 'bg' ? 'bg' : 'en';
+
   const plotlyOptions = {
     showLink: false,
     displaylogo: false,
+    locale: (lang === 'bg' ? 'bg' : 'en')
   };
 
   if (additionalOptions.hidePlotlyModeBar) {

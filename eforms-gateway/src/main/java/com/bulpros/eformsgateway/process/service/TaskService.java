@@ -14,7 +14,7 @@ public interface TaskService {
 
     List<TaskResponseDto> getAllTasksByProcessInstanceId(Authentication authentication, String processInstanceId);
 
-    List<HistoryTaskResponseDto> getAllHistoryTasksByProcessInstanceId(Authentication authentication, String processInstanceId);
+    List<HistoryTaskResponseDto> getAdminHistoryTasksByProcessInstanceId(Authentication authentication, String processInstanceId);
 
     List<TaskResponseDto> getActiveTasksByProcessInstanceBusinessKeyAndAssignee(Authentication authentication, String processInstanceBusinessKey, String assignee);
 }

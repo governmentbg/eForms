@@ -1,5 +1,6 @@
 package com.bulpros.eformsgateway.form.service;
 
+import com.bulpros.eformsgateway.cache.service.CacheService;
 import com.bulpros.eformsgateway.form.web.controller.dto.AdditionalProfileRoleEnum;
 import com.bulpros.eformsgateway.form.web.controller.dto.AdminCaseFilter;
 import com.bulpros.eformsgateway.form.web.controller.dto.CaseFilter;
@@ -11,14 +12,20 @@ import com.bulpros.formio.repository.formio.SubmissionFilterClauseEnum;
 import com.bulpros.formio.security.FormioUserService;
 import com.bulpros.formio.service.SubmissionService;
 import com.bulpros.formio.utils.Page;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import javax.validation.Valid;
 import java.util.*;
 import java.util.stream.Collectors;
+
+import static com.bulpros.eformsgateway.cache.service.CacheService.*;
+import static java.util.Objects.isNull;
 
 @Slf4j
 @Service
@@ -36,19 +43,32 @@ public class CaseServiceImpl implements CaseService {
     public static final String STAGE_KEY = "stage";
     public static final String CHANNEL_KEY = "channelType";
     public static final String VALUE_KEY = "value";
-    public static final String REQUESTOR_FULL_USER_NAME_KEY = "requestorFullUserName";
     public static final String EXIST_SERVICE = "existService";
+
+    private static final String GET_CASE_STATUSES_BY_CLASSIFIER_CACHE = "getCaseStatusesByClassifier";
+    private static final String GET_CASE_STATUSES_CACHE = "getCaseStatusesCache";
 
     private final FormioUserService userService;
     private final UserProfileService userProfileService;
     private final ConfigurationProperties configuration;
     private final SubmissionService submissionService;
 
+    // Do not removed: Used in @Cacheable condition SpEL expression
+    @Getter
+    private final CacheService cacheService;
+
     @Override
-    public Page<ResourceDto> getAdminCasesByUserIdAndStatusClassifier(String projectId, Authentication authentication, String classifier,
-                                                                      @Valid AdminCaseFilter caseFilter, Long page, Long size, String sort) {
+    public Page<ResourceDto> getAdminCasesByFilterParameters(String projectId, Authentication authentication,
+                                                             @Valid AdminCaseFilter caseFilter, Long page, Long size, String sort) {
         List<SubmissionFilter> filters = getAdminFilters(caseFilter);
-        return getCasePage(projectId, authentication, classifier, page, size, sort, filters);
+
+        var statuses = cacheService.get(GET_CASE_STATUSES_CACHE, caseFilter.getStatusCode().toString(),
+                List.class, PUBLIC_CACHE);
+        if(isNull(statuses)){
+            statuses = getCaseStatuses(projectId, authentication, caseFilter.getStatusCode());
+            cacheService.put(GET_CASE_STATUSES_CACHE, caseFilter.getStatusCode().toString(), statuses, PUBLIC_CACHE);
+        }
+        return getCasePage(projectId, authentication, statuses, page, size, sort, filters);
     }
 
     @Override
@@ -90,11 +110,8 @@ public class CaseServiceImpl implements CaseService {
         var caseStageIdToNameMap = getStageIdToNameMapByCases(projectId, authentication, Collections.singletonList(caseSubmission));
         var channelTypeToNameMap = getChannelTypeToNameMapByCases(projectId, authentication, Collections.singletonList(caseSubmission));
 
-        var userId = (String) caseSubmission.getData().get(configuration.getRequestorPropertyKey());
-        var userIdToUserNameMap = userProfileService.getUserIdToUserNameMap(projectId, authentication, Collections.singletonList(userId));
-
         addCaseExternalProperties(Arrays.asList(caseSubmission), serviceSubmissions, caseStatusIdToNameMap,
-                caseStageIdToNameMap, channelTypeToNameMap, userIdToUserNameMap);
+                caseStageIdToNameMap, channelTypeToNameMap);
 
         return caseSubmission;
     }
@@ -104,7 +121,12 @@ public class CaseServiceImpl implements CaseService {
                                                                  CaseFilter caseFilter, Long page, Long size, String sort) {
 
         List<SubmissionFilter> filters = getFilters(caseFilter, projectId, authentication);
-        return getCasePage(projectId, authentication, classifier, page, size, sort, filters);
+        var caseStatuses = getCaseStatusesByClassifier(projectId, authentication, classifier);
+        var caseStatusCodes = getCaseStatusCodes(caseStatuses);
+        filters.add(new SubmissionFilter(
+                SubmissionFilterClauseEnum.IN,
+                Collections.singletonMap(configuration.getCaseStatusCodePropertyKey(), caseStatusCodes)));
+        return getCasePage(projectId, authentication, caseStatuses, page, size, sort, filters);
     }
 
     @Override
@@ -133,25 +155,33 @@ public class CaseServiceImpl implements CaseService {
     }
 
     @Override
-    public List<ResourceDto> getIncompleteCasesByUserIdAndServiceIds(String projectId, Authentication authentication, List<String> serviceIds) {
+    public List<ResourceDto> getIncompleteCasesByUserIdAndServiceIds(String projectId, Authentication authentication, String applicant, List<String> serviceIds) {
         var user = userService.getUser(authentication);
 
-        var caseStatuses = submissionService.getSubmissionsWithFilter(
-                new ResourcePath(projectId, configuration.getCaseStatusResourcePath()), authentication,
-                Collections.singletonList(
-                        new SubmissionFilter(
-                                SubmissionFilterClauseEnum.IN,
-                                Collections.singletonMap(configuration.getCaseStatusClassifierPropertyKey(),
-                                        Collections.singletonList(CaseStatusClassifierEnum.SERVICE_IN_COMPLETION.classifier)))));
+        var caseStatuses = cacheService.get(GET_CASE_STATUSES_BY_CLASSIFIER_CACHE, CaseStatusClassifierEnum.SERVICE_IN_COMPLETION.classifier,
+                List.class, PUBLIC_CACHE);
+        if(isNull(caseStatuses)){
+            caseStatuses = getCaseStatusesByClassifier(projectId, authentication,
+                            CaseStatusClassifierEnum.SERVICE_IN_COMPLETION.classifier);
+            cacheService.put(GET_CASE_STATUSES_BY_CLASSIFIER_CACHE, CaseStatusClassifierEnum.SERVICE_IN_COMPLETION.classifier, caseStatuses, PUBLIC_CACHE);
+        }
 
-        var caseStatusCodes = caseStatuses
-                .stream()
-                .map(s -> (String) s.getData().get(CODE_KEY))
-                .collect(Collectors.toList());
+        var caseStatusCodes = getCaseStatusCodes(caseStatuses);
+
         List<SubmissionFilter> filters = new ArrayList<>();
-        filters.add(new SubmissionFilter(
-                SubmissionFilterClauseEnum.IN,
-                Collections.singletonMap(configuration.getRequestorPropertyKey(), user.getPersonIdentifier())));
+        if(StringUtils.isEmpty(applicant)) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getRequestorPropertyKey(), user.getPersonIdentifier())));
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getApplicantPropertyKey(), "")));
+        }
+        else {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getApplicantPropertyKey(), applicant)));
+        }
         filters.add(new SubmissionFilter(
                 SubmissionFilterClauseEnum.IN,
                 Collections.singletonMap(configuration.getServiceIdPropertyKey(), serviceIds)));
@@ -175,13 +205,8 @@ public class CaseServiceImpl implements CaseService {
         var caseStatusIdToNameMap = getStatusIdToNameMapByCases(projectId, authentication, caseSubmissions);
         var caseStageIdToNameMap = getStageIdToNameMapByCases(projectId, authentication, caseSubmissions);
 
-        var userIds = caseSubmissions
-                .stream()
-                .map(r -> (String) r.getData().get(configuration.getRequestorPropertyKey()))
-                .collect(Collectors.toList());
-        var userIdToUserNameMap = userProfileService.getUserIdToUserNameMap(projectId, authentication, userIds);
         addCaseExternalProperties(caseSubmissions, serviceSubmissions, caseStatusIdToNameMap,
-                caseStageIdToNameMap, null, userIdToUserNameMap);
+                caseStageIdToNameMap, null);
 
         return caseSubmissions;
     }
@@ -228,6 +253,7 @@ public class CaseServiceImpl implements CaseService {
         var statusIds = cases
                 .stream()
                 .map(c -> c.getData().get(STATUS_CODE_KEY).toString())
+                .distinct()
                 .collect(Collectors.toList());
 
 
@@ -279,8 +305,7 @@ public class CaseServiceImpl implements CaseService {
                                            List<ResourceDto> serviceSubmissions,
                                            Map<String, String> caseStatusIdToNameMap,
                                            Map<String, String> caseStageIdToNameMap,
-                                           Map<String, String> channelTypeToNameMap,
-                                           Map<String, String> userIdToUserNameMap) {
+                                           Map<String, String> channelTypeToNameMap) {
         customCaseSubmissions
                 .forEach(r -> r.getData().put(EXIST_SERVICE, existService(serviceSubmissions, r.getData().get(SERVICE_ID_KEY).toString())));
         customCaseSubmissions
@@ -291,8 +316,6 @@ public class CaseServiceImpl implements CaseService {
             customCaseSubmissions
                     .forEach(r -> r.getData().put(CHANNEL_NAME_KEY, channelTypeToNameMap.get(r.getData().get(CHANNEL_KEY))));
         }
-        customCaseSubmissions
-                .forEach(r -> r.getData().put(REQUESTOR_FULL_USER_NAME_KEY, userIdToUserNameMap.get(r.getData().get(configuration.getRequestorPropertyKey()))));
     }
 
     private boolean existService(List<ResourceDto> services, String id) {
@@ -335,8 +358,8 @@ public class CaseServiceImpl implements CaseService {
                     SubmissionFilterClauseEnum.NONE,
                     Collections.singletonMap(configuration.getRequestorPropertyKey(), caseFilter.getRequestor())));
             filters.add(new SubmissionFilter(
-                    SubmissionFilterClauseEnum.EXISTS,
-                    Collections.singletonMap(configuration.getApplicantPropertyKey(), false)));
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getApplicantPropertyKey(), "")));
         }
 
         return filters;
@@ -344,60 +367,66 @@ public class CaseServiceImpl implements CaseService {
 
     private List<SubmissionFilter> getAdminFilters(AdminCaseFilter caseFilter) {
         List<SubmissionFilter> filters = new ArrayList<>();
-            if (caseFilter.getServiceId() != null && !caseFilter.getServiceId().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.NONE,
-                        Collections.singletonMap(configuration.getServiceIdPropertyKey(),
-                                Collections.singletonList(caseFilter.getServiceId()))));
 
-            }
+        if (caseFilter.getStatusCode() != null && !caseFilter.getStatusCode().isEmpty()) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getCaseStatusCodePropertyKey(), caseFilter.getStatusCode())));
+        }
 
-            if (caseFilter.getBusinessKey() != null && !caseFilter.getBusinessKey().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.REGEX,
-                        Collections.singletonMap(configuration.getBusinessKey(), "(.*)" + caseFilter.getBusinessKey() + "(.*)")));
-            }
+        if (!StringUtils.isEmpty(caseFilter.getAdministrationUnitEDelivery())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.NONE,
+                    Collections.singletonMap(configuration.getAdministrationUnitEDeliveryKey(),
+                            caseFilter.getAdministrationUnitEDelivery())));
+        }
 
-            if (caseFilter.getProcessInstanceIds() != null && !caseFilter.getProcessInstanceIds().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.IN,
-                        Collections.singletonMap(configuration.getProcessInstanceId(), caseFilter.getProcessInstanceIds())));
+        if (!StringUtils.isEmpty(caseFilter.getServiceId())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.NONE,
+                    Collections.singletonMap(configuration.getServiceIdPropertyKey(),
+                            Collections.singletonList(caseFilter.getServiceId()))));
+        }
 
-            }
+        if (!StringUtils.isEmpty(caseFilter.getBusinessKey())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.REGEX,
+                    Collections.singletonMap(configuration.getBusinessKey(), "(.*)" + caseFilter.getBusinessKey() + "(.*)")));
+        }
 
-            if (caseFilter.getFromIssueDate() != null && !caseFilter.getFromIssueDate().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.GTE,
-                        Collections.singletonMap(configuration.getIssueDate(), caseFilter.getFromIssueDate())));
-            }
+        if (!StringUtils.isEmpty(caseFilter.getRequestor())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.REGEX,
+                    Collections.singletonMap(configuration.getRequestorPropertyKey(), "(.*)" + caseFilter.getRequestor() + "(.*)")));
+        }
 
-            if (caseFilter.getToIssueDate() != null && !caseFilter.getToIssueDate().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.LTE,
-                        Collections.singletonMap(configuration.getIssueDate(), caseFilter.getToIssueDate())));
-            }
+        if (!StringUtils.isEmpty(caseFilter.getOnBehalfOf())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.REGEX,
+                    Collections.singletonMap(configuration.getApplicantPropertyKey(), "(.*)" + caseFilter.getOnBehalfOf() + "(.*)")));
+        }
 
-            if (caseFilter.getUserIds() != null && !caseFilter.getUserIds().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.IN,
-                        Collections.singletonMap(configuration.getRequestorPropertyKey(), caseFilter.getUserIds())));
-            }
+        if (!StringUtils.isEmpty(caseFilter.getFromIssueDate())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.GTE,
+                    Collections.singletonMap(configuration.getDeliveryDate(), caseFilter.getFromIssueDate())));
+        }
 
-            if (caseFilter.getServiceSupplierId() != null && !caseFilter.getServiceSupplierId().isEmpty()) {
-                filters.add(new SubmissionFilter(
-                        SubmissionFilterClauseEnum.IN,
-                        Collections.singletonMap(configuration.getServiceSupplierIdPropertyKey(), caseFilter.getServiceSupplierId())));
-            }
+        if (!StringUtils.isEmpty(caseFilter.getToIssueDate())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.LTE,
+                    Collections.singletonMap(configuration.getDeliveryDate(), caseFilter.getToIssueDate())));
+        }
+
+        if (!StringUtils.isEmpty(caseFilter.getServiceSupplierId())) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getServiceSupplierIdPropertyKey(), caseFilter.getServiceSupplierId())));
+        }
         return filters;
     }
 
-    private Page<ResourceDto> getCasePage(String projectId, Authentication authentication, String classifier, Long page, Long size, String sort, List<SubmissionFilter> filters) {
-        var caseStatuses = getCaseStatuses(projectId, authentication, classifier);
-        var caseStatusCodes = getCaseStatusCodes(caseStatuses);
-        filters.add(new SubmissionFilter(
-                SubmissionFilterClauseEnum.IN,
-                Collections.singletonMap(configuration.getCaseStatusCodePropertyKey(), caseStatusCodes)));
-
+    private Page<ResourceDto> getCasePage(String projectId, Authentication authentication, List<ResourceDto> statuses, Long page, Long size, String sort, List<SubmissionFilter> filters) {
         var paginatedCaseSubmissions = submissionService.getSubmissionsWithFilter(
                 new ResourcePath(projectId, configuration.getCaseResourcePath()), authentication,
                 filters, page, size, sort);
@@ -419,18 +448,11 @@ public class CaseServiceImpl implements CaseService {
                                 SubmissionFilterClauseEnum.IN,
                                 Collections.singletonMap(configuration.getArId(), serviceIds))));
 
-        var caseStatusIdToNameMap = getStatusIdToNameMapByCasesStatuses(caseStatuses);
+        var caseStatusIdToNameMap = getStatusIdToNameMapByCasesStatuses(statuses);
         var caseStageIdToNameMap = getStageIdToNameMapByCases(projectId, authentication, paginatedCaseSubmissions.getElements());
 
-        var userIds = paginatedCaseSubmissions.getElements()
-                .stream()
-                .map(r -> (String) r.getData().get(configuration.getRequestorPropertyKey()))
-                .distinct()
-                .collect(Collectors.toList());
-        var userIdToUserNameMap = userProfileService.getUserIdToUserNameMap(projectId, authentication, userIds);
-
         addCaseExternalProperties(paginatedCaseSubmissions.getElements(), serviceSubmissions, caseStatusIdToNameMap,
-                caseStageIdToNameMap, null, userIdToUserNameMap);
+                caseStageIdToNameMap, null);
 
         sortCasesByExternalProperties(paginatedCaseSubmissions.getElements(), sort);
 
@@ -439,7 +461,15 @@ public class CaseServiceImpl implements CaseService {
                 paginatedCaseSubmissions.getElements());
     }
 
-    private List<ResourceDto> getCaseStatuses(String projectId, Authentication authentication, String classifier){
+    @Override
+    @Cacheable(value = GET_CASE_STATUSES_BY_CLASSIFIER_CACHE, key = "#classifier", unless = "#result == null", condition = CACHE_ACTIVE_CONDITION)
+    public List<ResourceDto> getCaseStatusesByClassifier(String projectId, Authentication authentication, String classifier){
+        return getCaseStatusesByClassifier(projectId, authentication, classifier, PUBLIC_CACHE);
+    }
+
+    @Override
+    @Cacheable(value = GET_CASE_STATUSES_BY_CLASSIFIER_CACHE, key = "#classifier", unless = "#result == null", condition = CACHE_CONTROL_CONDITION)
+    public List<ResourceDto> getCaseStatusesByClassifier(String projectId, Authentication authentication, String classifier, String cacheControl) {
         return submissionService.getAllSubmissionsWithFilter(
                 new ResourcePath(projectId, configuration.getCaseStatusResourcePath()), authentication,
                 Collections.singletonList(
@@ -447,6 +477,51 @@ public class CaseServiceImpl implements CaseService {
                                 SubmissionFilterClauseEnum.IN,
                                 Collections.singletonMap(configuration.getCaseStatusClassifierPropertyKey(), classifier))),20L);
     }
+
+    @Override
+    public String getCaseApplicantByBusinessKey(String projectId, Authentication authentication, String businessKye) {
+        ArrayList<SubmissionFilter> filters = new ArrayList<>();
+        filters.add(new SubmissionFilter( SubmissionFilterClauseEnum.NONE,
+                Collections.singletonMap(configuration.getBusinessKey(), businessKye)));
+        filters.add(SubmissionFilter.build("select", "data.applicant"));
+        List<ResourceDto> caseResource = submissionService.getAllSubmissionsWithFilter(
+                new ResourcePath(projectId, configuration.getCaseResourcePath()),
+                authentication, filters, 1L, false);
+        if(caseResource.isEmpty()) return null;
+        return (String) caseResource.get(0).getData().get(configuration.getApplicantPropertyKey());
+    }
+
+    @Override
+    public String getCaseSupplierByBusinessKey(String projectId, Authentication authentication, String businessKye) {
+        ArrayList<SubmissionFilter> filters = new ArrayList<>();
+        filters.add(new SubmissionFilter( SubmissionFilterClauseEnum.NONE,
+                Collections.singletonMap(configuration.getBusinessKey(), businessKye)));
+        filters.add(SubmissionFilter.build("select", "data.supplier"));
+        List<ResourceDto> caseResource = submissionService.getAllSubmissionsWithFilter(
+                new ResourcePath(projectId, configuration.getCaseResourcePath()),
+                authentication, filters, 1L, false);
+        if(caseResource.isEmpty()) return null;
+        return (String) caseResource.get(0).getData().get(configuration.getSupplierPropertyKey());
+    }
+
+    @Override
+    @Cacheable(value = GET_CASE_STATUSES_CACHE, key = "new org.springframework.cache.interceptor.SimpleKey(statuses)", unless = "#result == null", condition = CACHE_ACTIVE_CONDITION)
+    public List<ResourceDto> getCaseStatuses(String projectId, Authentication authentication, List<Integer> statuses) {
+        return getCaseStatuses(projectId, authentication, statuses, PUBLIC_CACHE);
+    }
+
+    @Override
+    @Cacheable(value = GET_CASE_STATUSES_CACHE, key = "new org.springframework.cache.interceptor.SimpleKey(statuses)", unless = "#result == null", condition = CACHE_CONTROL_CONDITION)
+    public List<ResourceDto> getCaseStatuses(String projectId, Authentication authentication, List<Integer> statuses, String cacheControl) {
+        return submissionService.getAllSubmissionsWithFilter(
+                new ResourcePath(projectId, configuration.getCaseStatusResourcePath()), authentication,
+                Collections.singletonList(
+                        new SubmissionFilter(
+                                SubmissionFilterClauseEnum.IN,
+                                Collections.singletonMap(configuration.getCodePropertyKey(), statuses))),20L);
+
+    }
+
     private List<String> getCaseStatusCodes(List<ResourceDto> caseStatuses){
         return caseStatuses
                 .stream()

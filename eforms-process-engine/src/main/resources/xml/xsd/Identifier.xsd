@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+
+	<xsd:complexType name="Identifier">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+			Всеки идентификатор, издаден от всеки орган (държавен или друг)
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Стойност на самия идентификатор
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identifierType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Тип на идентификатора, например: ЕГН, ЛНЧ, ЕИК, БУЛСТАТ и т.н. от Номенклатура „Вид идентификатор“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="issueDate" type="xsd:date" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Датата на издаване на идентификатора
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

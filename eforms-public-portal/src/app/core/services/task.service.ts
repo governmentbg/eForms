@@ -17,4 +17,12 @@ export class TaskService {
   unclaimTask(id: any) {
     return this.http.post(`api/admin/tasks/${id}/unclaim`, {});
   }
+
+  getCurrentTask(processInstanceId){
+    return this.http.get(`api/admin/tasks?processInstanceId=${processInstanceId}`);
+  }
+  
+  getPreviousTasks(processInstanceId){
+    return this.http.get(`api/admin/history-tasks?processInstanceId=${processInstanceId}`);
+  }
 }

@@ -8,7 +8,7 @@ import { TooltipPossitions } from 'src/app/core/types/tooltip-possitions';
 export class TooltipDirective {
   
   @Input('appTooltip') tooltipBody: string;
-  @Input() tooltipTitle: string = 'IMPORTANT';
+  @Input() tooltipTitle: string;
   @Input() type: string ='notice';
   @Input() placement: string = "top-center";
   tooltip: HTMLElement;
@@ -41,7 +41,9 @@ export class TooltipDirective {
     this.tooltip = this.renderer.createElement('span');
 
     let tooltipTitle = this.renderer.createElement('span');
-    this.renderer.addClass(tooltipTitle, 'tooltip-title');
+    if(this.tooltipTitle) {
+      this.renderer.addClass(tooltipTitle, 'tooltip-title');
+    }
 
     let tooltipBody = this.renderer.createElement('span');    
     this.renderer.addClass(tooltipBody, 'tooltip-body');
@@ -58,17 +60,18 @@ export class TooltipDirective {
 
     this.renderer.appendChild(
       tooltipTitle,
-      this.renderer.createText(this.translateService.instant(this.tooltipTitle))
+      this.renderer.createText(this.tooltipTitle ? this.translateService.instant(this.tooltipTitle) : '')
     );
-
-    this.renderer.appendChild(
-      tooltipTitle,
-      this.renderer.createElement('br')
-    ); 
+    if(this.tooltipTitle) {
+      this.renderer.appendChild(
+        tooltipTitle,
+        this.renderer.createElement('br')
+      );
+    } 
 
     this.renderer.appendChild(
       tooltipBody,
-      this.renderer.createText(this.tooltipBody)
+      this.renderer.createText(this.tooltipBody ? this.translateService.instant(this.tooltipBody) : '')
     );
 
     this.renderer.appendChild(

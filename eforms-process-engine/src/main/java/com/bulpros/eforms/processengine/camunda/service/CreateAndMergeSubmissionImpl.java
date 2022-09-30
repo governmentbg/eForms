@@ -14,9 +14,9 @@ import net.minidev.json.parser.ParseException;
 import org.jvnet.hk2.annotations.Service;
 import org.springframework.security.core.Authentication;
 
+@Slf4j
 @Service
 @AllArgsConstructor
-@Slf4j
 public class CreateAndMergeSubmissionImpl<T> implements CreateAndMergeSubmission<T> {
 
     private final SubmissionService submissionService;
@@ -39,43 +39,33 @@ public class CreateAndMergeSubmissionImpl<T> implements CreateAndMergeSubmission
         }
         parsedData.forEach((key, value) -> {
             var patchDataObject = DataUtil.getJsonObjectForPatch(
-                    "replace",
+                    "add",
                     "/data/" + key,
                     value
             );
             jsonPatchArray.add(patchDataObject);
         });
-        try {
-            this.submissionService.updateSubmission(
-                    projectId,
-                    ValueTypeEnum.ID,
-                    resourceName,
-                    ValueTypeEnum.PATH,
-                    authentication,
-                    id,
-                    jsonPatchArray.toJSONString()
-            );
-        }
-        catch (Exception e) {
-            log.error(String.format("Could not update resource %s with id %s. Message: %s", resourceName, id, e.getMessage()));
-        }
+        this.submissionService.updateSubmission(
+                projectId,
+                ValueTypeEnum.ID,
+                resourceName,
+                ValueTypeEnum.PATH,
+                authentication,
+                id,
+                jsonPatchArray.toJSONString()
+        );
     }
 
     public void createSubmission(String projectId, String resourceName, T details, Authentication authentication) {
         var data = new JSONObject();
         data.put("data", details);
-        try {
-            this.submissionService.createSubmission(
-                    projectId,
-                    ValueTypeEnum.ID,
-                    resourceName,
-                    ValueTypeEnum.PATH,
-                    authentication,
-                    data.toJSONString()
-            );
-        }
-        catch (Exception e) {
-            log.error(String.format("Could not create resource %s. Message: %s", resourceName, e.getMessage()));
-        }
+        this.submissionService.createSubmission(
+                projectId,
+                ValueTypeEnum.ID,
+                resourceName,
+                ValueTypeEnum.PATH,
+                authentication,
+                data.toJSONString()
+        );
     }
 }

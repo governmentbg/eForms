@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:po="http://eform.e-gov.bg/dictionary/PublicOrganization"
+        xmlns:ps="http://eform.e-gov.bg/dictionary/PublicService"
+        xmlns:ident="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns:doc="http://eform.e-gov.bg/dictionary/Document">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicOrganization" schemaLocation="PublicOrganization.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicService" schemaLocation="PublicService.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Identifier" schemaLocation="Identifier.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Document" schemaLocation="Document.xsd"/>
+	
+	<xsd:element name="ServiceRequestResponse">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Заявление за предоставяне на електронна услуга
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="requestURI" type="ident:Identifier" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Уникален номер на заявка - представлява референтен номер на операцията (Operation Reference Number - ORN), генериран от системата за ORN
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="requestDateTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Дата и време на изпращане на заявлението
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="publicService" type="ps:PublicService" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Заявена електронна услуга
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="serviceProvider" type="po:PublicOrganization" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Доставчик на услугата, вкл. звено, ако се предоставя от звено
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="specificContent" type="xsd:base64Binary" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Контейнер за специфична информация за дадената електронна услуга. 
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="attachedDocument" type="doc:Document" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Приложени документи
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="responseDateTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Дата и време на предоставяне на резултата от услугата
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+</xsd:schema>

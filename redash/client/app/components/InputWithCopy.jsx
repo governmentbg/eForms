@@ -3,6 +3,7 @@ import Input from "antd/lib/input";
 import CopyOutlinedIcon from "@ant-design/icons/CopyOutlined";
 import Tooltip from "@/components/Tooltip";
 import PlainButton from "./PlainButton";
+import { t } from "@/locales/config.jsx";
 
 export default class InputWithCopy extends React.Component {
   constructor(props) {
@@ -29,10 +30,10 @@ export default class InputWithCopy extends React.Component {
       if (!success) {
         throw new Error();
       }
-      this.setState({ copied: "Copied!" });
+      this.setState({ copied: t("Copied!") });
     } catch (err) {
       this.setState({
-        copied: "Copy failed",
+        copied: t("Copy failed"),
       });
     }
 
@@ -42,7 +43,7 @@ export default class InputWithCopy extends React.Component {
 
   render() {
     const copyButton = (
-      <Tooltip title={this.state.copied || "Copy"}>
+      <Tooltip title={this.state.copied || t("Copy")}>
         <PlainButton onClick={this.copy}>
           {/* TODO: lacks visual feedback */}
           <CopyOutlinedIcon />

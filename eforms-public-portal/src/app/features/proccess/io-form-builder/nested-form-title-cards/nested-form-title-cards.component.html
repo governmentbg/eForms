@@ -1,0 +1,23 @@
+<div class="header mb-2"> {{ ((readonly === true)? 'PLEASE_REVIEW_ALL_DOCUMENTS' : 'PLEASE_FILL_OUT_ALL_DOCUMENTS') | translate }} </div>
+
+<div class="row" *ngIf="!(nestedForms.length === 1 && hasInitDocument)">
+    <ng-container *ngFor="let form of nestedForms">
+        <div class="col-12 col-md-4" *ngIf="form.isDocumentRequired !== 'non-required-from-main'">
+            <div class="nested-card" [class]="(!isDocumentRequired(form.isDocumentRequired) && form.isDocumentRequired !== 'non-required') || !isOnline ? 'card-non-required' : ''"(click)="selectNestedForm(form)">
+                <div class="nested-triangle-white"></div>
+                <div class="nested-triangle-blue"></div>
+                <div class="nested-card-inner">
+                    <div> {{ form.label }} </div>
+                </div>
+                <span *ngIf="form.isValid && form.hasBeenActive && isDocumentRequired(form.isDocumentRequired)" class="completed"> {{ 'COMPLETED' |
+                    translate }} <i class="fa fa-check"></i></span>
+                <span *ngIf="!form.isValid && form.hasBeenActive && isDocumentRequired(form.isDocumentRequired)" class="completed"> {{ 'INCOMPLETE' |
+                    translate }} <i class="fa fa-exclamation-triangle"></i></span>
+                <span *ngIf="!isDocumentRequired(form.isDocumentRequired) && form.isDocumentRequired !== 'non-required'" class="document-not-required"> {{ 'DOCUMENT_IS_NON_REQUIRED' |
+                    translate }}</span>
+                <span *ngIf="form.isDocumentRequired === 'non-required'" class="completed"> {{ (form.documentWasSubmitted ? 'COMPLETED' : 'DOCUMENT_IS_OPTIONAL') | 
+                    translate }} <i *ngIf="form.documentWasSubmitted" class="fa fa-check"></i></span>
+            </div>
+        </div>
+    </ng-container>
+</div>

@@ -19,7 +19,13 @@ export class TokenInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     if( request.url.match('api/public') ) {
       // Ignore Bearer
-    } else if(!request.url.match('nexu.js') || request.url.match('nexu-installer')){
+    } else if (request.url.match('reports')) {
+      request = request.clone({
+        setHeaders: {
+          'X-Authorization': this.oidcSecurityService.getToken()
+        }
+      });
+    } else if((!request.url.match('nexu.js') || request.url.match('nexu-installer')) && this.oidcSecurityService.getToken()){
       request = request.clone({
         setHeaders: {
           Authorization: `Bearer ${this.oidcSecurityService.getToken()}`

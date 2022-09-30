@@ -2,66 +2,71 @@
 @import "colors.scss";
 
 :host {
-    height: calc(100% - #{$desktop-header-height});
+  height: calc(100% - #{$desktop-header-height});
 
-    .help-application-eau-container {
-        min-height: 46em;
-        background-color: $white;
+  .help-application-eau-container {
+    min-height: 46em;
+    background-color: $white;
 
-        @media screen and (max-width: 840px) {
-            div:nth-child(0) {
-                flex-direction: column;
-            }
+    @media screen and (max-width: 840px) {
+      div:nth-child(0) {
+        flex-direction: column;
+      }
 
-            .back-button {
-                padding: 8px 0 0 8px;
-                display: flex;
-                align-self: flex-start;
-            }
-        }
+      .back-button {
+        padding: 8px 0 0 8px;
+        display: flex;
+        align-self: flex-start;
+      }
     }
+  }
 
-}
-
-
-::ng-deep .mat-cell {
+  ::ng-deep .mat-cell {
     font-size: 13px;
-}
+  }
 
-::ng-deep .mat-cell:nth-child(7) {
+  ::ng-deep .mat-cell:nth-child(7) {
     word-break: break-word;
-}
+  }
 
-::ng-deep .mat-sort-header-content {
+  ::ng-deep .mat-sort-header-content {
     font-size: 13px;
+  }
 }
 
 
-::ng-deep .formio-form {
+:host ::ng-deep .formio-form {
+  padding: 0 1.5em 1.5em 1.5em;
 
-    padding: 0 1.5em 1.5em 1.5em;
-    
-    .formio-component-submit {
-        display: none;
+  .formio-component-submit {
+    display: none;
+  }
+
+  button {
+    border-radius: 7px !important;
+    background-color: $main-light-blue;
+    color: $main-dark-blue-second;
+    height: 45px;
+    font-weight: 400;
+    line-height: 24px;
+    padding: 0px 24px;
+
+    &:hover {
+      background-color: $main-light-blue-hover;
     }
-    
-    button {
-        border-radius: 7px !important;
-        background-color: $main-light-blue;
-        color: $main-dark-blue-second;
-        height: 45px;
-        font-weight: 400;
-        line-height: 24px;
-        padding: 0px 24px;
+  }
 
-        &:hover {
-            background-color: $main-light-blue-hover;
-        }
-    }
+  button:focus,
+  button:active:focus,
+  button.active:focus {
+    outline: none;
+    outline-style: none;
+  }
 
-    button:focus, button:active:focus, button.active:focus {
-        outline: none;
-        outline-style: none;
-    }
-
+  a{
+    color: #007bff !important;
+    text-decoration: none  !important;
+    background-color: transparent  !important;
+    cursor: pointer;
+  }
 }

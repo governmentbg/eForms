@@ -14,14 +14,13 @@ public class AdminCaseFilter extends CaseFilter implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String serviceId;
-    @Pattern(regexp ="[^~!@#$%^&*+=|<>]*")
-    private String requestorName;
-    private List<String> processInstanceIds;
+    private List<Integer> statusCode;
+    private String administrationUnitEDelivery;
     private List<String> userIds;
     private String serviceSupplierId;
     private String fromIssueDate;
     private String toIssueDate;
-    private Boolean assignedToMe;
+    private String onBehalfOf;
     
     public AdminCaseFilter(String businessKey, String requestor, String applicant, String serviceName,
                            String serviceId) {

@@ -16,6 +16,7 @@ export class HelpApplicationEauComponent implements OnInit {
 
   form;
   formSrc;
+  formSubmition
 
   constructor(private router: Router,
     public dialog: MatDialog,
@@ -23,21 +24,26 @@ export class HelpApplicationEauComponent implements OnInit {
     private userProfileService: UserProfileService) { }
 
   ngOnInit(): void {
-      this.formioService.getFormByAlias('system/help/information-application-eau', environment.formioBaseProject).subscribe(result => {      
-      this.formSrc = result;
-      let baseUrl = `${environment.apiUrl}/projects/${environment.formioBaseProject}`
-      Formio.setBaseUrl(baseUrl);
-      this.formSrc.context = {
-        classifier: '',
-        formioBaseProject: environment.formioBaseProject,
-        apiUrl: environment.apiUrl,
-        selectedProfile: this.userProfileService.selectedProfile
-      }
+    this.formioService.getFormIoResource('system/help/information-application-eau' ).subscribe(result => {
+      this.formioService.getFormIoSubmissionById('system/help/information-application-eau', result[0]._id).subscribe(file => {
+        this.formSubmition = file
+        this.formioService.getFormByAlias('system/help/information-application-eau', environment.formioBaseProject).subscribe(result => {      
+          this.formSrc = result;
+          let baseUrl = `${environment.apiUrl}/projects/${environment.formioBaseProject}`
+          Formio.setBaseUrl(baseUrl);
+          this.formSrc.context = {
+            classifier: '',
+            formioBaseProject: environment.formioBaseProject,
+            apiUrl: environment.apiUrl,
+            selectedProfile: this.userProfileService.selectedProfile
+          }
+          })
       })
+    })
   }
 
   back() {
-    this.router.navigate(['help-info']);
+    this.router.navigate(['home']);
   }
 
 

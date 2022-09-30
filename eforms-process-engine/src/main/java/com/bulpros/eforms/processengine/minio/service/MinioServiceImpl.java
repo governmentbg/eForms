@@ -56,8 +56,8 @@ public class MinioServiceImpl implements MinioService {
         } catch (ErrorResponseException | ServerException e) {
             throw e;
         } catch (MinioException | NoSuchAlgorithmException | IOException | InvalidKeyException e) {
-            log.error(e.getMessage());
-            throw new Exception("Could not save file in minio!");
+            log.error(e.getMessage(), e);
+            throw new Exception(e.getMessage());
         }
     }
 
@@ -85,8 +85,8 @@ public class MinioServiceImpl implements MinioService {
         } catch (ErrorResponseException | ServerException e) {
             throw e;
         } catch (MinioException | NoSuchAlgorithmException | IOException | InvalidKeyException e) {
-            log.error(e.getMessage());
-            throw new Exception("Could not get file from minio!");
+            log.error(e.getMessage(), e);
+            throw new Exception(e.getMessage());
         }
     }
 

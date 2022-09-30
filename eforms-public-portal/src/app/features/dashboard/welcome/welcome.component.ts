@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
@@ -37,6 +37,7 @@ export class WelcomeComponent implements OnInit {
   unitsFiltered: Observable < any > ;
   suppliersInitialLenght;
   chosenUserProfile: any;
+  hasDeliveryCannel = false;
 
   constructor(
     public oidcSecurityService: OidcSecurityService,
@@ -74,12 +75,19 @@ export class WelcomeComponent implements OnInit {
         this.daefService.getFullDAEFService(this.easId, this.suppliers[0].supplierEAS).subscribe(response => {
           this.suppliers[0] = response;
           this.selectedSupplier.value = this.suppliers[0];
+
+          if (!this.selectedSupplier.value.data.channelsAndTermsList?.length && !this.selectedSupplier.value.data.administrativeUnitsList?.length) {
+            this.notificationsBannerService.show({message: "ERRORS.VALIDATE_CHANNEL", type: NotificationBarType.Error });
+          } else {
+            this.hasDeliveryCannel = true;
+          }
+
           if(this.selectedSupplier.value.data.hasAdministrativeUnits !== 'no'){
             this.selectedSupplier.value.easAdministrativeUnitsList = this.suppliers[0].data.administrativeUnitsList;
             if (this.selectedSupplier.value.easAdministrativeUnitsList.length === 1) {
               this.selectedUnit.value = this.selectedSupplier.value.easAdministrativeUnitsList[0];
             } else {
-              this.onSelectSupplier()
+              this.onSelectSupplier(false)
             }
           }
         });
@@ -97,6 +105,17 @@ export class WelcomeComponent implements OnInit {
               return this.daefService.getFullDAEFService(this.easId, this.selectedSupplier.value.data.supplierEAS).pipe(
                 map(response => {
                 this.selectedSupplier.value = response;
+
+                if (!this.selectedSupplier.value.data.channelsAndTermsList?.length && !this.selectedSupplier.value.data.administrativeUnitsList?.length) {
+                  this.notificationsBannerService.show({message: "ERRORS.VALIDATE_CHANNEL", type: NotificationBarType.Error });
+                  return;
+                } else if(this.selectedSupplier.value.data.administrativeUnitsList?.length === 1 && !this.selectedSupplier.value.data.administrativeUnitsList[0].useSupplierChannelsAndTermsList && !this.selectedSupplier.value.data.administrativeUnitsList[0].channelsAndTermsList.length) {
+                  this.notificationsBannerService.show({message: "ERRORS.VALIDATE_CHANNEL", type: NotificationBarType.Error });
+                  return;
+                } else {
+                  this.hasDeliveryCannel = true;
+                }
+                
                 if(this.selectedSupplier.value.data.hasAdministrativeUnits !== 'no'){
                   this.selectedSupplier.value.easAdministrativeUnitsList = this.selectedSupplier.value.data.administrativeUnitsList;
                   if (this.selectedSupplier.value.easAdministrativeUnitsList.length === 1) {
@@ -110,7 +129,9 @@ export class WelcomeComponent implements OnInit {
                 }
               }))
             }
-          }))
+          })
+          )
+
       }
     } else {
       this.suppliersInitialLenght = 0;
@@ -118,8 +139,30 @@ export class WelcomeComponent implements OnInit {
     }
     this.selectedUnit.valueChanges.subscribe(() => {
         this.notificationsBannerService.hideAllErrors()
-
+        if (this.selectedUnit.value.channelsAndTermsList) {
+          if (this.selectedUnit.value.channelsAndTermsList?.length) {
+            this.hasDeliveryCannel = true;
+          } else if(this.selectedUnit.value.useSupplierChannelsAndTermsList && this.selectedSupplier.value.data.channelsAndTermsList?.length) {
+            this.hasDeliveryCannel = true;
+          } else {
+            this.hasDeliveryCannel = false;
+            setTimeout(() => { // The timeout is used to prevent scrolling down to the units list
+              this.notificationsBannerService.show({message: "ERRORS.VALIDATE_CHANNEL", type: NotificationBarType.Error });
+            }, 100)
+          }
+        }
       })
+
+      if(this.suppliersFiltered){
+
+        this.suppliersFiltered.subscribe((val) => {
+          if(!val.length){
+            this.selectedSupplier.setErrors({"no_results_from_service": "no_results_from_service"});
+            this.selectedSupplier.touched = true;
+          } 
+        })
+
+      }
   }
 
   rejectService(): void {
@@ -139,7 +182,8 @@ export class WelcomeComponent implements OnInit {
 
   acceptService(): void {
     if (this.isSupplierValid &&
-        this.isUnitValid) {
+        this.isUnitValid && 
+        this.hasDeliveryCannel) {
       if (this.selectedSupplier.value.easAdministrativeUnitsList?.length === 1) {
         this.selectedUnit.value = this.selectedSupplier.value.easAdministrativeUnitsList[0];
       }
@@ -173,24 +217,21 @@ export class WelcomeComponent implements OnInit {
   }
 
   get isSupplierValid() {
-    if (this.selectedSupplier.valid || this.suppliers.length === 1) {
+    if ((this.selectedSupplier.valid && this.selectedSupplier.value?.data) || this.suppliersInitialLenght === 1) {
       return true;
     }
     return false;
   }
 
   get isUnitValid() {
-    if (this.selectedSupplier.value.easAdministrativeUnitsList?.length > 1 && !this.selectedUnit.valid) {
+    if (this.selectedSupplier.value.easAdministrativeUnitsList?.length > 1 && (!this.selectedUnit.valid || !this.selectedUnit.value?.administrationUnit)) {
       return false;
     }
     return true;
   }
 
   private _filterUnits(value: any) {
-    if(!value){
-      if(this.selectedSupplier.value.easAdministrativeUnitsList.length > 10) {
-        return this.selectedSupplier.value.easAdministrativeUnitsList.slice(0,10)
-      }     
+    if(!value){ 
       return this.selectedSupplier.value.easAdministrativeUnitsList
     }
     let filterValue = '';
@@ -202,9 +243,6 @@ export class WelcomeComponent implements OnInit {
     let administrativeUnitsList = this.selectedSupplier.value.easAdministrativeUnitsList.filter(
       unit => unit.administrationUnit.toLowerCase().indexOf(filterValue) > -1
     )
-    if(administrativeUnitsList.length>10){
-      administrativeUnitsList = administrativeUnitsList.slice(0,10)
-    }
     return administrativeUnitsList
   }
   
@@ -216,22 +254,38 @@ export class WelcomeComponent implements OnInit {
     return value ? value.administrationUnit : undefined;
   }
 
-  clearSelectedSupplier() {
-    this.selectedSupplier.setValue(''); 
+  clearSelectedSupplier(event: Event) {
+    event.stopImmediatePropagation();
+    this.selectedSupplier.setValue('');
   }
 
-  clearSelectedUnit() {
+  clearSelectedUnit(emitEvent: boolean) {
+    this.selectedUnit.setValue('', { emitEvent: emitEvent }); 
+  }
+
+  clearSelectedUnitOnClose(event: Event) {
+    event.stopImmediatePropagation();
     this.selectedUnit.setValue(''); 
   }
 
-  onSelectSupplier(){
-    this.clearSelectedUnit(); 
-    return this.unitsFiltered = this.selectedUnit.valueChanges.pipe(
+  onSelectSupplier(emitEvent: boolean = true){
+    this.clearSelectedUnit(emitEvent); 
+    
+    this.unitsFiltered = this.selectedUnit.valueChanges.pipe(
       startWith(""),
       map(value => 
         {
           return this._filterUnits(value)})
     )
+
+    this.unitsFiltered.subscribe((val) => {
+      if(!val.length){
+        this.selectedUnit.setErrors({"no_results_from_service": "no_results_from_service"});
+        this.selectedUnit.touched = true;
+      } 
+    })
+
+    return this.unitsFiltered
   }
 
   goToLink(url: string){
@@ -242,6 +296,7 @@ export class WelcomeComponent implements OnInit {
   }
 
   get disableNextButton() {
-    return (this.existUserProfile && this.iseDeliveryActive && this.suppliersInitialLenght > 0 && this.isUnitValid && this.isSupplierValid )
+    return (this.existUserProfile && this.iseDeliveryActive && this.suppliersInitialLenght > 0 && this.isUnitValid && this.isSupplierValid && this.hasDeliveryCannel)
   }
+
 }

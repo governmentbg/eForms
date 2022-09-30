@@ -105,3 +105,8 @@ button:focus, button:active:focus, button.active:focus {
     outline: none !important;
     outline-style: none !important;
 }
+
+.disabled-clickable, .disabled-clickable:hover {
+    background-color: $medium-gray;
+    color: $white;
+}

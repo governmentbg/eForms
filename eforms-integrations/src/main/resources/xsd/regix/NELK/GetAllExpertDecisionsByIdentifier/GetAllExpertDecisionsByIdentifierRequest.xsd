@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://egov.bg/RegiX/NELK/EISME" targetNamespace="http://egov.bg/RegiX/NELK/EISME" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+	<xs:complexType name="GetAllExpertDecisionsByIdentifierRequest">
+		<xs:annotation>
+			<xs:documentation>Входни параметри за идентификатор</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Identifier" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>ЕГН/ЛНЧ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetAllExpertDecisionsByIdentifierRequest" type="GetAllExpertDecisionsByIdentifierRequest">
+		<xs:annotation>
+			<xs:documentation>Справка за всички експертни решения на лице - входни параметри</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

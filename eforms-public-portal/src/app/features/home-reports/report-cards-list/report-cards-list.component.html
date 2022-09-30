@@ -1,0 +1,17 @@
+<div class="w-100">
+    <div class="row align-items-center">
+        <div class="back-button" (click)="back()">
+            <mat-icon>arrow_back_ios</mat-icon>
+            <span>{{ 'BACK' | translate }}</span>
+        </div>
+        <h2 id="home-header" class="heading-wrapper w-100">
+            {{ 'REPORTS' | translate }}
+        </h2>
+    </div>
+    <div class="row">
+        <div id="home-left-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="report-list" serviceIcon="report-list" serviceLabel="{{ 'REPORTS.LIST' | translate }}" serviceLink="admin-panel/report-panel/reports"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="report-configure" serviceIcon="report-configure" serviceLabel="{{ 'REPORTS.CONFIGURE' | translate }}" [serviceLink]="environment.redashUrl + '/saml/login'" [onNewTab]="true"></app-action-card>
+        </div>
+    </div>
+</div>

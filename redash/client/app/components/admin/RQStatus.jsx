@@ -82,6 +82,21 @@ const TablePropTypes = {
 };
 
 export function WorkersTable({ loading, items }) {
+  for (let index = 0; index < items.length; index++) {
+    const element = items[index];
+    element.state = t(element.state);
+
+    let splitQueues = element.queues.split(', ');
+    let translatedQueues = [];
+
+    for (let index = 0; index < splitQueues.length; index++) {
+      const translatedQueue = t(splitQueues[index]);
+      translatedQueues.push(translatedQueue);
+    }
+
+    element.queues = translatedQueues.join(', ');
+  }
+
   return (
     <Table
       locale={{emptyText: t('No Data')}}
@@ -101,6 +116,11 @@ export function WorkersTable({ loading, items }) {
 WorkersTable.propTypes = TablePropTypes;
 
 export function QueuesTable({ loading, items }) {
+  for (let index = 0; index < items.length; index++) {
+    const element = items[index];
+    element.name = t(element.name);
+  }
+
   return (
     <Table
       locale={{ emptyText: t('No Data') }}
@@ -120,6 +140,11 @@ export function QueuesTable({ loading, items }) {
 QueuesTable.propTypes = TablePropTypes;
 
 export function QueryJobsTable({ loading, items }) {
+  for (let index = 0; index < items.length; index++) {
+    const element = items[index];
+    element.id = t(element.id);
+  }
+
   return (
     <Table
       locale={{ emptyText: t('No Data') }}
@@ -139,6 +164,11 @@ export function QueryJobsTable({ loading, items }) {
 QueryJobsTable.propTypes = TablePropTypes;
 
 export function OtherJobsTable({ loading, items }) {
+  for (let index = 0; index < items.length; index++) {
+    const element = items[index];
+    element.id = t(element.id);
+  }
+
   return (
     <Table
       locale={{ emptyText: t('No Data') }}

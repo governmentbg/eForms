@@ -4,13 +4,14 @@ import Button from "antd/lib/button";
 import Badge from "antd/lib/badge";
 import Tooltip from "@/components/Tooltip";
 import KeyboardShortcuts from "@/services/KeyboardShortcuts";
+import { t } from "@/locales/config.jsx";
 
 function ParameterApplyButton({ paramCount, onClick }) {
   // show spinner when count is empty so the fade out is consistent
   const icon = !paramCount ? (
     <span role="status" aria-live="polite" aria-relevant="additions removals">
       <i className="fa fa-spinner fa-pulse" aria-hidden="true" />
-      <span className="sr-only">Loading...</span>
+      <span className="sr-only">{t("Loading...")}</span>
     </span>
   ) : (
     <i className="fa fa-check" aria-hidden="true" />
@@ -21,7 +22,7 @@ function ParameterApplyButton({ paramCount, onClick }) {
       <Badge count={paramCount}>
         <Tooltip title={paramCount ? `${KeyboardShortcuts.modKey} + Enter` : null}>
           <span>
-            <Button onClick={onClick}>{icon} Apply Changes</Button>
+            <Button onClick={onClick}>{icon} {t("Apply Changes")}</Button>
           </span>
         </Tooltip>
       </Badge>

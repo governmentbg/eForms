@@ -49,4 +49,14 @@ public class CamundaConfigurationProperties {
     @Value("${com.bulpros.process.payment.callback.remote.addresses}")
     private String paymentStatusCallbackRemoteAddresses;
 
+    @Value("${com.bulpros.process.payment.aisClientId}")
+    private String paymentStatusClientId;
+
+    @Value("${com.bulpros.process.payment.aisSecretKey}")
+    private String paymentStatusSecretKey;
+
+    @Value("${com.bulpros.process.admin.case.message.url}")
+    private String adminCaseMessageUrl;
+
+
 }

@@ -1,6 +1,7 @@
 package com.bulpros.eformsgateway.files.repository;
 
 import com.bulpros.eformsgateway.eformsintegrations.exception.ServiceNotAvailableException;
+import com.bulpros.eformsgateway.eformsintegrations.exception.SeverityEnum;
 import io.minio.*;
 import io.minio.errors.ErrorResponseException;
 import io.minio.errors.MinioException;
@@ -35,7 +36,7 @@ public class MinioRepositoryImpl implements MinioRepository {
             throw e;
         } catch (MinioException | NoSuchAlgorithmException | IOException | InvalidKeyException e) {
             log.error(e.getMessage());
-            throw new Exception(e.getMessage());
+            throw new Exception(e.getMessage(), e);
         }
     }
 
@@ -46,8 +47,8 @@ public class MinioRepositoryImpl implements MinioRepository {
                     .getObject(GetObjectArgs.builder().
                             bucket(projectId).object(location).build());
         } catch (MinioException | NoSuchAlgorithmException | IOException | InvalidKeyException e) {
-            log.error(e.getMessage());
-            throw new ServiceNotAvailableException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new ServiceNotAvailableException(SeverityEnum.ERROR, "MINIO.COMMUNICATION", e.getMessage());
         }
     }
 
@@ -57,8 +58,8 @@ public class MinioRepositoryImpl implements MinioRepository {
             minioClient.removeObject(RemoveObjectArgs.builder()
                     .bucket(projectId).object(location).build());
         } catch (MinioException | NoSuchAlgorithmException | IOException | InvalidKeyException e) {
-            log.error(e.getMessage());
-            throw new ServiceNotAvailableException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new ServiceNotAvailableException(SeverityEnum.ERROR, "MINIO.COMMUNICATION", e.getMessage());
         }
     }
 
@@ -68,8 +69,8 @@ public class MinioRepositoryImpl implements MinioRepository {
             return minioClient.statObject(StatObjectArgs.builder()
                     .bucket(projectId).object(location).build());
         } catch (MinioException | NoSuchAlgorithmException | IOException | InvalidKeyException e) {
-            log.error(e.getMessage());
-            throw new ServiceNotAvailableException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new ServiceNotAvailableException(SeverityEnum.ERROR, "MINIO.COMMUNICATION", e.getMessage());
         }
     }
 

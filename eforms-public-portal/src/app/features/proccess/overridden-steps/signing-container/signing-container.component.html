@@ -1,0 +1,60 @@
+<div class="container">
+    <div [ngSwitch]="eDeliveryFilesPackageStatus">
+        <ng-container *ngSwitchCase="'FINISHED'">
+            <h4 *ngIf="!isInCurrentTask">{{ 'DOCUMENTS_SIGNING' | translate }}</h4>
+            <button *ngIf="showCheckSignButton" class="custom-button-color check-sign-button" mat-button
+                (click)="handleDocumentStatusCheck()">{{ 'CHECK_DOCUMENT_STATUS' | translate }}</button>
+            <app-daef-document *ngFor="let daefDocument of daefDocuments" [daefDocument]="daefDocument"
+                [ornNumber]="ornNumber" 
+                [formId]="formId" 
+                [signedFiles]="signedFiles"
+                [jsonTimeStamp]="jsonTimeStamp"
+                [isOnline]="isOnline"
+                [isInAdmin]="isInAdmin"
+                (onDocumentSigned)="handleDocumentSigned($event)" 
+                (onDocumentError)="handleDocumentError($event)"
+                (onDocumentSigneesError)="handleOnDocumentSigneesError($event)"
+                (onDocumentSigneesLoaded)="handleOnDocumentSigneesLoaded($event)"
+                (onDocumentSigneesManipulated)="handleOnDocumentSigneesManipulated($event)">
+            </app-daef-document>
+            <div class="row pt-2">
+                <div class="col-lg-9 pl-0">
+                    <app-sign-method-select *ngIf="!hideSelect" [signMethodControl]="signMethodControl"></app-sign-method-select>
+                </div>
+                <div class="col-lg-3 pr-0">
+                    <div class="sign-button-container mt-1">
+                        <button *ngIf="!isSigning && !areAllDocumentsSigned" class="custom-button-color" mat-button [disabled]="hasDocumentSigneesError || !isOnline"
+                            (click)="handleSignAll()">
+                            <div class="m-1">
+                                <img height="14" width="14" class="mr-2" src="assets/images/file_sign.svg">
+                                {{ 'SIGN_DOCUMENTS' | translate }}
+                            </div>
+                        </button>
+                        <span *ngIf="isSigning && !areAllDocumentsSigned" class="signing-in-progress"><p>{{ 'DOCUMENTS_ARE_SIGNING' | translate }}</p></span>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'IN_PROGRESS'">
+            <div class="row pt-2">
+                <div class="col">
+                    <p>{{ 'DOCUMENT_GENERATION_IN_PROGRESS' | translate }}</p>
+                </div>
+
+                <div class="col">
+                    <button [disabled]="!isOnline" mat-raised-button class="custom-button-color" (click)="handleRetry()">{{ 'CHECK_DOCUMENT_GENERATION' | translate
+                        }}</button>
+                </div>
+            </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="'FAILED'">
+            <div class="row pt-2">
+                <div class="col">
+                    <p>{{ 'DOCUMENT_GENERATION_FAILED' | translate }}</p>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

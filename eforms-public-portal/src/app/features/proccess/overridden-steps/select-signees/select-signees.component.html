@@ -1,0 +1,132 @@
+<div class="select-signees-component-container">
+    <p>{{ 'THIS_DOCUMENT_WILL_BE_SIGNED_FROM' | translate}}</p>
+    <div class="row">
+        <div class="col-lg-12">
+            <mat-radio-group
+            (change)="handleRequiredSignaturesChange($event.value)"
+            [(ngModel)]="daefDocument.requiredSignatures"
+            [disabled]="!isOnline">
+                <mat-radio-button class="select-signees-radio-group" *ngFor="let signature of signatureOptions" [value]="signature.value"
+                    [disabled]="signature.value === disableSignatureOption && daefDocument.status.label !== daefDocumentStatuses.awaiting_sign.label">
+                    {{signature.label | translate}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </div>
+        <mat-error class="col-12" *ngIf="daefDocument.errorMessage">{{ daefDocument.errorMessage | translate}}</mat-error>
+    </div>
+
+    <div class="select-signees-component-inner-wrapper upper-spacing" *ngIf="daefDocument.requiredSignatures !== signatureOptionsEnumModel.requestorSignature.value">
+
+        <div class="row" *ngIf="daefDocument.signeesList.length > 0">
+            <div class="col-lg-12">
+                <p class="upper-spacing">{{'ADDED_SIGNEES' | translate}}</p>
+            </div>
+            <div class="col-lg-12">
+                <div class="signees-table">
+                    <table mat-table [dataSource]="daefDocument.signeesList" style="width: 100%;">
+                        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
+                            <th mat-header-cell *matHeaderCellDef [style.width]="column.width">
+                                {{column.header | translate}}
+                            </th>
+                            <td mat-cell *matCellDef="let row; index as i" [attr.data-label]="column.header | translate">
+                                <ng-container *ngIf="!column.action">
+                                    <div>{{column.cell(row) | translate}}</div>
+                                </ng-container>
+                    
+                                <ng-container *ngIf="column.action && row.signeeIdentifier !== currentUserData.signeeIdentifier" >
+                                    <button [disabled]="!isOnline" mat-button (click)="handleEditSignee(i)" [disabled]="signeesManipulation">
+                                        <mat-icon>edit</mat-icon>
+                                    </button>
+                                    <button [disabled]="!isOnline" mat-button (click)="handleDeleteSignee(i)" [disabled]="signeesManipulation">
+                                        <mat-icon>delete</mat-icon>
+                                    </button>
+                                </ng-container>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                
+                </div>
+            </div>
+        </div>
+
+
+        <div class="add-edit-signee-area" *ngIf="signeesManipulation">
+
+            <form #editSigneeForm="ngForm" (submit)="saveSigneeData()" [formGroup]="editSigneeFormGroup" autocomplete="off">
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <p class="upper-spacing">{{'SIGNEE_DATA_INFORMATION' | translate}}</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <p class="signee-field-label">{{'NAME' | translate}}</p>
+                        <mat-form-field class="signee-field">
+                            <input type="text" matInput formControlName="signeeFirstName"/>                        
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <p class="signee-field-label">{{'SECOND_NAME' | translate}}</p>
+                        <mat-form-field class="signee-field">
+                            <input matInput formControlName="signeeMiddleName"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <p class="signee-field-label">{{'FAMILY_NAME' | translate}}</p>
+                        <mat-form-field class="signee-field">
+                            <input matInput formControlName="signeeLastName"/>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-lg-3">
+                        <p class="signee-field-label">{{'EGN_OR_IDENTIFIER' | translate}} </p> <p class="signee-field-label-required-asterisk">*</p>
+                        <mat-form-field class="signee-field">
+                            <input matInput formControlName="signeeIdentifier"/>
+                            <mat-error *ngIf="editSigneeFormGroup.controls.signeeIdentifier.hasError('pinOrEgnError')">{{ 'PIN_OR_EGN_ERROR'| translate}}</mat-error>
+                            <mat-error *ngIf="editSigneeFormGroup.controls.signeeIdentifier.hasError('required')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                            <mat-error *ngIf="editSigneeFormGroup.controls.signeeIdentifier.hasError('uniqueSigneeIdentifierError')">{{'UNIQUE_SIGNEE_IDENTIFIER_ERROR'| translate}}</mat-error>
+                            <mat-error *ngIf="editSigneeFormGroup.controls.signeeIdentifier.hasError('requestorNotAllowedInSigneesListError')">{{'REQUESTOR_NOT_ALLOWED_IN_SIGNEES_LIST_ERROR'| translate}}</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p class="signee-field-label">{{'SIGNEE_AS' | translate}}</p>
+                        <mat-form-field class="signee-field full-col-width">
+                            <input matInput formControlName="signeeAs"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <p class="signee-field-label">{{'ADDRESS' | translate}}</p>
+                        <mat-form-field class="signee-field full-col-width">
+                            <input matInput formControlName="signeeAddress"/>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <button [disabled]="!isOnline" mat-button type="button" class="decline-signee-button upper-spacing" (click)="declineSigneeData()">{{'CANCEL' | translate}}</button>
+                    </div>
+                    <div class="col-lg-2">
+                        <button [disabled]="!isOnline" mat-button type="submit" class="save-signee-button upper-spacing">
+                            <mat-icon>save</mat-icon>{{'SAVE' | translate}}
+                        </button>
+                    </div>
+                </div>
+                
+            </form>
+
+        </div>
+
+        <div class="row" *ngIf="daefDocument.requiredSignatures !== signatureOptionsEnumModel.requestorSignature.value && !signeesManipulation">
+            <div class="col-lg-12">
+                <button [disabled]="!isOnline" mat-button class="add-signee-button upper-spacing" (click)="addSignee()">
+                    <mat-icon>add</mat-icon>
+                    {{'ADD_A_SIGNEE' | translate}}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

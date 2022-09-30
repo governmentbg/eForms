@@ -8,15 +8,14 @@ import com.bulpros.eformsgateway.form.web.controller.dto.ProfileTypeEnum;
 import com.bulpros.eformsgateway.form.web.controller.dto.UserProfileDto;
 import com.bulpros.formio.dto.ResourceDto;
 import com.bulpros.formio.utils.Page;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
 import static com.bulpros.eformsgateway.form.utils.ValidationUtils.isNotPresent;
 
@@ -28,6 +27,7 @@ public class AdminAdditionalProfileController {
     private final UserProfileService userProfileService;
     private final AdditionalProfileService additionalProfileService;
 
+    @Timed(value = "eforms-gateway-admin-get_additional-profile-data.time")
     @GetMapping(path = "projects/{projectId}/user-profiles", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Page<ResourceDto>> getAdditionalProfileData(Authentication authentication,
                                                                @RequestParam String applicant,
@@ -46,6 +46,7 @@ public class AdminAdditionalProfileController {
         return getForbiddenListResponse();
     }
 
+    @Timed(value = "eforms-gateway-admin-update-additional-profile-data.time")
     @PutMapping(path = "projects/{projectId}/user-profiles", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Void> updateAdditionalProfileData(Authentication authentication,
                                                                          @RequestBody FullAdditionalProfileDto profile,

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="http://egov.bg/RegiX/GRAO/BR" xmlns="http://egov.bg/RegiX/GRAO/BR/MaritalStatusSpouseChildrenResponse" targetNamespace="http://egov.bg/RegiX/GRAO/BR/MaritalStatusSpouseChildrenResponse" elementFormDefault="qualified" attributeFormDefault="unqualified">
+  <xs:import namespace="http://egov.bg/RegiX/GRAO/BR" schemaLocation="BRCommon.xsd"/>
+  <xs:simpleType name="RelativeType">
+		<xs:annotation>
+			<xs:documentation>Съпруг/а/Дете</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="СЪПРУГ"/>
+			<xs:enumeration value="СЪПРУГА"/>
+			<xs:enumeration value="ДЪЩЕРЯ"/>
+			<xs:enumeration value="СИН"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MaritalStatusCode">
+		<xs:annotation>
+			<xs:documentation>Код на семейно положение</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Heжeнeн (нeoмъжeнa)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Жeнeн (oмъжeнa)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>Bдoвeц (вдoвицa)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Paзвeдeн (paзвeдeнa)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="9">
+				<xs:annotation>
+					<xs:documentation>Heпoкaзaнo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="Relative">
+		<xs:sequence>
+			<xs:element name="OrderNumber" type="xs:int" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Пореден номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Собствено име</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MiddleName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Бащино име</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фамилно име</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EGN" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЕГН/Дата на раждане</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RelativeType" type="RelativeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид: Съпруг/а/Дете</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DateOfDeath" type="xs:date" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата на смърт</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RelativesData">
+		<xs:sequence>
+			<xs:element name="Relative" type="Relative" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Съпруг/а или дете</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MaritalStatusSpouseChildrenResponseType">
+		<xs:sequence>
+			<xs:element name="MaritalStatusCode" type="MaritalStatusCode" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код на семейно положение </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MaritalStatusName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Наименование на семейно положение </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FirstName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Собствено име</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MiddleName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Бащино име</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LastName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Фамилно име</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EGN" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Единен граждански номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+      <xs:element name="Gender" type="common:GenderCodeType" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Пол</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+			<xs:element name="Relatives" type="RelativesData" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Съпруг/а и деца</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+      <xs:element name="ReportDate" type="xs:dateTime" minOccurs="0">
+        <xs:annotation>
+          <xs:documentation>Дата на справката</xs:documentation>
+        </xs:annotation>
+      </xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MaritalStatusSpouseChildrenResponse" type="MaritalStatusSpouseChildrenResponseType">
+		<xs:annotation>
+			<xs:documentation>Справка за семейно положение, съпруг/а и деца</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

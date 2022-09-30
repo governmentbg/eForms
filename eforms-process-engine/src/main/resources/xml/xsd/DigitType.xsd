@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/DigitType"
+        xmlns="http://eform.e-gov.bg/dictionary/DigitType"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:simpleType name="DigitType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="bg">Поле, съдържащо само цифри</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[0-9]*" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

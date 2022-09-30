@@ -1,19 +1,5 @@
 package com.bulpros.eformsgateway.security;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.security.core.Authentication;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.server.ServerWebExchange;
-
 import com.bulpros.formio.dto.ResourceDto;
 import com.bulpros.formio.repository.formio.ResourcePath;
 import com.bulpros.formio.repository.formio.SubmissionFilter;
@@ -21,9 +7,22 @@ import com.bulpros.formio.repository.formio.SubmissionFilterClauseEnum;
 import com.bulpros.formio.service.SubmissionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Mono;
+
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Slf4j
 public abstract class AbstractSubmissionRequestGatewayFilterFactory<C> extends AbstractCompleteRequestGatewayFilterFactory<C> {
@@ -37,8 +36,7 @@ public abstract class AbstractSubmissionRequestGatewayFilterFactory<C> extends A
         
         String fullResourcePath = uriVariables.get("resourcePath");
         String projectId = uriVariables.get("projectId");
-        
-        String response = null;
+
         Object responseObject = null;
         String resourcePath = null;
         String submissionId = null;
@@ -85,16 +83,17 @@ public abstract class AbstractSubmissionRequestGatewayFilterFactory<C> extends A
                 return completeRequest(exchange, e.getStatusCode());
             }
         }
-        
+
+        String response = null;
         try {
             response = objectMapper.writeValueAsString(responseObject);
         } catch (JsonProcessingException e) {
             log.error("Building a response has failed: " + e.getMessage());
         }
         
-        return completeRequest(exchange, HttpStatus.OK, response);
+        return completeRequest(exchange, HttpStatus.OK, response.getBytes(StandardCharsets.UTF_8));
     }
-    
+
     protected List<SubmissionFilter> getFilters(Map<String, String> queryParams) {
         return this.getFilters(queryParams, false);
     }

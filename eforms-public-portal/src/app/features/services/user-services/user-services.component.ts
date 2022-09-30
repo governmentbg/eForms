@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { TableColumn } from 'src/app/core/types/table-column';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
@@ -11,23 +11,33 @@ import { FormIoService } from 'src/app/core/services/form-io.service';
 import { ServiceDetailsModalComponent } from '../service-details-modal/service-details-modal.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Formio } from 'formiojs';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { enumTypes } from 'src/app/core/types/enumTypes';
+import { SmartTableComponent } from 'src/app/shared/components/smart-table/smart-table.component';
 
 @Component({
   selector: 'app-user-services',
   templateUrl: './user-services.component.html',
   styleUrls: ['./user-services.component.scss']
 })
-export class UserServicesComponent implements OnInit {
+export class UserServicesComponent implements OnInit, OnDestroy {
+  /**
+   * Wrapper Subscription for services. To be destroyed on ngDestroy so component properly unsubscribes from all services
+   * @private
+   */
+  private wrapperSubscription = new Subscription();
+
+  @ViewChild(SmartTableComponent) smartTableComponent: SmartTableComponent;
+  
   tableData
   tableColumns: TableColumn[];
   apiCallUrl: string
   formSrc;
   form;
   filterEventSubject: Subject<any> = new Subject<any>();
-  classifier = 'serviceInApplication,serviceInRequest,serviceInCompletion'
+  classifier = 'serviceInApplication,serviceInRequest,serviceInCompletion,rejectedService,canceledService'
   parameters: string = `&classifier=${this.classifier}`;
+  
 
   constructor(
     private router: Router,
@@ -40,14 +50,27 @@ export class UserServicesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    let showSubmissionSuccess = localStorage.getItem('showSubmissionSuccess');
+    if (showSubmissionSuccess) {
+      this.notificationsBannerService.show({ message: "SUCCESSFUL_SUBMISSION", type: NotificationBarType.Success });
+      localStorage.removeItem('showSubmissionSuccess');
+    }
+
+
     this.apiCallUrl = `/api/projects/${environment.formioBaseProject}/cases`
     this.initializeColumns();
     this.filterTable();
 
-    this.formioService.getFormByAlias('common/component/common-case-filter', environment.formioBaseProject).subscribe(result => {
-      this.formSrc = result;
-      Formio.setBaseUrl(`${environment.apiUrl}`);
-    })
+    this.wrapperSubscription.add(
+      this.formioService.getFormByAlias('common/component/common-case-filter', environment.formioBaseProject).subscribe(result => {
+        this.formSrc = result;
+        Formio.setBaseUrl(`${environment.apiUrl}`);
+      })
+    )
+  }
+
+  ngOnDestroy(): void {
+    this.wrapperSubscription.unsubscribe();
   }
 
   back() {
@@ -81,10 +104,19 @@ export class UserServicesComponent implements OnInit {
         isSortable: true
       },
       {
-        name: 'SERVICES.SERVICE_PAYMENT_STATUS',
+        name: 'SERVICES.SERVICE_PAYMENT_STATUS_FIXED',
         dataKey: 'data.statusFixedTax',
         position: 'left',
         isSortable: true,
+        doTranslate: true,
+        translationPath: 'SERVICES.ENUMS.'
+      },
+      {
+        name: 'SERVICES.SERVICE_PAYMENT_STATUS_ADDITIONAL',
+        dataKey: 'data.statusCalculatedTax',
+        position: 'left',
+        isSortable: true,
+        doTranslate: true,
         translationPath: 'SERVICES.ENUMS.'
       },
       {
@@ -101,7 +133,7 @@ export class UserServicesComponent implements OnInit {
       },
       {
         name: 'SERVICES.ISSUE_DATE',
-        dataKey: 'data.issueDate',
+        dataKey: 'data.deliveryDate',
         position: 'left',
         isSortable: true,
         isDate: true
@@ -117,7 +149,7 @@ export class UserServicesComponent implements OnInit {
     if (this.userProfileService.selectedProfile) {
       this.tableColumns.push({
         name: "SERVICES.REQUESTOR",
-        dataKey: 'data.requestorFullUserName',
+        dataKey: 'data.requestorName',
         position: 'left',
         isSortable: true
       })
@@ -125,24 +157,35 @@ export class UserServicesComponent implements OnInit {
   }
 
   handleRowActionEvent(event) {
-    let enumObject = enumTypes["serviceButtonEnum"].getDisplayByCode(event.data.statusCode);
-    if (enumObject && enumObject.icon == 'edit') {
-      if (event.data.existService) {
-        this.daefService.setService(event.data.serviceId);
-        this.camundaProcessService.subject.next({
-          businessKey: event.data.businessKey,
-          id: event.data.processInstanceId
-        })
-        this.router.navigate(['my-services', 'process', event.data.processInstanceId], { queryParams: { easId: event.data.serviceId } })
-      } else {
-        this.notificationsBannerService.show({message: "SERVICES.MISSING_SERVICE", type: NotificationBarType.Info})
-      }
-    } else {
+
+    this.wrapperSubscription.add(
       this.daefService.getCase(event.data.businessKey).subscribe(result => {
-        result.showInnerSection = false;
-        this.dialog.open(ServiceDetailsModalComponent, {data: result})
+        
+        this.smartTableComponent.tableDataSource.data[event.smartTableIndex] = result;
+        this.smartTableComponent.setTableDataSource(this.smartTableComponent.tableDataSource.data, false);
+
+        let enumObject = enumTypes["serviceButtonEnum"].getDisplayByCode(result.data.statusCode);
+        if (enumObject && enumObject.icon == 'edit') {
+          if (result.data.existService) {
+            this.daefService.setService(result.data.serviceId);
+            this.camundaProcessService.subject.next({
+              businessKey: result.data.businessKey,
+              id: result.data.processInstanceId
+            })
+            this.router.navigate(['my-services', 'process', result.data.processInstanceId], { queryParams: { easId: result.data.serviceId } })
+          } else {
+            this.notificationsBannerService.show({message: "SERVICES.MISSING_SERVICE", type: NotificationBarType.Info})
+          }
+        } else {
+          
+          result.showInnerSection = false;
+          const dialogRef =  this.dialog.open(ServiceDetailsModalComponent, {data: result})
+         
+        }
       })
-    }
+    )
+
+    
   }
 
   handleFormReady(form: any) {
@@ -152,13 +195,13 @@ export class UserServicesComponent implements OnInit {
 
   handleFilterEvent(event) {
     if (event.type === 'filter') {
-      let serviceUri = event.data.serviceUri;
-      let serviceName = event.data.serviceName;
-      let businessKey = event.data.businessKey;
+      let serviceUri = event.data.serviceUri.trim();
+      let serviceName = event.data.serviceName.trim();
+      let businessKey = event.data.businessKey.trim();
       if (event.data.caseStageDropdown) {
         this.classifier = event.data.caseStageDropdown;
       } else {
-        this.classifier = 'serviceInApplication,serviceInRequest,serviceInCompletion';
+        this.classifier = 'serviceInApplication,serviceInRequest,serviceInCompletion,rejectedService,canceledService';
       }
 
       this.parameters = `&classifier=${this.classifier}&serviceUri=${serviceUri}&serviceName=${serviceName}&businessKey=${businessKey}`;

@@ -2322,7 +2322,11 @@
     "TELEMETRY_SUCCESS_HEADING": "Success",
     "TELEMETRY_SUCCESS": "Telemetry Configuration was saved successfully.",
     "TELEMETRY_ERROR_STATUS": "Error",
-    "TELEMETRY_ERROR_MESSAGE": "Your configuration could not be saved. Please try again."
+    "TELEMETRY_ERROR_MESSAGE": "Your configuration could not be saved. Please try again.",
+    "ZOOM_IN" : "zoom in",
+    "ZOOM_OUT" : "zoom out",
+    "RESET_ZOOM": "reset zoom",
+    "CUSTOM_ERROR_MESSAGE" : "This process definition has no job definitions associated with. The job priority cannot be overridden."
   },
   "dateLocales": {
     "months": [

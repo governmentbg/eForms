@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/RegixSync"
+        xmlns="http://eform.e-gov.bg/dictionary/RegixSync"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:complexType name="RegixSync">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+			Данни за синхронизация с RegiX
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="synchronized" type="xsd:boolean" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				Данните са извлечени от RegiX
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dateTime" type="xsd:dateTime" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Дата и време на извличане на данните от RegiX
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

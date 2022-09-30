@@ -6,7 +6,9 @@ import com.bulpros.eformsgateway.form.web.controller.dto.IdentifierTypeEnum;
 import com.bulpros.eformsgateway.process.repository.utils.EFormsUtils;
 import com.bulpros.eformsgateway.process.repository.utils.ProcessConstants;
 import com.bulpros.eformsgateway.process.service.ProcessService;
+import com.bulpros.formio.exception.FormioClientException;
 import net.minidev.json.JSONObject;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.support.ServerWebExchangeUtils;
 import org.springframework.http.HttpStatus;
@@ -28,7 +30,6 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 
 import net.minidev.json.JSONArray;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.server.ServerWebExchange;
 
 @Component
@@ -67,8 +68,10 @@ public class SubmissionRequestGatewayFilterFactory extends AbstractSubmissionReq
                 }
                 
                 String projectId = uriVariables.get("projectId");
-                String businessKey = request.getQueryParams().getFirst("data.businessKey");
-                String applicant = request.getQueryParams().getFirst("data.applicant");
+                var queryParameters = request.getQueryParams();
+                String businessKey = queryParameters.getFirst("data.businessKey");
+                String applicantData = queryParameters.getFirst("data.applicant");
+                String applicant = queryParameters.getFirst("applicant");
                 
                 Authentication authentication = (Authentication) principal;
                 UserProfileDto userProfile = userProfileService.getUserProfileData(projectId, authentication);
@@ -77,21 +80,28 @@ public class SubmissionRequestGatewayFilterFactory extends AbstractSubmissionReq
 
                 var isCurrentUserSignee = isUserSigneeForProcess(authentication, exchange, businessKey, user);
 
-                if (applicant != null && !applicant.isEmpty() && !isAllowedApplicant(userProfile, applicant)) {
-                        return completeRequest(exchange, HttpStatus.FORBIDDEN);
+                if (StringUtils.isNotBlank(applicant) && !hasAdditionalProfile(userProfile, applicant)) {
+                    return completeRequest(exchange, HttpStatus.FORBIDDEN);
                 }
-                Map<String, String> queryParams = request.getQueryParams().toSingleValueMap();
-                if (applicant == null || applicant.isEmpty()) {
+
+                if (StringUtils.isNotBlank(applicantData) && !isAllowedApplicant(userProfile, applicantData)) {
+                    return completeRequest(exchange, HttpStatus.FORBIDDEN);
+                }
+                Map<String, String> queryParams = queryParameters.toSingleValueMap();
+                if (applicantData == null || applicantData.isEmpty()) {
                     String resourcePath = fullResourcePath.substring(0, fullResourcePath.indexOf("/submission"));
                     JsonNode metadataJson = null;
                     try {
                         metadataJson = formService.getFormJson(projectId, resourcePath, authentication);
-                    } catch (HttpClientErrorException e) {
-                        return completeRequest(exchange, e.getStatusCode());
+                    } catch (FormioClientException e) {
+                        return completeRequest(exchange, e.getStatus());
                     }
                     String metadata = metadataJson.toString();
                     if (jsonExists(metadata, "$..[?(@.key == 'requestor')]")) {
                         queryParams.put("data.requestor", userProfile.getPersonIdentifier());
+                    }
+                    if (!jsonExists(metadata, "$..[?(@.key == 'applicant')]")) {
+                        queryParams.remove("applicant");
                     }
                 }
 
@@ -118,8 +128,8 @@ public class SubmissionRequestGatewayFilterFactory extends AbstractSubmissionReq
         if ((applicant == null || applicant.isEmpty()) &&
             requestor != null && !requestor.isEmpty()) {
             filters.add(new SubmissionFilter(
-                    SubmissionFilterClauseEnum.EXISTS,
-                    Collections.singletonMap(configuration.getApplicantPropertyKey(), false)));
+                    SubmissionFilterClauseEnum.IN,
+                    Collections.singletonMap(configuration.getApplicantPropertyKey(), "")));
         }
 
         return filters;
@@ -128,7 +138,7 @@ public class SubmissionRequestGatewayFilterFactory extends AbstractSubmissionReq
     private boolean isUserSigneeForProcess(Authentication authentication, ServerWebExchange exchange,
                                            String businessKey, String personIdentifier) {
         if(businessKey==null || businessKey.isEmpty()) return false;
-        String formSubmissionData = ProcessConstants.SUBMISSION_DATA + EFormsUtils.getFormDataSubmissionKey("common/component/selectSignees");
+        String formSubmissionData = ProcessConstants.SUBMISSION_DATA + EFormsUtils.getFormDataSubmissionKey(configuration.getSignForm());
 
         JSONObject signees = processService.getProcessVariableByBusinessKey(authentication, businessKey, formSubmissionData);
         if(signees == null) return false;
@@ -144,7 +154,12 @@ public class SubmissionRequestGatewayFilterFactory extends AbstractSubmissionReq
         return userProfileService.hasUserRole(userProfile, applicant, AdditionalProfileRoleEnum.Admin) ||
                userProfileService.hasUserRole(userProfile, applicant, AdditionalProfileRoleEnum.User);
     }
-    
+
+    private boolean hasAdditionalProfile(UserProfileDto userProfile, String applicant) {
+        var additionalProfile = userProfileService.getAdditionalProfileByApplicant(userProfile, applicant);
+        return Objects.nonNull(additionalProfile) ? true : false;
+    }
+
     private boolean jsonExists(String json, String parameter) {
         Configuration pathConfiguration = Configuration.builder().options(Option.DEFAULT_PATH_LEAF_TO_NULL).build();
         var result = JsonPath.using(pathConfiguration).parse(json).read(parameter);

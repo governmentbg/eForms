@@ -5,15 +5,10 @@ import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { ProcessNavigationComponent } from './features/proccess/process-navigation/process-navigation.component';
 import { LoginPageComponent } from './features/login-page/login-page.component';
 import { HomeComponent } from './features/home/home.component';
-import { MyServicesComponent } from './features/services/my-services/my-services.component';
-import { ServicesInProgressComponent } from './features/services/services-in-progress/services-in-progress.component';
-import { ServicesInRequestComponent } from './features/services/services-in-request/services-in-request.component';
-import { CompletedServicesComponent } from './features/services/completed-services/completed-services.component';
 import { ConfirmRedirectGuard } from './core/guards/confirm-redirect.guard';
 import { UserProfileComponent } from './features/user-profile/user-profile.component';
 import { InstantLogoutComponent } from './core/components/instant-logout/instant-logout.component';
 import { ForbiddenComponent } from './core/components/forbidden/forbidden.component';
-import { AdminServicesCompletedComponent } from './features/services/admin-services-completed/admin-services-completed.component';
 import { AdminServicesInProgressComponent } from './features/services/admin-services-in-progress/admin-services-in-progress.component';
 import { SettingsComponent } from './features/settings/settings.component';
 import { HelpInfoComponent } from './features/help-info/help-info/help-info.component';
@@ -28,6 +23,15 @@ import { AdministrationOfServicesComponent } from './features/services/administr
 import { CurrentTaskComponent } from './features/proccess/current-task/current-task.component';
 import { UserServicesComponent } from './features/services/user-services/user-services.component';
 import { LogoutGuard } from "./core/guards/logout.guard";
+import { MetadataEditComponent } from "./features/services/administration-of-services/meta-edit/metadata-edit.component";
+import { HiddenBoricaFormComponent } from './features/proccess/overridden-steps/payment-method-selection/hidden-borica-form/hidden-borica-form.component';
+import { TranslateLanguageComponent } from './features/translation/translate-language/translate-language.component';
+import { TranslateListComponent } from './features/translation/translate-list/translate-list.component';
+import { TranslateKeyComponent } from './features/translation/translate-key/translate-key.component';
+import { HomeAdministrationOfServicesComponent } from './features/services/home-administration-of-services/home-administration-of-services.component';
+import { ReportComponent } from './features/report/report.component';
+import { ReportsComponent } from './features/reports/reports.component';
+import { HomeReportsComponent } from './features/home-reports/home-reports.component';
 
 const routes: Routes = [
   {
@@ -44,6 +48,27 @@ const routes: Routes = [
       {
         path: '',
         component: LoginPageComponent,
+      },
+      {
+        path: 'help-application-eau',
+        component: HelpApplicationEauComponent,
+        canActivate: [LogoutGuard],
+        data: {
+          breadcrumbs: 'USER_GUIDE'
+        },
+      },
+      {
+        path: 'help-center',
+        component: HelpCenterComponent,
+        canActivate: [LogoutGuard],
+        data: {
+          breadcrumbs: 'FOOTER.CONTACT_CENTER'
+        },
+      },
+      {
+        path: 'borica',
+        component: HiddenBoricaFormComponent,
+        canActivate: [LogoutGuard]
       },
       {
         path: 'my-services',
@@ -126,22 +151,6 @@ const routes: Routes = [
             component: HelpInfoComponent,
           },
           {
-            path: 'help-center',
-            component: HelpCenterComponent,
-            canActivate: [LogoutGuard],
-            data: {
-              breadcrumbs: 'HELP_INFO'
-            },
-          },
-          {
-            path: 'help-application-eau',
-            component: HelpApplicationEauComponent,
-            canActivate: [LogoutGuard],
-            data: {
-              breadcrumbs: 'HELP_INFO_LIST.APPLICATION_TO_EAU'
-            },
-          },
-          {
             path: 'help-processing-eau',
             component: HelpProcessingEauComponent,
             canActivate: [LogoutGuard, AuthGuard],
@@ -162,6 +171,14 @@ const routes: Routes = [
         }
       },
       {
+        path: "settings",
+        component: SettingsComponent,
+        canActivate: [LogoutGuard],
+        data: {
+          breadcrumbs: 'SETTINGS'
+        }
+      },
+      {
         path: "edit-profile-roles",
         component: EditProfileRolesComponent,
         canActivate: [LogoutGuard, AuthGuard],
@@ -169,14 +186,6 @@ const routes: Routes = [
           breadcrumbs: 'PROFILE_ROLES.ADMIN_ROLES',
           roles: [roles.admin],
           profileTypes: [profileTypes.administration]
-        }
-      },
-      {
-        path: "settings",
-        component: SettingsComponent,
-        canActivate: [LogoutGuard],
-        data: {
-          breadcrumbs: 'SETTINGS'
         }
       },
       {
@@ -188,15 +197,6 @@ const routes: Routes = [
         },
         children: [
           {
-            path: 'in-progress',
-            component: AdminServicesInProgressComponent,
-            data: {
-              breadcrumbs: 'SERVICES.ADMIN.SERVICES_IN_PROGRESS',
-              roles: [roles.serviceManager],
-              profileTypes: [profileTypes.administration]
-            }
-          },
-          {
             path: 'process/:id',
             component: ProcessNavigationComponent,
             canActivate: [LogoutGuard, AuthGuard],
@@ -206,16 +206,6 @@ const routes: Routes = [
               roles: [roles.serviceManager],
               profileTypes: [profileTypes.administration]
             },
-          },
-          {
-            path: "completed",
-            component: AdminServicesCompletedComponent,
-            canActivate: [LogoutGuard, AuthGuard],
-            data: {
-              breadcrumbs: 'SERVICES.COMPLETED_SERVICES',
-              roles: [roles.serviceManager],
-              profileTypes: [profileTypes.administration]
-            }
           }
         ]
       },
@@ -223,29 +213,121 @@ const routes: Routes = [
         path: "administration-of-services",
         canActivate: [LogoutGuard, AuthGuard],
         data: {
-          breadcrumbs: 'SERVICES.ADMIN.ADMINISTRATION_OF_SERVICES',
-          roles: [roles.metadataManager],
-          profileTypes: [profileTypes.administration]
+          profileTypes: [profileTypes.administration],
         },
         children: [
           {
-            path: '',
+            path: 'services',
             component: AdministrationOfServicesComponent,
             data: {
+              breadcrumbs: 'SERVICES.ADMIN.ADMINISTRATION_OF_SERVICES',
               roles: [roles.metadataManager],
               profileTypes: [profileTypes.administration]
             }
           },
           {
-            path: 'process/:id',
-            component: ProcessNavigationComponent,
-            canActivate: [LogoutGuard, AuthGuard],
+            path: 'edit/:arId/:serviceSupplierCode',
+            component: MetadataEditComponent,
             canDeactivate: [ConfirmRedirectGuard],
             data: {
-              breadcrumbs: 'SERVICES.ADMIN.METADATA_PROCESSING',
+              breadcrumbs: 'SERVICES.ADMIN.ADMINISTRATION_OF_SERVICES',
               roles: [roles.metadataManager],
               profileTypes: [profileTypes.administration]
             }
+          }
+        ]
+      },
+      {
+        path: "admin-panel",
+        canActivate: [LogoutGuard, AuthGuard],
+        data: {
+          breadcrumbs: 'ADMIN_PANEL_MENU',
+          profileTypes: [profileTypes.administration],
+        },
+        children: [
+          {
+            path: '',
+            component: HomeAdministrationOfServicesComponent,
+            data: {
+              roles: [roles.admin],
+              profileTypes: [profileTypes.administration]
+            }
+          },
+          {
+            path: 'translation',
+            canActivate: [LogoutGuard, AuthGuard],
+            data: {
+              breadcrumbs: 'TRANSLATION.SELECT_LANGUAGE',
+              roles: [roles.admin]
+            },
+            children: [
+              {
+                path: '',
+                component: TranslateLanguageComponent,
+                data: {
+                  roles: [roles.admin]
+                }
+              },
+              {
+                path: ':targetLanguageCode',
+                component: TranslateListComponent,
+                data: {
+                  breadcrumbs: 'TRANSLATION.LIST',
+                  roles: [roles.admin]
+                },
+              },
+              {
+                path: ':targetLanguageCode/:key',
+                component: TranslateKeyComponent,
+                data: {
+                  breadcrumbs: 'TRANSLATION.EDIT',
+                  roles: [roles.admin]
+                },
+              },
+            ]
+          },
+          {
+            path: "report-panel",
+            canActivate: [LogoutGuard, AuthGuard],
+            data: {
+              breadcrumbs: 'REPORTS',
+              profileTypes: [profileTypes.administration],
+            },
+            children: [
+              {
+                path: '',
+                component: HomeReportsComponent,
+                data: {
+                  roles: [roles.admin],
+                  profileTypes: [profileTypes.administration]
+                }
+              },
+              {
+                path: 'reports',
+                canActivate: [LogoutGuard, AuthGuard],
+                data: {
+                  breadcrumbs: 'REPORTS.LIST',
+                  roles: [roles.admin]
+                },
+                children: [
+                  {
+                    path: '',
+                    component: ReportsComponent,
+                    data: {
+                      roles: [roles.admin]
+                    }
+                  },
+                  {
+                    path: ':dashboardId',
+                    component: ReportComponent,
+                    data: {
+                      breadcrumbs: 'REPORTS.REPORT',
+                      roles: [roles.admin]
+                    },
+                  },
+                ]
+              }
+            ]
           }
         ]
       },
@@ -266,6 +348,36 @@ const routes: Routes = [
           },
         ]
       },
+      {
+        path: 'admin-services',
+        canActivate: [LogoutGuard, AuthGuard],
+        data: {
+          roles: [roles.serviceManager],
+          profileTypes: [profileTypes.administration]
+        },
+        children: [
+          {
+            path: 'in-progress',
+            component: AdminServicesInProgressComponent,
+            data: {              
+              breadcrumbs: 'SERVICES.ADMIN.SERVICES_IN_PROGRESS',
+              roles: [roles.serviceManager],
+              profileTypes: [profileTypes.administration]
+            }
+          },
+          {
+            path: 'process/:id',
+            component: ProcessNavigationComponent,
+            canActivate: [LogoutGuard, AuthGuard],
+            canDeactivate: [ConfirmRedirectGuard],
+            data: {
+              breadcrumbs: 'SERVICES.ADMIN.SERVICE_PROCESSING',
+              roles: [roles.serviceManager],
+              profileTypes: [profileTypes.administration]
+            },
+          }
+        ]
+      }
     ]
   },
   {
@@ -281,7 +393,7 @@ const routes: Routes = [
     component: ForbiddenComponent
   },
   {
-    path: '**', 
+    path: '**',
     redirectTo: ''
   }
 ];

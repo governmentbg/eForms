@@ -5,7 +5,9 @@ import java.util.Arrays;
 public enum CaseStatusClassifierEnum {
     SERVICE_IN_APPLICATION("serviceInApplication"),
     SERVICE_IN_REQUEST("serviceInRequest"),
-    SERVICE_IN_COMPLETION("serviceInCompletion");
+    SERVICE_IN_COMPLETION("serviceInCompletion"),
+    REJECTED_SERVICE("rejectedService"),
+    CANCELED_SERVICE("canceledService");
 
     public final String classifier;
 

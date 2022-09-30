@@ -1,0 +1,180 @@
+@import "variables.scss";
+@import "colors.scss";
+
+:host {
+    width: 100%;
+
+    table {
+        width: 100%;
+        border-top: 1px solid $light-gray-hover;
+        border-bottom: 1px solid $light-gray-hover;
+        box-shadow: none !important;
+    }
+
+    tr, td {
+        background-color: #F5F5F5;
+    }
+
+    td {
+        border: none !important;
+    }
+
+    th {
+        font-weight: 600;
+        font-size: 16px;
+        color: $dark-gray;
+    }
+
+    mat-icon {
+        font-size: 25px;
+    }
+}
+
+@media screen and (max-width: 840px) {
+    .mat-header-row {
+        display: none !important;
+    }
+
+    tr {
+        display: flex;
+        flex-direction: column;
+        height: fit-content !important;
+        padding: 16px;
+        background-color: $light-gray;
+        margin-bottom: 16px;
+        border-radius: 7px;
+        td {
+            border: none;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            color: $dark-gray;
+        }
+
+        td:first-of-type {
+            margin-top: 0;
+        }
+
+        td:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    tr:last-of-type {
+        margin-bottom: 0;
+    }
+
+    td.mat-cell:first-of-type {
+        padding: 0;
+    }
+
+    td:before{
+        content: attr(data-label);
+        font-style: italic;
+        color: $sub-header-gray;
+        font-size: 13px;
+    }
+}
+
+.select-signees-component-container {
+
+    ::ng-deep .mat-form-field-underline {
+        display: none;
+    }
+
+    .select-signees-radio-group {
+        display: flex;
+        flex-direction: column;
+        margin: 15px 0;
+        align-items: flex-start;
+    }
+
+    ::ng-deep .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{
+    border-color:$main-dark-blue-second
+    }
+    
+    ::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle{
+    color:$main-dark-blue-second;
+    background-color:$main-dark-blue-second;
+    }
+    
+    ::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+        background-color:$main-dark-blue-second;
+    }
+
+    .decline-signee-button {
+        color: $main-dark-blue-second;
+    }
+
+    .save-signee-button {
+        background-color: $main-light-blue;
+        color: $main-dark-blue-second;
+
+        mat-icon {
+            margin-right: 10px;
+        }
+    }
+
+    .add-signee-button-icon {
+        background-color: $main-light-blue;
+    }
+
+    .add-signee-button {
+
+        padding-left: 0px !important;
+
+        mat-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 35px;
+            margin-right: 10px;
+            background: $main-light-blue;
+            border-radius: 50%;
+            color: $main-dark-blue-second;
+        }
+    }
+
+    .signee-field-label {
+        margin-bottom: 5px;
+        display: inline-block;
+    }
+
+    .signee-field-label-required-asterisk {
+        margin-bottom: 5px;
+        display: inline-block;
+        color: $notification-error;
+        margin-left: 5px;
+    }
+
+    .signee-field {
+        outline: none;
+        display: block;
+
+        ::ng-deep .mat-form-field-flex {
+            border: 1px solid $main-dark-blue;
+            border-radius: 7px;
+            padding-left: 5px;
+        }
+
+        ::ng-deep .mat-input-element {
+            font-size: initial !important;
+            color: initial !important;
+        }
+
+    }
+
+    .full-col-width {
+        width: 100%;
+    }
+
+    .upper-spacing {
+        margin-top: 15px;
+    }
+
+    .select-signees-component-inner-wrapper {
+        background: #F5F5F5;
+        padding: 10px;
+        border-radius: 7px;
+    }
+
+
+}

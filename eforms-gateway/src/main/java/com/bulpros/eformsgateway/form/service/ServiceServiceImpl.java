@@ -3,14 +3,15 @@ package com.bulpros.eformsgateway.form.service;
 import static com.bulpros.eformsgateway.cache.service.CacheService.CACHE_ACTIVE_CONDITION;
 import static com.bulpros.eformsgateway.cache.service.CacheService.CACHE_CONTROL_CONDITION;
 import static com.bulpros.eformsgateway.cache.service.CacheService.PUBLIC_CACHE;
-import static java.util.Objects.nonNull;
+import static java.util.Objects.isNull;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 import com.bulpros.eformsgateway.form.exception.NotSatisfiedAssuranceLevel;
 import com.bulpros.eformsgateway.security.service.UserService;
-import org.modelmapper.ModelMapper;
+import io.micrometer.core.annotation.Timed;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.Authentication;
@@ -28,7 +29,6 @@ import com.bulpros.formio.repository.formio.SubmissionFilter;
 import com.bulpros.formio.repository.formio.SubmissionFilterClauseEnum;
 import com.bulpros.formio.service.SubmissionService;
 import com.bulpros.formio.utils.Page;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
@@ -46,29 +46,29 @@ public class ServiceServiceImpl implements ServiceService {
     public final String AR_ID;
 
     private final CaseService caseService;
-    private final ObjectMapper objectMapper;
-    private final ModelMapper modelMapper;
     private final ConfigurationProperties configuration;
     private final SubmissionService submissionService;
     private final UserService userService;
+    private final UserProfileService userProfileService;
+    private final ValidationServiceService validationServiceService;
     
     // Do not removed: Used in @Cacheable condition SpEL expression
     @Getter private final CacheService cacheService;
 
     @Autowired
     public ServiceServiceImpl(CaseService caseService, SubmissionService submissionService,
-                              ObjectMapper objectMapper, ModelMapper modelMapper, ConfigurationProperties configuration,
-                              CacheService cacheService, UserService userService) {
+                              ConfigurationProperties configuration,
+                              UserProfileService userProfileService, CacheService cacheService, UserService userService, ValidationServiceService validationServiceService) {
         this.caseService = caseService;
-        this.objectMapper = objectMapper;
-        this.modelMapper = modelMapper;
         this.configuration = configuration;
         this.submissionService = submissionService;
+        this.userProfileService = userProfileService;
         this.cacheService = cacheService;
         this.userService = userService;
         CODE_KEY = configuration.getCodePropertyKey();
         STATUS_KEY = configuration.getStatus();
         AR_ID = configuration.getArId();
+        this.validationServiceService = validationServiceService;
     }
     @Override
     @Cacheable(value = GET_SERVICE_ASSURANCE_LEVEL_CACHE, key = "#easId", unless = "#result == null", condition = CACHE_ACTIVE_CONDITION)
@@ -92,14 +92,53 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
+    public ResourceDto getServiceById(String projectId, Authentication authentication, String easId) {
+        return getServiceById(projectId, authentication, easId, PUBLIC_CACHE);
+    }
+
+    @Override
+    public ResourceDto getServiceById(String projectId, Authentication authentication, String easId, String cacheControl) {
+        var resources = submissionService.getSubmissionsWithFilter(
+                new ResourcePath(projectId, configuration.getServiceResourcePath()), authentication,
+                Collections.singletonList(
+                        new SubmissionFilter(
+                                SubmissionFilterClauseEnum.NONE,
+                                Collections.singletonMap(configuration.getArId(), easId))));
+        if (resources.isEmpty()) throw new ResourceNotFoundException("Service with id: " + easId + " not found!");
+        return resources.get(0);
+    }
+
+    @Override
+    public ServiceSubmissionResponseDto getServiceInfo(String projectId, Authentication authentication, String easId, String applicant) {
+        ServiceSubmissionResponseDto response =  cacheService.get(GET_SERVICES_BY_ID_CACHE, easId, ServiceSubmissionResponseDto.class, PUBLIC_CACHE);
+        if (isNull(response)) {
+            response = getServicesById(projectId, authentication, easId, applicant);
+            cacheService.put(GET_SERVICES_BY_ID_CACHE, easId, response, PUBLIC_CACHE);
+        }
+
+        var userProfile= userProfileService.getUserProfileData(projectId,authentication);
+        validationServiceService.validateRequiredProfile(userProfile, response.getService(), applicant);
+
+        var incompleteCases = caseService.getIncompleteCasesByUserIdAndServiceIds(projectId,
+                authentication, applicant, Collections.singletonList(easId));
+        var existIncompleteCases =
+                (incompleteCases != null && !incompleteCases.isEmpty()) ? Boolean.TRUE : Boolean.FALSE;
+        response.setExistIncompleteCases(existIncompleteCases);
+        return response;
+    }
+
+    @Timed(value = "eforms-gateway-get-services-by-id.time")
+    @Override
     @Cacheable(value = GET_SERVICES_BY_ID_CACHE, key = "#easId", unless = "#result == null", condition = CACHE_ACTIVE_CONDITION)
-    public ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId) {
-        return getServicesById(projectId, authentication, easId, PUBLIC_CACHE);
+    public ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId,
+                                                        String applicant) {
+        return getServicesById(projectId, authentication, easId, applicant, PUBLIC_CACHE);
     }
         
     @Override
     @Cacheable(value = GET_SERVICES_BY_ID_CACHE, key = "#easId", unless = "#result == null", condition = CACHE_CONTROL_CONDITION)
-    public ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId, String cacheControl) {
+    public ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId,
+                                                        String applicant, String cacheControl) {
         var serviceSubmissions = submissionService.getSubmissionsWithFilter(
                 new ResourcePath(projectId, configuration.getServiceResourcePath()), authentication,
                 Collections.singletonList(
@@ -113,31 +152,21 @@ public class ServiceServiceImpl implements ServiceService {
         }
 
         var serviceSubmission = serviceSubmissions.get(0);
-        if (!ServiceStatusEnum.ACTIVE.status.equals(serviceSubmission.getData().get(STATUS_KEY))) {
-            throw new NotActiveException("Service with ID: " + easId + " is not active");
+        var serviceStatus = serviceSubmission.getData().get(STATUS_KEY);
+        if (!this.configuration.getStartServiceStatuses().contains(serviceStatus)) {
+            throw new NotActiveException("Service with ID: " + easId + " with status: " + serviceStatus + " is not allowed to start");
         }
+
         serviceSubmission = addFirstTenActiveServiceSuppliers(serviceSubmission, projectId, easId, authentication);
-
-        var incompleteCases = caseService.getIncompleteCasesByUserIdAndServiceIds(projectId, authentication, Collections.singletonList(easId));
-        var existIncompleteCases =
-                (incompleteCases != null && !incompleteCases.isEmpty()) ? Boolean.TRUE : Boolean.FALSE;
-
         ServiceSubmissionResponseDto result = new ServiceSubmissionResponseDto();
         result.setService(serviceSubmission);
-        result.setExistIncompleteCases(existIncompleteCases);
         return result;
     }
 
+    @Timed(value = "eforms-gateway-get-process-key-by-services-id.time")
     @Override
-    public String getProcessKeyByServicesId(String projectId, Authentication authentication, String easId) {
-        var resources = submissionService.getSubmissionsWithFilter(
-                new ResourcePath(projectId, configuration.getServiceResourcePath()), authentication,
-                Collections.singletonList(
-                        new SubmissionFilter(
-                                SubmissionFilterClauseEnum.NONE,
-                                Collections.singletonMap(configuration.getArId(), easId))));
-        if (resources.isEmpty()) throw new ResourceNotFoundException("Service with id: " + easId + " not found!");
-        var assuranceLevelString = (String) resources.get(0).getData().get(configuration.getRequiredSecurityLevel());
+    public String getProcessKeyByServicesId(String projectId, Authentication authentication, ResourceDto serviceDto) {
+        var assuranceLevelString = (String) serviceDto.getData().get(configuration.getRequiredSecurityLevel());
         var serviceRequiredAssuranceLevel = AssuranceLevelEnum.valueOf(assuranceLevelString.toUpperCase(Locale.ROOT));
         if(serviceRequiredAssuranceLevel != null){
             var user= userService.getUser(authentication);
@@ -147,7 +176,7 @@ public class ServiceServiceImpl implements ServiceService {
             }
         }
 
-        return resources.get(0).getData().get(configuration.getProcessDefinitionId()).toString();
+        return serviceDto.getData().get(configuration.getProcessDefinitionId()).toString();
     }
 
     @Override
@@ -172,7 +201,8 @@ public class ServiceServiceImpl implements ServiceService {
         return submissionService.getSubmissionsWithFilter(new ResourcePath(projectId, configuration.getServiceSuppliersResourcePath()),
                 authentication, filters, page, size, sort);
     }
-    
+
+    @Timed(value = "eforms-gateway-get-service-suppliers-by-title.time")
     @Override
     @Cacheable(value = GET_SERVICE_SUPPLIERS_BY_TITLE_CACHE, key = "new org.springframework.cache.interceptor.SimpleKey(#easId, #title)", unless = "#result == null", condition = CACHE_ACTIVE_CONDITION)
     public List<ResourceDto> getServiceSuppliersByTitle(String projectId, String easId, String title, Authentication authentication) {
@@ -186,24 +216,34 @@ public class ServiceServiceImpl implements ServiceService {
         return easServiceSuppliers.getElements();
     }
 
-    private List<String> getServiceIdsList(List<ResourceDto> servicesWithSupplier) {
-        return servicesWithSupplier.stream()
-                .map(s -> (String) s.getData().get(AR_ID))
-                .collect(Collectors.toList());
-    }
-
     @Override
-    public List<ServiceIdAndNameDto> getServicesByCaseStatusClassifierAndName(String projectId, Authentication authentication,
-                                                                              AdminServiceFilter serviceFilter, String classifier) {
+    public List<ServiceIdAndNameDto> getServicesByCaseStatusAndName(String projectId, Authentication authentication,
+                                                                    AdminServiceFilter serviceFilter, List<Integer> caseStatuses,
+                                                                    String caseAdministrativeUnit, String fromIssueDate, String toIssueDate) {
         List<SubmissionFilter> filters = createCaseSubmissionFilter(serviceFilter);
-        var caseStatusCodes = getCaseStatusCodes(projectId, authentication, classifier);
+        filters.add(new SubmissionFilter(
+                SubmissionFilterClauseEnum.REGEX,
+                Collections.singletonMap(configuration.getAdministrationUnitEDeliveryKey(), "(.*)" + Objects.toString(caseAdministrativeUnit, "") + "(.*)")));
         filters.add(new SubmissionFilter(
                 SubmissionFilterClauseEnum.REGEX,
                 Collections.singletonMap(configuration.getServiceNamePropertyKey(), "(.*)" + Objects.toString(serviceFilter.getServiceName(), "") + "(.*)")));
         filters.add(new SubmissionFilter(
                 SubmissionFilterClauseEnum.IN,
-                Collections.singletonMap(configuration.getCaseStatusCodePropertyKey(), caseStatusCodes)));
+                Collections.singletonMap(configuration.getCaseStatusCodePropertyKey(), caseStatuses)));
         filters.add(SubmissionFilter.build("select", "data." + configuration.getServiceIdPropertyKey()));
+
+        if (StringUtils.isNotEmpty(fromIssueDate)) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.GTE,
+                    Collections.singletonMap(configuration.getDeliveryDate(), fromIssueDate)));
+        }
+
+        if (StringUtils.isNotEmpty(toIssueDate)) {
+            filters.add(new SubmissionFilter(
+                    SubmissionFilterClauseEnum.LTE,
+                    Collections.singletonMap(configuration.getDeliveryDate(), toIssueDate)));
+        }
+
         var serviceIds = submissionService.getAllSubmissionsWithFilter(
                 new ResourcePath(projectId, configuration.getCaseResourcePath()), authentication,
                 filters,100l, false);
@@ -217,7 +257,7 @@ public class ServiceServiceImpl implements ServiceService {
         }
         var serviceWithCasesFilter = new ArrayList<SubmissionFilter>();
         serviceWithCasesFilter.add(new SubmissionFilter(SubmissionFilterClauseEnum.IN,
-                        Map.of(configuration.getArId(), servicesIdsWithCases.stream().collect(Collectors.toList()))));
+                        Map.of(configuration.getArId(), servicesIdsWithCases.stream().distinct().collect(Collectors.toList()))));
         serviceWithCasesFilter.add(SubmissionFilter.build("select", "data." + configuration.getArId()));
         serviceWithCasesFilter.add(SubmissionFilter.build("select", "data." + configuration.getServiceNamePropertyKey()));
         var serviceIdsAndNames = submissionService.getSubmissionsWithFilter(
@@ -283,7 +323,8 @@ public class ServiceServiceImpl implements ServiceService {
         filters.add(SubmissionFilter.build("select", "data.serviceSupplierTitle"));
         filters.add(SubmissionFilter.build("select", "data.supplierEAS"));
         filters.add(SubmissionFilter.build(configuration.getArId(), easId));
-        filters.add(SubmissionFilter.build(configuration.getStatus(), "active"));
+        filters.add(new SubmissionFilter(SubmissionFilterClauseEnum.IN,
+                Map.of(configuration.getStatus(), configuration.getServiceSupplierAllowedStatuses())));
         return filters;
     }
 
@@ -303,14 +344,8 @@ public class ServiceServiceImpl implements ServiceService {
         return filters;
     }
 
-
-    private List<String> getCaseStatusCodes(String projectId, Authentication authentication, String classifier){
-        var caseStatusSubmissions = submissionService.getAllSubmissionsWithFilter(
-                new ResourcePath(projectId, configuration.getCaseStatusResourcePath()), authentication,
-                Collections.singletonList(
-                        new SubmissionFilter(
-                                SubmissionFilterClauseEnum.NONE,
-                                Collections.singletonMap(configuration.getCaseStatusClassifierPropertyKey(), classifier))),20L);
+    private List<String> getCaseStatusCodes(String projectId, Authentication authentication, List<Integer> statuses){
+        var caseStatusSubmissions = caseService.getCaseStatuses(projectId, authentication,statuses);
         return caseStatusSubmissions
                 .stream()
                 .map(s -> (String) s.getData().get(CODE_KEY))

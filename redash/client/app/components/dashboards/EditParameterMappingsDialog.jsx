@@ -11,6 +11,7 @@ import {
   synchronizeWidgetTitles,
 } from "@/components/ParameterMappingInput";
 import notification from "@/services/notification";
+import { t } from "@/locales/config.jsx";
 
 export function getParamValuesSnapshot(mappings, dashboardParameters) {
   return map(
@@ -100,10 +101,12 @@ class EditParameterMappingsDialog extends React.Component {
     return (
       <Modal
         {...dialog.props}
-        title="Parameters"
+        title={t("Parameters")}
         onOk={() => this.saveWidget()}
         okButtonProps={{ loading: this.state.saveInProgress }}
-        width={700}>
+        width={700}
+        cancelText={t("Cancel")}
+        okText={t("OK")}>
         {this.state.parameterMappings.length > 0 && (
           <ParameterMappingListInput
             mappings={this.state.parameterMappings}

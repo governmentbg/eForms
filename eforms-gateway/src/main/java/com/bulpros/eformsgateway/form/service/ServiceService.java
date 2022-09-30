@@ -13,11 +13,17 @@ import java.util.List;
 public interface ServiceService {
     ResourceDto getServiceAssuranceLevel(String projectId, Authentication authentication, String easId);
 
-    ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId);
-    
-    ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId, String cacheControl);
+    ResourceDto getServiceById(String projectId, Authentication authentication, String easId);
 
-    String getProcessKeyByServicesId(String projectId, Authentication authentication, String easId);
+    ResourceDto getServiceById(String projectId, Authentication authentication, String easId, String cacheControl);
+
+    ServiceSubmissionResponseDto getServiceInfo(String projectId, Authentication authentication, String easId, String applicant);
+
+    ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId, String applicant);
+    
+    ServiceSubmissionResponseDto getServicesById(String projectId, Authentication authentication, String easId, String applicant, String cacheControl);
+
+    String getProcessKeyByServicesId(String projectId, Authentication authentication, ResourceDto serviceDto);
 
     Page<ResourceDto> getServices(String projectId, Authentication authentication, AdminServiceFilter serviceFilter,
                                   Long page, Long size, String sort);
@@ -26,6 +32,7 @@ public interface ServiceService {
 
     List<ResourceDto> getServiceSuppliersByTitle(String projectId, String easId, String title, Authentication authentication, String cacheControl);
 
-    List<ServiceIdAndNameDto> getServicesByCaseStatusClassifierAndName(String projectId, Authentication authentication,
-                                                                       AdminServiceFilter serviceFilter, String classifier);
+    List<ServiceIdAndNameDto> getServicesByCaseStatusAndName(String projectId, Authentication authentication,
+                                                             AdminServiceFilter serviceFilter, List<Integer> caseStatuses,
+                                                             String caseAdministrativeUnit, String fromIssueDate, String toIssueDate);
 }

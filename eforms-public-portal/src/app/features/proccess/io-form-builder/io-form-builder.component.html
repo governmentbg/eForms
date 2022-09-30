@@ -1,25 +1,33 @@
-
+<div *ngIf="hasInitDocument" class="row row-seperator">
+    <div class="col-md-4 col-12 p-0 m-0"><div class="init-document-select-label"> {{ 'CHOOSE_INITIATING_DOCUMENT' | translate }} </div></div>
+    <div class="col-md-4 col-12 p-0 m-0">
+        <mat-select class="init-document-select " [formControl]="selectedInitDocument"
+        [placeholder]="'SELECT' | translate" [disabled]="readonly || isAfterCorrection || !isOnline">
+            <mat-option *ngFor="let doc of initDocuments" [value]="doc.value">
+                {{doc.label}} 
+            </mat-option>
+        </mat-select>
+    </div>
+</div>
 <div *ngIf="formSrc && formLoaded">
     <formio [id]="io-form-builder-form"
-    class="formio-form-proccess"
-    [form]="formSrc"
-    [refresh]="refreshForm"
-    (ready)="handleFormReady($event)"
-    (render)="handleFormRender($event)"
-    (customEvent)="handleCustomEvent($event)"
-    (change)="handleFormChange($event)"
-    [submission]='formSubmition'>
-</formio>
-    <div *ngIf="errors.length" class="alert alert-danger" role="alert">
-        <div *ngFor="let error of errors">
-            {{ error }}
-        </div>
-    </div>
+        [form]="formSrc"
+        [refresh]="refreshForm"
+        [renderOptions]="formIoRenderOptions"
+        (ready)="handleFormReady($event)"
+        (render)="handleFormRender()"
+        (customEvent)="handleCustomEvent($event)"
+        (change)="handleFormChange($event)"
+        [submission]='formSubmition'
+    >
+    </formio>
 </div>
 <div *ngIf="!formLoaded && nestedForms.length">
     <app-nested-form-title-cards
             [nestedForms]="nestedForms"
             [readonly]="readonly"
-            (selectNestedFormEvent)="handleSelectNestedForm($event)"></app-nested-form-title-cards>
+            [hasInitDocument]="hasInitDocument"
+            [isOnline] = "isOnline"
+            (selectNestedFormEvent)="handleInitialSelectNestedForm($event)"></app-nested-form-title-cards>
 </div>
 

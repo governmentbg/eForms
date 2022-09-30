@@ -21,3 +21,44 @@
         }
     }
 }
+
+
+:host ::ng-deep .filter-form {
+
+    .apply-metadata-filter-button button {
+        border-radius: 7px !important;
+        background-color: $main-light-blue;
+        color: $main-dark-blue-second;
+        height: 45px;
+        font-weight: 400;
+        line-height: 24px;
+        padding: 0px 24px;
+        border: none;
+
+        &:hover {
+            color: $white;
+            background-color: $main-light-blue-hover;
+        }
+        &:disabled{
+            cursor: not-allowed;
+            background-color: $main-light-blue-hover;
+        }
+        &:focus, &:active:focus, &.active:focus {
+            outline: none;
+            outline-style: none;
+        }
+    }
+
+    .formio-component-submit {
+        display: none;
+    }
+
+    .card-border,
+    .card-body {
+        background-color: $light-gray;
+    }
+    .btn-primary{
+        border: none;
+    }
+    
+}

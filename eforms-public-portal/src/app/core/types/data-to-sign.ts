@@ -5,6 +5,6 @@ export interface DataToSign {
     digestToSign?: string;
     documentToSign?: string;
     documentName: string;
-    signingDate: string;
+    signingDate: Date;
     signatureValue?: string
 }

@@ -1,0 +1,32 @@
+<div *ngIf="tableDataSource" class="table-container">
+
+    <table mat-table [dataSource]="tableDataSource">
+
+    <ng-container *ngFor="let tableColumn of tableColumns" [matColumnDef]="tableColumn.name">
+        <div #dataCell>
+            <th mat-header-cell *matHeaderCellDef [class.text-right]="tableColumn.position == 'right'"
+            [style.width]="columnsCount + '%'">
+            {{ tableColumn.name | translate}}
+            </th>
+
+        <!-- column data -->
+        <td mat-cell *matCellDef="let element" [class.text-right]="tableColumn.position == 'right'" class="pr-3"
+            [attr.data-label]="tableColumn.name | translate">
+            <div class="date-wrapper" *ngIf="tableColumn.isDate">
+            <div>
+                <span class="fw-500">{{ (element | dataPropertyGetter: tableColumn.dataKey) | date:'d.MM.y' }}</span>
+                <span class="color-gray"> {{ (element | dataPropertyGetter: tableColumn.dataKey) | date:'HH:mm' }} </span>
+            </div>
+            </div>
+            <div *ngIf="!tableColumn.isDate && !tableColumn.doTranslate">
+            {{ element | dataPropertyGetter: tableColumn.dataKey | translate }}
+            </div>
+        </td>
+
+        </div>
+    </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+</div>

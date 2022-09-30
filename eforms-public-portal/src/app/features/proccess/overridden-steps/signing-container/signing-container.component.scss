@@ -1,0 +1,49 @@
+@import "colors.scss";
+@import "variables.scss";
+
+.custom-button-color {
+    background-color: $main-light-blue;
+    color: $main-dark-blue;
+    font-weight: 400 !important;
+    box-shadow: none !important;
+}
+
+.container {
+    margin-top: 16px;
+}
+
+.sign-button-container {
+    float: right;
+}
+
+.check-sign-button {
+    margin-top: 16px;
+}
+
+.signing-in-progress, .documents-signed {
+    display: inline-flex !important;
+    border-radius: 20px !important;
+    width: 14em;
+    height: 2.5em;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    
+    p {
+        margin-bottom: 0px;
+    }
+}
+
+.documents-signed {
+    background-color: $light-green;
+    width: 16em;
+
+    &::after {
+        margin-left: 0.5em;
+        content: "\2713"
+    }
+}
+
+.signing-in-progress {
+    background-color: $notification-attention;
+}

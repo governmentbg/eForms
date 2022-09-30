@@ -1,10 +1,9 @@
-import { Component, ComponentFactoryResolver } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Breadcrumb, BreadcrumbsConfig } from '@exalif/ngx-breadcrumbs';
 import { OidcSecurityService } from 'angular-auth-oidc-client';
 import { isEmpty } from 'lodash';
 import { DeepLinkService } from './core/services/deep-link.service';
-import { TranslateService } from '@ngx-translate/core';
 import { environment } from 'src/environments/environment';
 import { UserProfileService } from './core/services/user-profile.service';
 import { Formio } from 'formiojs';
@@ -25,7 +24,6 @@ import { LoginService } from './core/services/login.service';
 })
 export class AppComponent {
   title = 'public-portal';
-  langSelect: string;
   closedEventSubject: Subject<void> = new Subject<void>();
 
   constructor(
@@ -34,19 +32,8 @@ export class AppComponent {
     private deepLinkService: DeepLinkService,
     private userProfileService: UserProfileService,
     breadcrumbsConfig: BreadcrumbsConfig,
-    translate: TranslateService,
     private loginService: LoginService
   ) {
-    translate.addLangs(['en', 'bg']);
-    translate.setDefaultLang('bg');
-    this.langSelect = localStorage.getItem('language');
-    if (this.langSelect && this.langSelect.match(/en|bg/)) {
-      translate.use(this.langSelect);
-    } else {
-      this.langSelect = environment.defaultLanguage;
-      translate.use(environment.defaultLanguage);
-      localStorage.setItem('language', this.langSelect);
-    }
     breadcrumbsConfig.postProcess = (breadcrumbs): Breadcrumb[] => {
 
       // Ensure that the first breadcrumb always points to home
@@ -63,21 +50,24 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.oidcSecurityService.checkAuth()
-      .subscribe((isAuthenticated: boolean) => {
+      .subscribe(async (isAuthenticated: boolean) => {
         let queryParams = this.extractAndDecodeQueryParams();
-        this.redirectProfile(queryParams);
+        if ( queryParams.profileType != 1 && queryParams.profileID ) {
+          localStorage.setItem('redirectQueryParams', JSON.stringify(queryParams));
+        }
         this.deepLinkService.saveQueryParams(JSON.stringify(queryParams));
         if (!isAuthenticated) {
           if(queryParams.hasOwnProperty('easId') && !window.location.href.match('current-task')){
-            localStorage.setItem('navigateTo', `${window.location.origin}/dashboard/${queryParams.easId}`);
+            localStorage.setItem('navigateTo', `dashboard/${queryParams.easId}`);
             this.loginService.loginWithoutAssuranceLevel()
           } else {
             if (!window.location.href.match('login')) {
-              localStorage.setItem('navigateTo', window.location.href);
+              localStorage.setItem('navigateTo', window.location.pathname + window.location.search);
             }
           this.router.navigate(['login']);
           }
         } else {
+          await this.redirectProfile(queryParams);
           this.oidcSecurityService.userData$
             .subscribe(userData => {
               if (userData) {
@@ -85,11 +75,6 @@ export class AppComponent {
                   this.userProfileService.getUserProfilesWithUpdatedRoles();
                 } else {
                   this.userProfileService.getUserProfiles();
-                }
-                let navigateTo = localStorage.getItem('navigateTo');
-                if (navigateTo) {
-                  localStorage.removeItem('navigateTo');
-                  window.location.href = navigateTo;
                 }
               }
             });
@@ -194,10 +179,10 @@ export class AppComponent {
       const queries = queryString.split("&");
   
       queries.forEach((indexQuery: string) => {
-          const indexPair = indexQuery.split("=");
-  
-          const queryKey = decodeURIComponent(indexPair[0]);
-          const queryValue = decodeURIComponent(indexPair.length > 1 ? indexPair[1] : "");
+          const separatorIndex = indexQuery.indexOf('=');
+
+          const queryValue = decodeURIComponent(indexQuery.slice(separatorIndex + 1));
+          const queryKey = decodeURIComponent(indexQuery.slice(0, separatorIndex));
   
           params[queryKey] = queryValue;
       });
@@ -210,26 +195,46 @@ export class AppComponent {
     this.closedEventSubject.next();
   }
 
-  private redirectProfile(queryParams) {
-    if ( queryParams.profileType != 1 && queryParams.profileID ) {
-      localStorage.setItem('redirectQueryParams', JSON.stringify(queryParams));
-    }
+  private async redirectProfile(queryParams) {
 
     let redirectQueryParams = JSON.parse(localStorage.getItem('redirectQueryParams'));
     if ( redirectQueryParams && redirectQueryParams.profileType != 1 && redirectQueryParams.profileID ) {
-      this.userProfileService.decryptProfileId(redirectQueryParams.profileID).subscribe((profileId) => {
-        this.userProfileService.subscribe((userProfile: any) => {
-          if ( userProfile ) {
-            userProfile.profiles.forEach((profile) => {
-              if (profile.profileType == redirectQueryParams.profileType && profile.identifier == profileId) {
-                this.userProfileService.setUserByProfileId(profileId.toString());
-                localStorage.removeItem('redirectQueryParams');
+      let profileId = await this.userProfileService.decryptProfileId(redirectQueryParams.profileID).toPromise()
+      this.userProfileService.subscribe((userProfile: any) => {
+        if ( userProfile ) {
+          userProfile.profiles.forEach((profile) => {
+            if (profile.profileType == redirectQueryParams.profileType && profile.identifier == profileId) {
+              this.userProfileService.setUserByProfileId(profileId.toString());
+              localStorage.removeItem('redirectQueryParams');
+              let navigateTo = localStorage.getItem('navigateTo');
+              if (navigateTo) {
+                this.navigateTo(navigateTo)
               }
-            });
-          }
-        });
+            }
+          });
+        }
       });
       this.userProfileService.removeSelectedProfile();
+    } else {
+      let navigateTo = localStorage.getItem('navigateTo');
+      if (navigateTo) {
+        this.navigateTo(navigateTo)
+      }
     }
   }
+
+  private navigateTo(navigateTo: string) {
+    let navigateToParts = navigateTo.split('?')
+    localStorage.removeItem('navigateTo');
+
+    let queryParams = {}
+    if (navigateToParts.length > 1) {
+      new URLSearchParams(navigateToParts[1]).forEach((value, key) => {
+        queryParams[key] = value
+      })
+    }
+
+    this.router.navigate([navigateToParts[0]], {queryParams: queryParams})
+  }
+
 }

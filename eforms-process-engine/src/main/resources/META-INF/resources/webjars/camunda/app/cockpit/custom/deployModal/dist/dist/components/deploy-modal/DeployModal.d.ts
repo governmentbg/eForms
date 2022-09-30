@@ -1,4 +1,5 @@
 import React from 'react';
+import "../../i18n/i18n";
 declare type ModalProps = {
     onClose: Function;
     showModal: boolean;

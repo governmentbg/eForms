@@ -29,6 +29,6 @@ export class AssuranceLevelErrorComponent implements OnInit {
     this.oidcSecurityService.logoff();
     this.deepLinkService.deleteAllParams();
     localStorage.setItem('assuranceLevel', this.requiredAssuranceLevel);
-    localStorage.setItem('navigateTo', window.location.href);
+    localStorage.setItem('navigateTo', window.location.pathname + window.location.search);
   }
 }

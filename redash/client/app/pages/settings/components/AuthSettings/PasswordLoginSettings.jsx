@@ -19,8 +19,7 @@ export default function PasswordLoginSettings(props) {
     <DynamicComponent name="OrganizationSettings.PasswordLoginSettings" {...props}>
       {!loading && !settings.auth_password_login_enabled && (
         <Alert
-          message="Password based login is currently disabled and users will
-            be able to login only with the enabled SSO options."
+          message={t("Password based login is currently disabled and users will be able to login only with the enabled SSO options.")}
           type="warning"
           className="m-t-15 m-b-15"
         />

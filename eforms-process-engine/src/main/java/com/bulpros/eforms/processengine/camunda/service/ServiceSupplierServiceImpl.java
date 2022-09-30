@@ -24,12 +24,12 @@ public class ServiceSupplierServiceImpl implements ServiceSupplierService {
 
     @Override
     public List<ResourceDto> getActiveSuppliers(String projectId, Authentication authentication) {
-                return submissionService.getAllSubmissionsWithFilter(
+        return submissionService.getAllSubmissionsWithFilter(
                 new ResourcePath(projectId, configurationProperties.getSupplierResourceName()), authentication,
                 Collections.singletonList(
                         new SubmissionFilter(
                                 SubmissionFilterClauseEnum.NONE,
                                 Collections.singletonMap(configurationProperties.getStatusPropertyKey(), ACTIVE))),
-                        bulkSize);
+                bulkSize);
     }
 }

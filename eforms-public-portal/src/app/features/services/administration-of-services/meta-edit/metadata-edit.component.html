@@ -1,0 +1,157 @@
+<div class="w-100 d-flex flex-column">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="services-container bg-white p-3">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 id="meta-review-header" class="heading-wrapper">
+                {{'METADATA_EDIT_FORM_SERVICE' | translate }} {{supplierData?.arId}} - {{supplierData?.serviceTitle}}
+            </h2>
+        </div>
+        <div *ngIf="!isLoading" #supplierFormElement>
+            <app-collapsable-card initialVisibility="true" [title]="'METADATA_REVIEW.EAS_DATA'| translate" [forceOpen]="eventOpenAllCollapsable.asObservable()" >
+                <div [formGroup]="supplierFormGroup" class="supplier-form">
+                    <div>{{'METADATA_REVIEW_SERVICE' | translate}}: <b>{{supplierData?.arId}} - {{supplierData?.serviceTitle}}</b></div>
+                    <div class="mb-3">{{'METADATA_REVIEW_SERVICE_PROVIDER' | translate}}: <b>{{supplierData?.supplierEAS}} - {{supplierData?.serviceSupplierTitle}}</b></div>
+                    <app-collapsable-card [isGrey]="true" [forceOpen]="eventOpenAllCollapsable.asObservable()" 
+                                        [title]="'METADATA_REVIEW_STATUS_DESC_SERVICE' | translate">
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <p>
+                                    {{'PROFILE_ROLES.STATUS'|translate}} <span class="text-danger ml-1">*</span>
+                                </p>
+                                <mat-form-field class="w-100">
+                                    <mat-select formControlName="status" disableOptionCentering panelClass="dropdown-pannel">
+                                        <mat-option *ngFor="let s of supplierStatuses" [value]="s.value">
+                                        {{s.transKey | translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="supplierFormGroup.controls.status.hasError('required')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                                </mat-form-field>
+        
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <p>
+                                    {{'METADATA_REVIEW.SERVICE_NEEDS_PROCESSING'|translate}}
+                                </p>
+                                <mat-form-field class="w-100">
+                                    <mat-select formControlName="isNotProcessable" disableOptionCentering panelClass="dropdown-pannel">
+                                        <mat-option [value]="false">
+                                            {{'YES'|translate}}
+                                        </mat-option>
+                                        <mat-option [value]="true">
+                                            {{'NO'|translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="supplierFormGroup.controls.isNotProcessable.hasError('required')" class="mb-1">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                                </mat-form-field>    
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12 col-md-6">
+                                <p>
+                                    {{'METADATA_REVIEW.SERVICE_WITH_PAYMENT'|translate}} <span class="text-danger ml-1">*</span>
+                                </p>
+                                <mat-form-field class="w-100">
+                                    <mat-select formControlName="hasPayment" (selectionChange)="handlePaymentChange()" disableOptionCentering panelClass="dropdown-pannel">
+                                        <mat-option [value]="'yes'">
+                                            {{'YES'|translate}}
+                                        </mat-option>
+                                        <mat-option [value]="'no'">
+                                            {{'NO'|translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="supplierFormGroup.controls.isNotProcessable.hasError('required')" class="mb-1">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                                </mat-form-field>    
+        
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <p>
+                                    {{'METADATA_REVIEW.SERVICE_FIXED_PRICE'|translate}} <span *ngIf="supplierFormGroup.value.hasPayment === 'yes'" class="text-danger ml-1">*</span>
+                                </p>
+                                <mat-form-field class="w-100">
+                                    <mat-select formControlName="hasFixedPayment" (selectionChange)="handleFixPaymentChange()" disableOptionCentering panelClass="dropdown-pannel">
+                                        <mat-option [value]="'yes'">
+                                            {{'YES_AFTER_DELIVERY'|translate}}
+                                        </mat-option>
+                                        <mat-option [value]="'beforeDelivery'">
+                                            {{'YES_BEFORE_DELIVERY'|translate}}
+                                        </mat-option>
+                                        <mat-option [value]="'no'">
+                                            {{'NO'|translate}}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="supplierFormGroup.controls.isNotProcessable.hasError('required')" class="mb-1">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                                </mat-form-field>  
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p>
+                                    {{'METADATA_REVIEW.SERVICE_NOTE'|translate}}
+                                </p>
+                                <mat-form-field class="w-100">
+                                    <textarea matInput formControlName="serviceDescription"></textarea>
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </app-collapsable-card>
+        
+                    <app-collapsable-card [isGrey]="true" [forceOpen]="eventOpenAllCollapsable.asObservable()" 
+                                        [title]="'METADATA_REVIEW.INTEGRATIONS' | translate">
+                        <div class="row">
+                            <div class="col-6">
+                                <p>
+                                    {{'METADATA_REVIEW.AIS_CLIENT_PAYMENT'|translate}} <span *ngIf="supplierFormGroup.value.hasPayment === 'yes'" class="text-danger ml-1">*</span>
+                                </p>
+                                <div class="mb-3 ">
+                                    <mat-form-field class="w-100">
+                                        <input matInput formControlName="aisClientEPayment"/>
+                                        <mat-error *ngIf="supplierFormGroup.controls.aisClientEPayment.hasError('required')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </app-collapsable-card>
+                </div>
+            </app-collapsable-card>
+        </div>
+        
+
+        <hr/>
+        <div style="clear:both"></div>
+
+        <app-collapsable-card *ngIf="!isLoading" initialVisibility="true" [title]="'METADATA_REVIEW.TAX.INFO' | translate">
+            <app-channel-tax #appChannelTax
+            [termsTaxesData]="termsTaxesData"
+            [availableChannels]="availableChannels"
+            [eventPaymentChange]="eventPaymentChange.asObservable()"
+            (updateChannelEvent)="handleUpdateChannel($event)"
+            (deleteChannelEvent)="handleDeleteChannel($event)"
+            (isEdditingChannel)="handleIsEditngChannel($event)">
+        </app-channel-tax>
+        </app-collapsable-card>
+
+        <hr/>
+        <div style="clear:both"></div>
+
+        <app-collapsable-card *ngIf="!isLoading"initialVisibility="true" [title]="'METADATA_REVIEW.DATA_SERVICE_SUPPLIERS'| translate" [forceOpen]="eventOpenEASCollapsable.asObservable()" >
+            <app-service-supplier-eas #appAdministrativeUnits
+            [metadata]="supplierData" [availableAdministrativeUnitsList] = "availableAdministrativeUnitsList"
+            [availableChannelTaxList] = "termsTaxesData?.channelsAndTermsList"
+            [updateChannelEvent]="eventUpdateChannel.asObservable()"
+            [deleteChannelEvent]="eventDeleteChannel.asObservable()"> 
+        </app-service-supplier-eas>
+        </app-collapsable-card>
+        <div class="row" *ngIf="!isLoading">
+            <div class="col-12 pr-0 text-right">
+                <button type="button" (click)="submitMetadata()" mat-button class="btn-primary-large" [disabled]="isEditingChannels">
+                    {{ 'SAVE' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

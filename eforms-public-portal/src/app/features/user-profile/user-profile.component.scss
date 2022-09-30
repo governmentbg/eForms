@@ -2,71 +2,149 @@
 @import "colors.scss";
 
 :host {
-
-    .profile-additional {
-        margin: 0 1.5em 1.5em 1.5em;
-        border: 1px solid $formBorder !important;  
-        .fa {
-            margin-right: 4px;
-        }      
-        .table-hide{
-            display: none;
-        }
+  .profile-additional {
+    margin: 0 1.5em 1.5em 1.5em;
+    border: 1px solid $formBorder;
+    border-radius: 25px;
+    overflow: hidden;
+    .fa {
+      margin-right: 4px;
     }
-
-    height: calc(100% - #{$desktop-header-height});
-
-    .profile-container {
-        min-height: 46em;
-        background-color: $white;
-
-        @media screen and (max-width: 840px) {
-            div:nth-child(0) {
-                flex-direction: column;
-            }
-
-            .back-button {
-                padding: 8px 0 0 8px;
-                display: flex;
-                align-self: flex-start;
-            }
-        }
+    .table-hide {
+      display: none;
     }
+  }
+
+  height: calc(100% - #{$desktop-header-height});
+
+  .profile-container {
+    min-height: 46em;
+    background-color: $white;
+
+    @media screen and (max-width: 840px) {
+      div:nth-child(0) {
+        flex-direction: column;
+      }
+
+      .back-button {
+        padding: 8px 0 0 8px;
+        display: flex;
+        align-self: flex-start;
+      }
+    }
+  }
+
+  @media screen and (min-width: 840px) {
+    .profile-inner-container {
+      width: 85%;
+      margin: 0 auto;
+    }
+  }
 }
 
-::ng-deep .formio-form {
-    .form-additional-profiles{
-        display: none;
-    }
-
-    .formio-component-submit {
-        display: none;
-    }
+:host ::ng-deep .formio-form {
+  .form-additional-profiles {
+    display: none;
+  }
 
     .form-control:disabled, .form-control[readonly] {
         background-color: #fff;
-        border: none
+        border: none;
+        padding: 0;
     }
 
-    input[type="radio"], input[type="checkbox"] {
-        display: none;
+    .form-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+        color: red;
+        opacity: 1; /* Firefox */
     }
-    .form-check {
-        display:none;
-        padding-left: 0;
+    .form-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+        color: red;
     }
-    .form-check.radio-selected{
-        display: block;
-    }
-    .form-check.checkbox{
-        display: block;
-    }
-    .formio-collapse-icon {
-        display: none;
-    }
-    .fa-minus-square-o {
-        display: none !important;
+    .form-control::-ms-input-placeholder { /* Microsoft Edge */
+        color: red;
     }
 
-    padding: 0 1.5em 1.5em 1.5em;
+    h4 {
+        font-weight: 500;
+        padding-bottom: 15px;
+    }
+
+    .col-form-label {
+        font-weight: bold;
+    }
+
+    .field-required:after {
+        display: none;
+    }
+  .formio-component-submit {
+    display: none;
+  }
+
+  .form-control {
+    background-color: #fff;
+    border: none;
+    padding: 0;
+  }
+
+  .form-control::placeholder {
+    /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: red;
+    opacity: 1; /* Firefox */
+  }
+  .form-control:-ms-input-placeholder {
+    /* Internet Explorer 10-11 */
+    color: red;
+  }
+  .form-control::-ms-input-placeholder {
+    /* Microsoft Edge */
+    color: red;
+  }
+
+  h4 {
+    font-weight: 500;
+    padding-bottom: 15px;
+  }
+
+  .col-form-label {
+    font-weight: bold;
+  }
+
+  .field-required:after {
+    display: none;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    display: none;
+  }
+  .form-check {
+    display: none;
+    padding-left: 0;
+  }
+  .form-check.radio-selected {
+    display: block;
+  }
+  .form-check.checkbox {
+    display: block;
+  }
+  .formio-collapse-icon {
+    display: none;
+  }
+  .fa-minus-square-o {
+    display: none !important;
+  }
+
+  .col-md-6,
+  .col-md-4 {
+    border-left: 1px solid #999;
+  }
+
+  padding: 0 1.5em 1.5em 1.5em;
+
+  h3 {
+    margin: 3em 0 1em 0;
+  }
+  h3.mb-0 {
+    margin-bottom: 0;
+  }
 }

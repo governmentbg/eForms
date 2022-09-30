@@ -1,7 +1,5 @@
 package com.bulpros.eforms.processengine.egov.model.eservice;
 
-import com.bulpros.eforms.processengine.camunda.listener.RequiredSignaturesEnum;
-
 import java.util.Arrays;
 
 public enum AssuranceLevelEnum {

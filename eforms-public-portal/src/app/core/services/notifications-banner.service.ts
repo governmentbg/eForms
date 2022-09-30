@@ -8,19 +8,26 @@ export class NotificationsBannerService {
   created = new EventEmitter<NotificationBarModel>();
   closed = new EventEmitter<NotificationBarModel>();
   closeErrors = new EventEmitter<NotificationBarModel>();
-
+  visibleNotifications = false
   constructor() {}
 
   show(notificationBar: NotificationBarModel) {
     this.created.emit(notificationBar);
+    this.visibleNotifications = true;
   }
 
   hideAll() {
     this.closed.emit();
+    this.visibleNotifications = false;
   }
 
   hideAllErrors() {
     this.closeErrors.emit();
+    this.visibleNotifications = false;
+  }
+
+  closeNotification() {
+    this.visibleNotifications = false;
   }
 
 }

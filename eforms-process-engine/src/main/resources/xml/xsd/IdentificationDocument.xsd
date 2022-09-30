@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/IdentificationDocument"
+        xmlns="http://eform.e-gov.bg/dictionary/IdentificationDocument"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:clname="http://eform.e-gov.bg/dictionary/CyrillicLatinNameType"
+		xmlns:regix="http://eform.e-gov.bg/dictionary/RegixSync">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/CyrillicLatinNameType" schemaLocation="CyrillicLatinNameType.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/RegixSync" schemaLocation="RegixSync.xsd"/>
+
+	<xsd:complexType name="IdentificationDocument">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+		  Информация за личните документи на лице: лична карта, паспорт и др.
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="documentType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Вид на документа за самоличност. Номенклатура „Вид документ за самоличност“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="documentNumber" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Номер на документа за самоличност
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="issueDate" type="xsd:date" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Дата на издаване
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="issuer" type="clname:CyrillicLatinNameType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Държавен орган, издал документа за самоличност
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="validTo" type="xsd:date" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Дата на валидност
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="regix" type="regix:RegixSync" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Данните за лицето са синхронизирани от RegiX
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

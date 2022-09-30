@@ -8,7 +8,6 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  language: string;
   menuIcon = "menu";
 
   @Output() public sidenavToggle = new EventEmitter();
@@ -17,7 +16,6 @@ export class HeaderComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.language = 'Български';
     this.closeSidenavEvent.subscribe(() => {
       this.toggleMenu();
     })
@@ -26,10 +24,6 @@ export class HeaderComponent implements OnInit {
   openEgov() {
     const url = `https://${environment.egovBaseURL}/`;
     window.open(url, '_blank');
-  }
-
-  changeLanguage() {
-    this.language === 'Български' ? this.language = 'English' : this.language = 'Български';
   }
 
   toggleMenu() {

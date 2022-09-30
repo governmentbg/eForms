@@ -1,14 +1,18 @@
 package com.bulpros.eforms.processengine.web.exception;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpStatus;
 
-import lombok.Getter;
-
 @Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ExceptionBody {
-    private final int status;
-    private final String error;
-    private final String message;
+
+    private int status;
+    private String error;
+    private String message;
     private Object data;
 
     public ExceptionBody(HttpStatus status, String message) {
@@ -16,7 +20,7 @@ public class ExceptionBody {
         this.error = status.getReasonPhrase();
         this.message = message;
     }
-    
+
     public ExceptionBody(HttpStatus status, String message, Object data) {
         this.status = status.value();
         this.error = status.getReasonPhrase();

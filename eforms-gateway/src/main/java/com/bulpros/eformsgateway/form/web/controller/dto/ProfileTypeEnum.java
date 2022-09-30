@@ -1,5 +1,8 @@
 package com.bulpros.eformsgateway.form.web.controller.dto;
 
+import lombok.Getter;
+
+@Getter
 public enum ProfileTypeEnum {
     PERSON          (1),
     LEGAL_PERSON    (2),

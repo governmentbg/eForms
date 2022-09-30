@@ -95,7 +95,7 @@ class EditDestination extends React.Component {
       <div className="row" data-test="Destination">
         <div className="text-center m-b-10">
           <img className="p-5" src={`${IMG_ROOT}/${type.type}.png`} alt={type.name} width="64" />
-          <h3 className="m-0">{type.name}</h3>
+          <h3 className="m-0">{t(type.name)}</h3>
         </div>
         <div className="col-md-4 col-md-offset-4 m-b-10">
           <DynamicForm {...formProps} />

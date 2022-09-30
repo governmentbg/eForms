@@ -5,6 +5,7 @@ import com.bulpros.eformsgateway.eformsintegrations.model.EDeliveryProfileTypeEn
 import com.bulpros.eformsgateway.eformsintegrations.model.EDeliveryStatusEnum;
 import com.bulpros.eformsgateway.form.service.UserProfileService;
 import com.bulpros.eformsgateway.user.model.User;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ public class EDeliveryRegistrationServiceImpl implements EDeliveryRegistrationSe
     private final PersonRegistrationService personRegistrationService;
     private final UserProfileService userProfileService;
 
+    @Timed(value = "eforms-gateway-check-registration.time")
     @Override
     public CheckEDeliveryRegistrationResult checkRegistration(User user, Authentication authentication, String projectId, String applicant) {
         CheckEDeliveryRegistrationResult checkEDeliveryRegistrationResult;

@@ -62,13 +62,23 @@ export class CamundaProcessService {
       this.router.navigate(['administration-of-services', 'process', this.processInfo.id]);
     });
   }
-  setLocalVariableInProcess(taskId:string, variable:any){
+  setLocalVariableInProcess(taskId:string, variable:any, hideLoader:boolean = false){
     let filteredVariable = JSON.parse(JSON.stringify(variable))
     filteredVariable = this.clean(filteredVariable)
-    return this.http.post<any>(`/api/tasks/${taskId}/localVariables`, filteredVariable)
+    let customHeaders = {}
+    if(hideLoader){
+      customHeaders = {headers: {
+        'Hide-Loader': ''
+      }}
+    }
+    return this.http.post<any>(`/api/tasks/${taskId}/localVariables`, filteredVariable, customHeaders)
   }
   getLocalVariableFromProcess(taskId:string, variableName:string){
     return this.http.get(`/api/tasks/${taskId}/localVariables/${variableName}`)
+  }
+
+  deleteAllLocalVariables(taskId: string) {
+    return this.http.delete<any>(`api/projects/${environment.formioBaseProject}/task/${taskId}/local-variables`)
   }
   
   getVariableFromProcess(taskId:string, variableName:string){

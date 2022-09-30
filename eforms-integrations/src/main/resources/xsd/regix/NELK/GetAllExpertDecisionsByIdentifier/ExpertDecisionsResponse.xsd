@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://egov.bg/RegiX/NELK/EISME" targetNamespace="http://egov.bg/RegiX/NELK/EISME" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:complexType name="AdditionalData">
+		<xs:annotation>
+			<xs:documentation>Допълнителни данни за ЕР </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EmployeeType" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дали е ТЕЛК ИЛИ НЕЛК, Служител на ТЕЛК 9854, Служител на НЕЛК 9853</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Status" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Статус на ЕР:Създадено 9844;Издадено 9845;Върнато 9846;Очаква обжалване 9847;Обжалвано 9848;Влязло в сила 9849;Отменено 9850;Прекратено 9851;Изтекло 9852;Пренасочен 10236</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReasonForTermination" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>При прекратено ЕР се избира:Неявил се;Отказал се;Починал</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="IdentityDocument">
+		<xs:annotation>
+			<xs:documentation>Лична карта</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocumentNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Лична карта номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssueDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Издадена нa</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IssuePlace" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Лична карта - Издадена от</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ValidDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Лична карта - Валидна до</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Address">
+		<xs:annotation>
+			<xs:documentation>Адрес</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AddressDescription" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DistrictEKATTE" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код на област по ЕКАТТЕ – няма го в бланките на ЕР</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MunicipalityEKATTE" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код на община по ЕКАТТЕ – няма го в бланките на ЕР</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SettlementEKATTE" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код на населеното място по ЕКАТТЕ – няма го в бланките на ЕР</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DisabilityReason">
+		<xs:annotation>
+			<xs:documentation>Инвалидност по причини</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Date" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата на инвалидност</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Percent" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>% тр. н. раб.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Type" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид на инвалидността</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Appeal">
+		<xs:annotation>
+			<xs:documentation>Данни за обжлваното ЕР ако е НЕЛК</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegistrationNumber" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер на решение за което се обжалва</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата на решение за което се обжалва</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Institution" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Инстанция която е издала обжалваното решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InstitutionCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Инстанция която е издала обжалваното решение код </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Stakeholders" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Обжалвани заинтересовани лица и органи</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StakeholdersCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Обжалвани заинтересовани лица и органи код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Condition" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Състояние до Експ. В ТЕЛК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Decision" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Решение на ТЕЛК/НЕЛК по обжалвания повод</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecisionCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Решение на ТЕЛК/НЕЛК по обжалвания повод код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CommisionMember">
+		<xs:annotation>
+			<xs:documentation>Член на комисията</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Position" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Длъжност (председ ,член)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Name" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Имена на лекарят</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InitiateDocument">
+		<xs:annotation>
+			<xs:documentation>Данни за инициращият документ</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegistrationNumber" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Деловоден номер на документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата на документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocumentType" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид документ - текст</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Annotation" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Анотация на документа</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="Parent">
+		<xs:annotation>
+			<xs:documentation>Данни за Настойник при деца</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EGN" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЕГН на настойника</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="LNCh" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЛНЧ на настойник</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonNames" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Имена на настойник</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdentityDocument" type="IdentityDocument" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Лична карта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PermanentAddress" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Настойник - Постоянен адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TemporaryAddress" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Настойник - Настоящ адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExpertDecisionDocument">
+		<xs:annotation>
+			<xs:documentation>Експертно решение</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RegistrationNumber" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Експертно решение номер</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeetingNumber" type="xs:long" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Номер заседание</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RegistrationDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата на експертно решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommissionDescr" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ТЕЛК за/Специализиран състав на НЕЛК по</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommissionCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ТЕЛК за/Специализиран състав на НЕЛК по - кода</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CommisionMember" type="CommisionMember" nillable="true" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Членове на комисията</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonNames" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Име ,презиме ,фамилия на пациента</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PersonIdentifier" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ЕГН / ЛНЧ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="IdentityDocument" type="IdentityDocument" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Лична карта</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PermanentAddress" type="Address" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Постоянен адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TemporaryAddress" type="Address" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Настоящ адрес</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Employment" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Трудова заетост</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmploymentCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код на трудовата заетост</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Profession" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Трудова заетост (ако работи се добавя професията)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConditionText" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Състояние до експертиза/Състояние до експертиза в ТЕЛК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ConditionCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Код на Състояние до експертиза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpertiseType" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид на експертиза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpertiseTypeCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Вид на експертиза код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpertiseDecisionMaking" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Начин на вземане на решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpertiseDecisionMakingCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Начин на вземане на решение код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpertisePlace" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Място на експертизата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ExpertisePlaceCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Място на експертизата код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmployabilityAssessment" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Оценка на работоспособността</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EmployabilityAssessmentCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Оценка на работоспособността код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AppealedHospitalSheets" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Обжалвани болнични листове</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DurationForeignAid" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок на чуждата помощ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DurationDisabilityDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок на определения % трайно намалена работоспособност/вид и степен на увреждане - дата</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DurationDisability" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок на определения % трайно намалена работоспособност/вид и степен на увреждане</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DurationDisabilityCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Срок на определения % трайно намалена работоспособност/вид и степен на увреждане код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DisabilityReason" type="DisabilityReason" nillable="true" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Инвалидност по причини</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Diagnosis" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Водеща диагноза</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DiagnosisCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Водеща диагноза – МКБ код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GeneralIllness" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Общо заболяване</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GeneralIllnessCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Общо заболяване-код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WorkAccident" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Трудова злополука</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WorkAccidentCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Трудова злополука - код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WorkDisease" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Професионално заболяване</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="WorkDiseaseCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Професионално заболяване - код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MilitaryDisability" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Военна инвалидност</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MilitaryDisabilityCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Военна инвалидност код</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ContradictionWorkingConditions" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Противопоказни условия на труд</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="RecommendationsForChild" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>препоръки ако е дете</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArgumentsAndObservations" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Констатация от медицинските изледвания,представените документи и мотиви за експертното решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ReceiptDate" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Дата на получаване на ЕР (налична ако е попълнена)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Appeal" type="Appeal" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данни за обжлваното ЕР ако е НЕЛК</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Parent" type="Parent" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данни за Настойник при деца</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AdditionalData" type="AdditionalData" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Допълнителни данни за ЕР </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InitiateDocument" type="InitiateDocument" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Данни за инициращият документ</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ExpertDecisionsResponse">
+		<xs:annotation>
+			<xs:documentation>Списък с експертни решения</xs:documentation>
+		</xs:annotation>
+		<xs:sequence minOccurs="0" maxOccurs="unbounded">
+			<xs:element name="ExpertDecisionDocument" type="ExpertDecisionDocument" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Експертно решение</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

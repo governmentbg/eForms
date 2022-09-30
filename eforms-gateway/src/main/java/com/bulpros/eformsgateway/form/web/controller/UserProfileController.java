@@ -13,6 +13,7 @@ import com.bulpros.eformsgateway.form.web.controller.dto.ResourceDataDto;
 import com.bulpros.eformsgateway.form.web.controller.dto.UserProfileDto;
 import com.bulpros.formio.model.User;
 import com.bulpros.formio.security.FormioUserService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.modelmapper.ModelMapper;
@@ -36,6 +37,7 @@ public class UserProfileController {
     private final EgovUserProfileService egovUserProfileService;
     private final ModelMapper modelMapper;
 
+    @Timed(value = "eforms-gateway-update-profile.time")
     @GetMapping(path = "projects/{projectId}/user-profile/update", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserProfileDto> userProfileUpdate(Authentication authentication, @PathVariable String projectId) {
         User user = userService.getUser(authentication);
@@ -52,6 +54,7 @@ public class UserProfileController {
         return ResponseEntity.ok(updatedUserData);
     }
 
+    @Timed(value = "eforms-gateway-update-additional-profiles.time")
     @GetMapping(path = "projects/{projectId}/user-profile/update-additional-profiles", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserProfileDto> userProfileUpdateAdditionalProfiles(Authentication authentication, @PathVariable String projectId) {
         User authUser = userService.getUser(authentication);
@@ -80,6 +83,7 @@ public class UserProfileController {
         return ResponseEntity.ok(userProfile);
     }
 
+    @Timed(value = "eforms-gateway-projectId-user-profile.time")
     @GetMapping(path = "projects/{projectId}/user-profile", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<UserProfileDto> getUserProfileData(
             Authentication authentication, @PathVariable String projectId) {
@@ -96,11 +100,12 @@ public class UserProfileController {
         return ResponseEntity.ok(user);
     }
 
+    @Timed(value = "eforms-gateway-decrypt-user-profile-id.time")
     @GetMapping(path = "projects/{projectId}/user-profile/profileId", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<String> decryptUserProfileId(Authentication authentication, @PathVariable String projectId,
                                                 @RequestParam String encryptProfileId) {
         String decryptUserProfileId = egovUserProfileService.decryptProfileId(encryptProfileId);
-        if(StringUtils.isEmpty(decryptUserProfileId)) {
+        if (StringUtils.isEmpty(decryptUserProfileId)) {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
         return ResponseEntity.ok(decryptUserProfileId);
@@ -117,17 +122,16 @@ public class UserProfileController {
         return userProfileService.createUserProfileData(projectId, authentication, userProfileData);
     }
 
-    private UserAdministrationsAuthorization addDefaultUserRole(UserAdministrationsAuthorization userAdministrationsAuthorization){
+    private UserAdministrationsAuthorization addDefaultUserRole(UserAdministrationsAuthorization userAdministrationsAuthorization) {
         var administrations = userAdministrationsAuthorization.getProfile().getAdministrations();
-        if(administrations == null || administrations.isEmpty()) return userAdministrationsAuthorization;
+        if (administrations == null || administrations.isEmpty()) return userAdministrationsAuthorization;
         administrations.forEach(administration -> {
-            if(administration.getProfileType().equals(EDeliveryProfileTypeEnum.INSTITUTION.getEGovValue())){
-                if(administration.getRoles() == null) {
+            if (administration.getProfileType().equals(EDeliveryProfileTypeEnum.INSTITUTION.getEGovValue())) {
+                if (administration.getRoles() == null) {
                     var roles = new ArrayList<String>();
                     roles.add(AdditionalProfileRoleEnum.User.role);
                     administration.setRoles(roles);
-                }
-                else if (administration.getRoles().stream().noneMatch(role -> role.equalsIgnoreCase(AdditionalProfileRoleEnum.User.role))) {
+                } else if (administration.getRoles().stream().noneMatch(role -> role.equalsIgnoreCase(AdditionalProfileRoleEnum.User.role))) {
                     administration.getRoles().add(AdditionalProfileRoleEnum.User.name());
                 }
             }

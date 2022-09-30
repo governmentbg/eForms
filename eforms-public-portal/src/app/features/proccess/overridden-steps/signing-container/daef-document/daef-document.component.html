@@ -1,0 +1,51 @@
+<div class="daef-document-wrapper" [class.daef-document-error-border]="daefDocument.hasErrorBorder" >
+    <mat-accordion>
+        <mat-expansion-panel [disabled]="isDropdownDisabled">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="reset-row-wrapper">
+
+                        <div class="row">
+                            <div class="col-12">
+                                <p class="daef-document-name">
+                                    <mat-icon>insert_drive_file</mat-icon>
+                                    {{ daefDocument.fileTitle }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row pt-2">
+                            <div class="col-lg-8 col-sm-12">
+                                <div class="row">                    
+                                    <div *ngFor="let file of daefDocument.files" class="col-lg-2 daef-document-download-column">
+                                        <button [disabled]="!isOnline" mat-button class="daef-document-download-button" (click)="handleFileDownload($event, file)">
+                                            {{ file.fileExtension }}
+                                            <mat-icon>download</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-sm-12">
+                                <span [class]="'document-status ' + daefDocument.status.class">
+                                    <span class="loading-bar" [ngStyle]="{
+                                        width: daefDocument.percentage + '%'
+                                    }"></span>
+                                    <p>{{ daefDocument.status.label | translate }}</p>
+                                </span>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <div class="daef-document-content-wrapper">
+                <app-select-signees [daefDocument]="daefDocument" [isOnline]="isOnline" 
+                (onDocumentSigneesLoaded)="handleOnDocumentSigneesLoaded($event)" 
+                (onDocumentSigneesError)="handleOnDocumentSigneesError($event)"
+                (onDocumentSigneesManipulated)="handleOnDocumentSigneesManipulated($event)"></app-select-signees>
+            </div>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>

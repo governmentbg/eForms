@@ -1,0 +1,112 @@
+@import "variables.scss";
+@import "colors.scss";
+p {
+    margin-bottom: 0px;
+}
+
+.warning {
+    color: $notification-error;
+}
+
+.success {
+    color: $success-green;
+}
+
+.font-13 {
+    font-size: 13px;
+}
+
+.payment-preview {
+    background-color: $light-gray;
+    border-radius: 10px;
+}
+
+.blue {
+    color: $main-dark-blue;
+}
+
+.payment-code-icon {
+    background-image: $payment-code;
+}
+
+.payment-card {
+    background-image: $payment-card;
+}
+
+.payment-ePay {
+    background-image: $payment-ePay;
+}
+
+.method-selection {
+    span {
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: block;
+        width: 100%;
+        height: 100%;
+    }
+
+    .method {
+        border: 2px $light-gray solid;
+        color: $main-dark-blue;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-right: 1rem !important;
+        overflow: hidden;
+
+        :last-child {
+            margin-right: 0px;
+        }
+
+        &.active {
+            border-color: $main-dark-blue;
+        }
+    }
+
+    .icon-wrapper {
+        width: 35px;
+        height: 35px;
+    }
+
+    .service-info {
+        color: $main-dark-blue;
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    .payment-action-button {
+        background-color: $main-dark-blue;
+        color: white;
+
+        &[disabled="true"] {
+            background-color: $medium-gray;
+            color: $white;
+        }
+    }
+
+    .payment-code {
+        border: 1px $main-dark-blue solid;
+        border-radius: 3px;
+    }
+
+    .payment-code-row {
+        border-bottom: 1px $light-gray solid;
+        margin-bottom: 0.5rem !important;
+    }
+
+    .infomation-row {
+        height: 20px;
+    }
+}
+
+.mt-2 {
+    margin-top: 0.5rem !important;
+}
+
+@media screen and (max-width: $tablet-max-width) {
+    .method-selection {
+        .method {
+            margin-right: 0px !important;
+        }
+    }
+}

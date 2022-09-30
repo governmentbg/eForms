@@ -4,6 +4,7 @@ import com.bulpros.eforms.processengine.camunda.service.TasksService;
 import com.bulpros.eforms.processengine.exeptions.ProcessNotFoundException;
 import com.bulpros.eforms.processengine.exeptions.TaskNotFoundException;
 import com.bulpros.eforms.processengine.web.dto.ProcessDto;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.apache.logging.log4j.util.Strings;
 import org.springframework.http.HttpStatus;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 @RestController
-@RequestMapping({ "/eforms-rest" })
+@RequestMapping({"/eforms-rest"})
 @RequiredArgsConstructor
 public class TaskController {
 
     private final TasksService tasksService;
 
+    @Timed(value = "eforms-process-engine-current_task.time")
     @GetMapping(value = "process/{processId}/current-task", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ProcessDto> getAssignedTask(@PathVariable("processId") String processId) {
         if (Strings.isEmpty(processId)) {
@@ -31,6 +33,7 @@ public class TaskController {
     }
 
 
+    @Timed(value = "eforms-process-engine-task_complete.time")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @PostMapping(value = "task/{taskId}/complete")
     public void completeTaskById(@PathVariable("taskId") String taskId, @RequestBody Map<String, Object> variables) {

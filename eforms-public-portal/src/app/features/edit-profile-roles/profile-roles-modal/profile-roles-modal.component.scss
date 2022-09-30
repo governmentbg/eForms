@@ -1,66 +1,67 @@
 @import "colors.scss";
 
-
-
-button.close-button {
-    background: transparent;
-    cursor: pointer;
-    border: 0;
-    color: $white;
-    float: right;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-right: 1em;
-}
-
-.header-wrapper {
-    padding: 16px 16px 16px 32px;
-    display: flex;
-    justify-content: space-between;
-    @media screen and (max-width: 840px) {
-        padding: 16px;
-    }
-}
-
-.user-wrapper {
-    display: flex;
-    align-items: center;
-    app-user {
-        margin: 0;
-    }
-    @media screen and (max-width: 840px) {
+:host {
+    button.close-button {
+        background: transparent;
+        cursor: pointer;
+        border: 0;
+        color: $white;
+        float: right;
+        display: flex;
         flex-direction: column;
-        align-items: flex-start;
-        app-user {
-            margin-top: 20px;
+        align-items: center;
+        padding-right: 1em;
+    }
+
+    .header-wrapper {
+        padding: 16px 16px 16px 32px;
+        display: flex;
+        justify-content: space-between;
+        @media screen and (max-width: 840px) {
+            padding: 16px;
         }
     }
-}
 
-.user-wrapper {
-    padding: 16px 16px 16px 32px;
-    @media screen and (max-width: 840px) {
-        padding: 16px;
+    .user-wrapper {
+        display: flex;
+        align-items: center;
+        app-user {
+            margin: 0;
+        }
+        @media screen and (max-width: 840px) {
+            flex-direction: column;
+            align-items: flex-start;
+            app-user {
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .user-wrapper {
+        padding: 16px 16px 16px 32px;
+        @media screen and (max-width: 840px) {
+            padding: 16px;
+        }
+    }
+
+    ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
+        background-color: $main-dark-blue-second !important; 
+        
+    }
+
+    ::ng-deep .mat-checkbox .mat-checkbox-label {
+        font-size: 1.4rem;
+    }
+    ::ng-deep .mat-checkbox .mat-checkbox-inner-container {
+        width: 1em;
+        height: 1em;
+        font-size: 1.4rem;
+        margin-bottom: 1em;
+        text-align:left;
     }
 }
 
 
- ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background, .mat-checkbox-indeterminate.mat-accent .mat-checkbox-background, .mat-accent .mat-pseudo-checkbox-checked, .mat-accent .mat-pseudo-checkbox-indeterminate, .mat-pseudo-checkbox-checked, .mat-pseudo-checkbox-indeterminate {
-    background-color: $main-dark-blue-second !important; 
-    
-}
-
-::ng-deep .mat-checkbox .mat-checkbox-label {
-    font-size: 1.4rem;
-  }
-::ng-deep .mat-checkbox .mat-checkbox-inner-container {
-    width: 1em;
-    height: 1em;
-    font-size: 1.4rem;
-    margin-bottom: 1em;
-    text-align:left;
-  }
 
 
 

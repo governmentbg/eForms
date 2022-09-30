@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ServiceRequestResponse>
+    <requestURI>
+        <identifier>#{/data/businessKey}</identifier>
+        <identifierType>
+            <code>1006-100001</code>
+            <name>Идентификатор на заявление за услуга</name>
+        </identifierType>
+    </requestURI>
+    <requestDateTime>#{/data/caseDataSource/data/issueDate}</requestDateTime>
+    <publicService>
+        <identifier>
+            <identifier>#{/data/caseDataSource/data/serviceId ?? ""}</identifier>
+            <identifierType>
+                <code>1006-100008</code>
+                <name>Идентификатор на публична услуга</name>
+            </identifierType>
+        </identifier>
+        <name>#{/data/caseDataSource/data/serviceName ?? ""}</name>
+        <language>
+            <code>BG</code>
+            <name>Български</name>
+        </language>
+        <status>
+            <code>1006-050001</code>
+            <name>Активна</name>
+        </status>
+    </publicService>
+    <serviceProvider>
+        <legalIdentifier>
+            <identifier>#{/data/caseDataSource/data/supplier ?? ""}</identifier>
+            <identifierType>
+                <code>1006-100003</code>
+                <name>БУЛСТАТ</name>
+            </identifierType>
+        </legalIdentifier>
+        <identifier>
+            <identifier>#{/data/caseDataSource/data/serviceSupplierId ?? ""}</identifier>
+            <identifierType>
+                <code>1006-100007</code>
+                <name>Идентификатор на публична организация</name>
+            </identifierType>
+        </identifier>
+        <preferredLabel>#{/data/caseDataSource/data/serviceSupplierName ?? ""}</preferredLabel>
+        <organizationType>
+            <code>#{/data/caseDataSource/data/serviceSupplierTypeCode ?? ""}</code>
+            <name>#{/data/caseDataSource/data/serviceSupplierTypeName ?? ""}</name>
+        </organizationType>
+        <administrativeUnits>
+            <legalIdentifier>
+                <identifier>#{/data/caseDataSource/data/administrationUnitEDelivery ?? ""}</identifier>
+                <identifierType>
+                    <code>1006-100003</code>
+                    <name>БУЛСТАТ</name>
+                </identifierType>
+            </legalIdentifier>
+            <identifier>
+                <identifier>#{/data/caseDataSource/data/serviceSupplierId ?? ""}</identifier>
+                <identifierType>
+                    <code>1006-100007</code>
+                    <name>Идентификатор на публична организация</name>
+                </identifierType>
+            </identifier>
+            <preferredLabel>#{/data/caseDataSource/data/administrationUnit ?? ""}</preferredLabel>
+            <organizationType>
+                <code>#{/data/caseDataSource/data/serviceSupplierTypeCode ?? ""}</code>
+                <name>#{/data/caseDataSource/data/serviceSupplierTypeName ?? ""}</name>
+            </organizationType>
+        </administrativeUnits>
+    </serviceProvider>
+    <responseDateTime>#{/data/caseDataSource/data/issueDate}</responseDateTime>
+    <specificContent>#{/data/specificContent/*}</specificContent>
+</ServiceRequestResponse>

@@ -283,7 +283,7 @@ class VisualizationWidget extends React.Component {
           <div className="body-row-auto scrollbox">
             {widgetQueryResult.getError() && (
               <div className="alert alert-danger m-5">
-                Error running query: <strong>{widgetQueryResult.getError()}</strong>
+                {t("Error running query")}: <strong>{widgetQueryResult.getError()}</strong>
               </div>
             )}
           </div>

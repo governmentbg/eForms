@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/Channel"
+        xmlns="http://eform.e-gov.bg/dictionary/Channel"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:pt="http://eform.e-gov.bg/dictionary/ProcessTime">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ProcessTime" schemaLocation="ProcessTime.xsd"/>
+
+	<xsd:complexType name="Channel">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Начин за предоставяне на услугата
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Идентификатор на начина на предоставяне
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="channelType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Начин на предоставяне на резултата от услугата.
+                        Номенклатура „Начини на предоставяне на резултата от ЕАУ“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="openingHours" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Описание на достъпността на канала, вкл. часови диапазони и друга необходима информация
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processTime" type="pt:ProcessTime" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Срокове за предоставяне на услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

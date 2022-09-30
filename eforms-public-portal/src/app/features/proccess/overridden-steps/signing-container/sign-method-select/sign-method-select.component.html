@@ -1,0 +1,14 @@
+<label class="mr-2">{{ 'SIGN_METHOD' | translate }}:</label>
+<mat-form-field class="w-50" appearance="outline">
+    <mat-select [formControl]="signMethodControl" (selectionChange)="handleSignMethodChange($event)"
+        [placeholder]="'SELECT' | translate">
+        <mat-optgroup [label]="('SIGN_WITH' | translate) + ':'">
+            <mat-option *ngFor="let signMethod of signMethods" [value]="signMethod.value">
+                {{ signMethod.label | translate }}
+            </mat-option>
+        </mat-optgroup>
+    </mat-select>
+    <mat-error *ngIf="signMethodControl.hasError('required')">
+        {{ 'SIGN_METHOD_REQUIRED' | translate }}
+    </mat-error>
+</mat-form-field>

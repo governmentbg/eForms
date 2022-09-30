@@ -84,5 +84,37 @@
     mat-paginator {
         display: none;
     }
+
 }
 
+.profile-roles-status-active, .profile-roles-status-inactive, .profile-roles-status-draft {
+    border-radius: 25px;
+    padding: 5px 25px;
+    display: inline;
+}
+
+.profile-roles-status-active {
+    background-color: #B5F5C6;
+}
+.profile-roles-status-inactive {
+    background-color: #FF6666;
+}
+.profile-roles-status-draft {
+    background-color: #fff3cd;
+}
+
+.profile-roles-status-active:after
+{
+    content: '\2713';
+    display: inline-block;
+    color: #333333;
+    padding: 0 6px 0 0;
+}
+
+tr:last-of-type td.mat-cell {
+    border: none;
+}
+td.mat-cell {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}

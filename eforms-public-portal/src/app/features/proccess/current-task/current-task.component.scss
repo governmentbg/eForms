@@ -1,23 +1,25 @@
 @import "variables.scss";
 @import "colors.scss";
 
-.navigation-buttons {
-    padding: 0.75em 1.5em 0.75em 1.25em;
-    background-color: $white;
-    z-index: 1;
+:host{
+    .navigation-buttons {
+        padding: 0.75em 1.5em 0.75em 1.25em;
+        background-color: $white;
+        z-index: 1;
 
-    .button-previous {
-        color: $main-dark-blue;
-    }
+        .button-previous {
+            color: $main-dark-blue;
+        }
 
-    @media screen and (max-width: $phone-max-width) {
-        box-shadow: none;
-        margin-right: 1.0714em;
-        border: 1px solid $dark-blue-navigation;
-        border-top: none;
-        border-radius: 0 0 7px 7px;
+        @media screen and (max-width: $phone-max-width) {
+            box-shadow: none;
+            margin-right: 1.0714em;
+            border: 1px solid $dark-blue-navigation;
+            border-top: none;
+            border-radius: 0 0 7px 7px;
+        }
     }
-}
-.form-container{
-    margin: 0 auto;
+    .form-container{
+        margin: 0 auto;
+    }    
 }

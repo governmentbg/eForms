@@ -32,7 +32,6 @@ import { MatChipsModule } from '@angular/material/chips';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatRippleModule } from '@angular/material/core';
 // Material Popups & Modals
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -42,6 +41,11 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
+
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { DateFormat } from '../core/types/date-format';
 
 @NgModule({
   declarations: [],
@@ -83,7 +87,8 @@ import { MatTableModule } from '@angular/material/table';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatNativeDateModule
   ],
   exports: [
     MatAutocompleteModule,
@@ -122,7 +127,12 @@ import { MatTableModule } from '@angular/material/table';
     MatTooltipModule,
     MatPaginatorModule,
     MatSortModule,
-    MatTableModule
+    MatTableModule,
+    MatNativeDateModule
+  ],
+  providers: [
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE] },
+    { provide: MAT_DATE_FORMATS, useValue: DateFormat }
   ]
 })
 export class MaterialModule { }

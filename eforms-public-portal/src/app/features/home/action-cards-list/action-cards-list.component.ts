@@ -5,7 +5,6 @@ import { roles } from 'src/app/core/types/roles';
 import { environment } from 'src/environments/environment';
 
 declare var process;
-
 @Component({
   selector: 'app-action-cards-list',
   templateUrl: './action-cards-list.component.html',
@@ -16,23 +15,34 @@ export class ActionCardsList implements OnInit {
   roles;
   profileTypes;
   egovLink;
-  fulleDeliveryLink;
+  fulleDeliveryLink: string;
   isProduction: boolean;
+  eDeliveryUrl: URL;
 
-  constructor(public userProfileService: UserProfileService) { }
+  constructor(
+    public userProfileService: UserProfileService
+  ) {
+    this.fulleDeliveryLink = `https://${environment.edeliveryURL}/Account/CertificateAuthV2?login=True&returnUrl=/Messages/Inbox`;
+    this.eDeliveryUrl = new URL(this.fulleDeliveryLink);
+  }
 
   ngOnInit(): void {
     this.roles = roles
     this.profileTypes = profileTypes
     this.egovLink = environment.egovBaseURL
-    this.isProduction = environment.production && process.env.NODE_ENV === 'production';
+    this.isProduction = environment.production && environment.environment === 'production';
 
-    let selectedProfile = this.userProfileService.selectedProfile;
-    this.fulleDeliveryLink = `https://${environment.edeliveryURL}/Messages/${environment.production ? 'Inbox' : 'ReceivedMessages'}`;
+    this.userProfileService.additionalProfileSubject.subscribe((selectedProfile) => {
+      if (selectedProfile) {
+        this.eDeliveryUrl.searchParams.set('profileID', selectedProfile.identifier);
+        this.eDeliveryUrl.searchParams.set('profileIDType', selectedProfile.identifierType);
+      } else {
+        this.eDeliveryUrl.searchParams.delete('profileID');
+        this.eDeliveryUrl.searchParams.delete('profileIDType');
+      }
 
-    if (selectedProfile) {
-      this.fulleDeliveryLink += '?selectedProfile=' + selectedProfile.identifier
-    }
+      this.fulleDeliveryLink = this.eDeliveryUrl.toString();
+    });
   }
 
 }

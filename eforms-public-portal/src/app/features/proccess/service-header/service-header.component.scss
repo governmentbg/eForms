@@ -3,7 +3,7 @@
 
 :host {
     display: block;
-    border-bottom: 1px solid $dark-gray;
+    border-bottom: 2px solid $medium-gray;
     padding: 0 1.0714em;
 
     @media screen and (max-width: $phone-max-width) {
@@ -29,4 +29,17 @@
             left: -1.4em;           
         }
     }
+}
+
+#cancel-declaration-button {
+
+    color: $sub-header-gray;
+    border: 2px solid $sub-header-gray !important;
+
+    &:hover {
+        background-color: transparent;
+        color: $notification-error;
+        border-color: $notification-error !important;
+    }
+
 }

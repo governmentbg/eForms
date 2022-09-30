@@ -12,6 +12,7 @@ html,body {
 }
 .main-background {
     position: relative;
+    min-height: 50vh;
     
     @media (min-width: $tablet-min-width) {
         background-image: url('./assets/images/background.png');
@@ -193,3 +194,9 @@ html,body {
         }
     }
 }
+
+// remove max-width for profile select dialog
+// we use shared style in order to style angular material component
+  .profile-select-menu {
+      max-width: 600px !important;
+  }

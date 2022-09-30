@@ -1,5 +1,5 @@
-<div class="container">
-    <div id="header-main" class="row justify-content-between">
+<div class="container header-wraper">
+    <div id="header-main" class="flex-nowrap row justify-content-between">
         <div class="d-flex align-items-center px-0">
             <img id="header-logo-desktop" class="logo desktop-logo" src="../assets/images/logo_lion_line.svg"
                 (click)="openEgov()" alt="">
@@ -8,13 +8,11 @@
             <div class="hide-mobile hide-small-screen">
                 <h1 class="mb-0">{{ 'EGOV_BG' | translate }}</h1>
                 <h2 class="mb-0">{{ 'SYSTEM_E_FORMS' | translate }}</h2>
-                <div class="text-muted hide-small-screen">{{ 'DAEU' | translate }}</div>
+                <div class="text-muted hide-small-screen text-nowrap">{{ 'DAEU' | translate }}</div>
             </div>
         </div>
-        <div class="desktop-header-section-outer">
-            <div class="language text-right" (click)="changeLanguage()">
-                {{ language }}
-            </div>
+        <div class="desktop-header-section-outer ml-2">
+            <app-language-select class="language text-right" menuXPosition="before"></app-language-select>
             <div class="desktop-header-section-inner">
                 <div class="d-flex align-items-end text-right">
                     <app-profile-select class="pr-2"></app-profile-select>

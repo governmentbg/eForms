@@ -5,7 +5,15 @@ import com.bulpros.eformsgateway.files.repository.model.FileFilter;
 import com.bulpros.eformsgateway.files.service.FilePermissionEvaluator;
 import com.bulpros.eformsgateway.files.service.FileService;
 import com.bulpros.eformsgateway.form.web.controller.dto.AdminCaseFilter;
+import com.bulpros.eformsgateway.form.web.controller.dto.CaseFilter;
+import com.bulpros.eformsgateway.process.repository.utils.ProcessConstants;
+import com.bulpros.eformsgateway.process.service.ProcessService;
+import com.jayway.jsonpath.Configuration;
+import com.jayway.jsonpath.JsonPath;
+import com.jayway.jsonpath.Option;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -27,12 +35,16 @@ public class AdminFileController {
 
     private final FileService fileService;
     private final FilePermissionEvaluator filePermissionEvaluator;
+    private final ProcessService processService;
 
-    public AdminFileController(FileService fileService, @Qualifier("admin") FilePermissionEvaluator filePermissionEvaluator) {
+    public AdminFileController(FileService fileService, @Qualifier("admin") FilePermissionEvaluator filePermissionEvaluator,
+                               ProcessService processService) {
         this.fileService = fileService;
         this.filePermissionEvaluator = filePermissionEvaluator;
+        this.processService = processService;
     }
 
+    @Timed(value = "eforms-gateway-admin-file-download.time")
     @GetMapping("/project/{projectId}/file")
     @ResponseBody
     public ResponseEntity<Resource> handleFileDownload(Authentication authentication,
@@ -51,6 +63,30 @@ public class AdminFileController {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
     }
 
+    @GetMapping("/projects/{projectId}/edelivery-files-package/process/{process-id}")
+    @ResponseBody
+    public ResponseEntity<JSONObject> handleGetEdeliveryFilesPackageList(Authentication authentication,
+                                                                         @PathVariable("projectId") String projectId,
+                                                                         @PathVariable("process-id") String processInstanceId,
+                                                                         @Valid AdminCaseFilter caseFilter) {
+        FileFilter fileFilter = new FileFilter();
+        fileFilter.setBusinessKey(caseFilter.getBusinessKey());
+        if (filePermissionEvaluator.hasDownloadPermission(authentication, projectId, caseFilter, fileFilter)) {
+            var processContext = processService.getProcessVariableAsJsonObject(authentication,
+                    processInstanceId, ProcessConstants.CONTEXT);
+            Configuration pathConfiguration = Configuration.builder().options(Option.DEFAULT_PATH_LEAF_TO_NULL).build();
+            String arId = JsonPath.using(pathConfiguration).parse(processContext).read("$.value.service.data.arId");
+
+            var eDeliveryFilesPackageVariable = ProcessConstants.EDELIVERY_FILES_PACKAGE + arId +
+                    ProcessConstants.FORMA_RESPONSE_SUFFIX;
+
+            return ResponseEntity.ok().body(processService.getProcessVariableAsJsonObject(authentication,
+                    processInstanceId, eDeliveryFilesPackageVariable));
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+    }
+
+    @Timed(value = "eforms-gateway-admin-file-upload.time")
     @RequestMapping(value = "/project/{projectId}/file", consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
             method = {RequestMethod.POST, RequestMethod.PUT})
     @ResponseBody
@@ -70,6 +106,7 @@ public class AdminFileController {
     }
 
 
+    @Timed(value = "eforms-gateway-admin-delete-file.time")
     @DeleteMapping("/project/{projectId}/file")
     @ResponseBody
     public ResponseEntity handleFileDelete(Authentication authentication,

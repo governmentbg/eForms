@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+		xmlns:po="http://eform.e-gov.bg/dictionary/PublicOrganization"
+		xmlns:channel="http://eform.e-gov.bg/dictionary/Channel"
+        xmlns:contact="http://eform.e-gov.bg/dictionary/ContactPoint"
+		xmlns:ps="http://eform.e-gov.bg/dictionary/PublicService">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Channel" schemaLocation="Channel.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ContactPoint" schemaLocation="ContactPoint.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicOrganization" schemaLocation="PublicOrganization.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/PublicService" schemaLocation="PublicService.xsd"/>
+
+	<xsd:element name="PublicOrganizationService">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Услуги, предоставяни от публични организации
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="publicService" type="ps:PublicService" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Електронна услуга
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="serviceProvider" type="ServiceProvider" minOccurs="1" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Доставчик на услугата
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="administrativeUnits" type="ServiceProvider" minOccurs="0" maxOccurs="unbounded">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+							Звена на доставчика, които предоставят услугата
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:complexType name="ServiceProvider">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+			Доставчик / Звено на доставчик и канали за предоставяне на услуга
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="serviceProvider" type="po:PublicOrganization" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Доставчик на услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="resultChannel" type="channel:Channel" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Начин на предоставяне на резултата от услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contactPoint" type="contact:ContactPoint" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Информация за контакт с доставчика на услугата – адрес, електронна поща, телефон
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+
+</xsd:schema>

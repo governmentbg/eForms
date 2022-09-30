@@ -8,7 +8,6 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class SupplierDetailsInfo extends Supplier {
-    String projectId;
     boolean autSystem;
     String providerOID;
     String url;

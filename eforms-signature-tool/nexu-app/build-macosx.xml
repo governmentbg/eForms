@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="JavaFX Hello World Example" default="default"
+         basedir="target/build"
+         xmlns:fx="javafx:com.sun.javafx.tools.ant">
+
+    <property environment="env"/>
+
+    <target name="get-resources">
+        <copy file="target/nexu-app-${project.version}.jar"
+              tofile="target/build/nexu.jar"/>
+    </target>
+
+    <target name="deploy">
+        
+        <taskdef resource="com/sun/javafx/tools/ant/antlib.xml"
+                 uri="javafx:com.sun.javafx.tools.ant"
+                 classpath="${env.JAVA8_HOME}/lib/ant-javafx.jar"/>
+
+        <fx:deploy nativeBundles="pkg"
+                   outdir="${basedir}/target/build"
+                   outfile="Nexu">
+            <fx:bundleargument arg="signBundle" value="false"/>
+            <fx:application name="Nexu" mainClass="lu.nowina.nexu.NexuLauncher" version="1.0"/>
+            <fx:resources>
+                <fx:fileset dir="target/build">
+                    <include name="nexu.jar"/>
+                </fx:fileset>
+            </fx:resources>
+            <fx:info title="Nexu" category= "Nexu" vendor="DAEU" description="DEAU Sign Tool">
+            </fx:info>
+            <fx:preferences menu="true" shortcut="true"/>
+        </fx:deploy>
+
+    </target>
+
+</project>

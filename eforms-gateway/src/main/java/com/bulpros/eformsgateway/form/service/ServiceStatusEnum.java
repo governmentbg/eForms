@@ -1,9 +1,12 @@
 package com.bulpros.eformsgateway.form.service;
 
 public enum ServiceStatusEnum {
-    ACTIVE("active"),
-    INACTIVE("inactive"),
-    DRAFT("draft");
+    DEVELOPED   ("developed"),
+    VALIDATED   ("validated"),
+    APPROVED    ("approved"),
+    PUBLISHED   ("published"),
+    INACTIVE    ("inactive"),
+    DRAFT       ("draft");
 
     public final String status;
 

@@ -12,6 +12,7 @@ export class ActionCard implements OnInit {
   @Input() serviceLabel: string;
   @Input() serviceIcon: string;
   @Input() serviceLink: string;
+  @Input() onNewTab: boolean = false;
 
   constructor(private router: Router) { }
 
@@ -19,8 +20,12 @@ export class ActionCard implements OnInit {
   }
 
   public serviceSelected() {
-    if(this.serviceLink.includes('https')){
-      window.location.replace(this.serviceLink);
+    if(this.serviceLink.includes('https') || this.serviceLink.includes('http')){
+      if (this.onNewTab) {
+        window.open(this.serviceLink, '_blank');
+      } else {
+        window.location.replace(this.serviceLink);
+      }
     } else {
       this.router.navigate([this.serviceLink])
     }

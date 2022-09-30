@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/Evidence"
+        xmlns="http://eform.e-gov.bg/dictionary/Evidence"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+		xmlns:doc="http://eform.e-gov.bg/dictionary/Document">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Document" schemaLocation="Document.xsd"/>
+
+	<xsd:complexType name="Evidence">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+				Необходими входни документ и други артефакти, които е необходимо да бъдат предоставени при заявяване на публичната услуга
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Идентификатор, ако е предвиден такъв
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Официалното име на доказателството/документа
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="type" type="code:Code" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Тип на доказателството/документа. Номенклатура „Вид приложен документ при заявяване на ЕАУ“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="relatedDocumentation" type="doc:Document" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Документация, която съдържа информация, свързана с доказателствата, например конкретен шаблон за административен документ, приложение или ръководство за оформяне на доказателството
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Свободен текст за описание на доказателството
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="language" type="code:Code" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Език (езици), на който (които) трябва да бъдат предоставени доказателствата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

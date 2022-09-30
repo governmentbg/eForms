@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/PublicService"
+        xmlns="http://eform.e-gov.bg/dictionary/PublicService"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:ident="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns:loc="http://eform.e-gov.bg/dictionary/Location"
+		xmlns:ev="http://eform.e-gov.bg/dictionary/Evidence"
+		xmlns:out="http://eform.e-gov.bg/dictionary/Output">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Identifier" schemaLocation="Identifier.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Location" schemaLocation="Location.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Evidence" schemaLocation="Evidence.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Output" schemaLocation="Output.xsd"/>
+
+	<xsd:complexType name="PublicService">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Данни за публична услуга
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="ident:Identifier" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Идентификатор на услугата от административния регистър
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="name" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Официалното наименование на услугата, както е вписана в административния регистър
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Свободен текст за описание на публичната услуга
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="keyword" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Ключова дума, термин или фраза за описание на публичната услуга
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="language" type="code:Code" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Езикът (езиците), на който (които) е достъпна публичната услуга.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="status" type="code:Code" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Показва дали публична услуга е активна, неактивна, в процес на разработка и т.н. според контролиран речник.
+                        Номенклатура „Статус на публична услуга“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spatial" type="loc:Location" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Териториален обхват на действие на услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="evidence" type="ev:Evidence" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Списък с необходимите входни документи и други артефакти за предоставяне на услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="output" type="out:Output" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Списък с артефакти, резултат от предоставяне на услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+</xsd:schema>

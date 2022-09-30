@@ -4,6 +4,7 @@ import com.bulpros.eforms.processengine.camunda.model.Lane;
 import com.bulpros.eforms.processengine.camunda.model.Process;
 import com.bulpros.eforms.processengine.camunda.model.ProcessConstants;
 import com.bulpros.eforms.processengine.camunda.model.UserTask;
+import com.bulpros.eforms.processengine.camunda.model.enums.UserStageTypeEnum;
 import com.bulpros.eforms.processengine.camunda.repository.CamundaProcessRepository;
 import com.bulpros.eforms.processengine.camunda.repository.CamundaTaskRepository;
 import com.bulpros.eforms.processengine.exeptions.ForbiddenTaskException;
@@ -13,6 +14,7 @@ import com.bulpros.eforms.processengine.exeptions.VariableNotFoundException;
 import com.bulpros.eforms.processengine.security.UserService;
 import com.bulpros.eforms.processengine.web.dto.ProcessDto;
 import com.bulpros.eforms.processengine.web.dto.enums.UserTaskStatus;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import org.camunda.bpm.engine.task.Task;
 import org.modelmapper.ModelMapper;
@@ -34,8 +36,8 @@ public class TasksServiceImpl implements TasksService {
     @Override
     public ProcessDto getCurrentUserTaskByProcessId(String processId) {
         Optional.ofNullable(processRepository.getActivityInstanceByProcessById(processId))
-            .orElseThrow(() ->
-                   new ProcessNotFoundException(MessageFormat.format("Process {0} does not exists", processId)));
+                .orElseThrow(() ->
+                        new ProcessNotFoundException(MessageFormat.format("Process {0} does not exists", processId)));
 
         Optional<String> optionalUser = Optional.ofNullable(userService.getPrincipalIdentifier());
         String user = optionalUser
@@ -60,15 +62,16 @@ public class TasksServiceImpl implements TasksService {
             }
         }
 
-       throw new ForbiddenTaskException("User is not assigned to the task");
+        throw new ForbiddenTaskException("User is not assigned to the task");
     }
 
+    @Timed(value = "eforms-process-engine-complete-task-method.time")
     @Override
     @SuppressWarnings("unchecked")
     public void completeTask(String taskId, Map<String, Object> variables) {
         Task curTask = Optional.ofNullable(taskRepository.getTaskByTaskId(taskId))
                 .orElseThrow(() -> new TaskNotFoundException(MessageFormat.format("Task {0} does not exist", taskId)));
-        if(!taskRepository.isTaskCompletable(curTask.getProcessInstanceId(), curTask.getTaskDefinitionKey())) {
+        if (!taskRepository.isTaskCompletable(curTask.getProcessInstanceId(), curTask.getTaskDefinitionKey())) {
             throw new ForbiddenTaskException("Task is not completable");
         }
         Map<String, Object> submissionDataKeyMap = Optional.ofNullable(variables.get("variables"))

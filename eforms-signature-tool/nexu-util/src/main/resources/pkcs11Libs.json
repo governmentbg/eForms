@@ -1,0 +1,185 @@
+{
+  "LINUX": [
+    {
+      "terminalLabel": ["Charismathics"],
+      "pkcs11Lib": [
+        "64bit/libcmP11.so",
+        "32bit/libcmP11.so"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "/usr/local/lib64/libcmP11.so",
+        "/usr/lib64/pkcs11/libcmP11.so"
+      ]
+    },
+    {
+      "terminalLabel": ["Cryptovision"],
+      "pkcs11Lib": [
+        "64bit/libcvP11.so"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "/usr/local/lib/libcvP11.so"
+      ]
+    },
+    {
+      "terminalLabel": ["Gemalto", "Circle"],
+      "pkcs11Lib": [
+        "64bit/libIDPrimePKCS11.so"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "/usr/lib64/pkcs11/libidprimepkcs11.so",
+        "/usr/lib/pkcs11/libidprimepkcs11.so"
+      ]
+    },
+    {
+      "terminalLabel": ["Bit4ID"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "/usr/lib/libbit4ipki.so",
+        "/usr/lib64/libbit4ipki.so",
+        "/usr/lib/bit4id/libbit4ipki.so"
+      ]
+    },
+    {
+      "terminalLabel": ["Siemens"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "/usr/local/lib/libsiecap11.so"
+      ]
+    },
+    {
+      "terminalLabel": ["OpenSC"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "/usr/lib/x86_64-linux-gnu/opensc-pkcs11.so",
+        "/usr/lib/i386-linux-gnu/opensc-pkcs11.so",
+        "/usr/lib/opensc-pkcs11.so",
+        "/usr/lib64/opensc-pkcs11.so"
+      ]
+    }
+  ],
+  "WINDOWS": [
+    {
+      "terminalLabel": ["Charismathics"],
+      "pkcs11Lib": [
+        "64bit/cmP11.dll"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "C:/Windows/SysWOW64/cmP11.dll",
+        "C:/Windows/System32/cmP11.dll",
+        "C:/Windows/System32/cmP1164.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["Cryptovision"],
+      "pkcs11Lib": [
+        "64bit/cvP11.dll"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "C:/Windows/SysWOW64/cvP11.dll",
+        "C:/Windows/System32/cvP11.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["Gemalto", "Circle"],
+      "pkcs11Lib": [
+        "64bit/idprimepkcs11.dll",
+        "32bit/idprimepkcs11.dll"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "C:/Windows/SysWOW64/idprimepkcs11.dll",
+        "C:/Windows/System32/idprimepkcs11.dll",
+        "C:/Windows/System32/eTPKCS11.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["Bit4ID"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "C:/WINDOWS/system32/bit4ipki.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["Siemens"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "C:/WINDOWS/system32/siecap11.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["OpenSC"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "C:/Windows/System32/onepin-opensc-pkcs11.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["AWP"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "C:/Windows/System32/OcsPKCS11Wrapper.dll"
+      ]
+    },
+    {
+      "terminalLabel": ["IDEMIA"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "C:/Windows/System32/OcsPKCS11Wrapper.dll"
+      ]
+    }
+  ],
+  "MACOSX": [
+    {
+      "terminalLabel": ["Charismathics"],
+      "pkcs11Lib": [
+        "libcmP11.dylib"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "/Application/Charismathics/libcmP11.dylib"
+      ]
+    },
+    {
+      "terminalLabel": ["Cryptovision"],
+      "pkcs11Lib": [
+        "libcvP11.dylib"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "/Library/CV Cryptovision/libcvp11.dylib"
+      ]
+    },
+    {
+      "terminalLabel": ["Gemalto", "Circle"],
+      "pkcs11Lib": [
+        "libidprimepkcs11.dylib"
+      ],
+      "pkcs11LibAbsolutePath": [
+        "/Library/Gemalto/libidprimepkcs11.dylib"
+      ]
+    },
+    {
+      "terminalLabel": ["Bit4ID"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "/Library/bit4id/pkcs11/libbit4ipki.dylib"
+      ]
+    },
+    {
+      "terminalLabel": ["Siemens"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "/usr/local/lib/libsiecap11.dylib"
+      ]
+    },
+    {
+      "terminalLabel": ["OpenSC"],
+      "pkcs11Lib": [],
+      "pkcs11LibAbsolutePath": [
+        "/Library/OpenSC/lib/onepin-opensc-pkcs11.so",
+        "/Library/OpenSC/lib/opensc-pkcs11.so",
+        "/Library/OpenSC/lib/pkcs11/onepin-opensc-pkcs11.so",
+        "/Library/OpenSC/lib/pkcs11/opensc-pkcs11.so",
+        "/usr/local/lib/onepin-opensc-pkcs11.so",
+        "/usr/local/lib/opensc-pkcs11.so"
+      ]
+    }
+  ]
+}

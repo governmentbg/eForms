@@ -8,6 +8,9 @@ import {
     } from 'react-bootstrap';
 import Feedback from 'react-bootstrap/Feedback';
 
+import { t } from 'i18next';
+import "../../i18n/i18n";
+
 type ModalProps = {
     onClose: Function,
     showModal: boolean,
@@ -53,6 +56,8 @@ export default class DeployModal extends React.Component<ModalProps, FormState> 
 
         let formData = new FormData();
         formData.append('*', this.fileRef.current.files[0]);
+        formData.set('deployment-source', 'Camunda Cockpit');
+        formData.set('deployment-name', this.fileRef.current.files[0].name.replace('.bpmn', ''));
 
         fetch('/engine-rest/deployment/create', {
             method: "post",
@@ -64,9 +69,9 @@ export default class DeployModal extends React.Component<ModalProps, FormState> 
         })
         .then((response) => {
             if (response.status === 200) {
-                this.toastMessage = "Deployment successful!"
+                this.toastMessage = t('DEPLOYMENT_SUCCESSFUl')
             } else {
-                this.toastMessage = "Error during deploy! " + response.statusText;
+                this.toastMessage = t('DEPLOY_ERROR', {ERROR: response.statusText});
             }
             this.showToast();
         })
@@ -78,7 +83,7 @@ export default class DeployModal extends React.Component<ModalProps, FormState> 
             <>
                 <Modal show={this.props.showModal} onHide={this.onClose} animation={false}>
                     <Modal.Header>
-                        <Modal.Title>Deploy diagram</Modal.Title>
+                        <Modal.Title>{t('DEPLOY_DIAGRAM')}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
                         <Toast animation={false} show={this.state.showToast}>
@@ -87,20 +92,20 @@ export default class DeployModal extends React.Component<ModalProps, FormState> 
                         <Form noValidate onSubmit={e => this.submit(e)}>
                             <Form.Group controlId="form.file">
                                 <FormFile>
-                                    <FormFile.Label>Process Model</FormFile.Label>
+                                    <FormFile.Label>{t('PROCESS_MODEL')}</FormFile.Label>
                                     <FormFile.Input
                                         required
                                         ref={this.fileRef}
                                     />
-                                    <Feedback type="invalid">.bpmn File upload is required.</Feedback>
+                                    <Feedback type="invalid">{t('BPMN_REQUIRED')}</Feedback>
                                 </FormFile>
                             </Form.Group>
                             <Form.Row className="pull-right">
                                 <Button disabled={this.state.showToast} variant="primary" type="submit" >
-                                    Submit
+                                    {t('SUBMIT')}
                                 </Button>
                                 <Button variant="secondary" onClick={this.onClose}>
-                                    Close
+                                    {t('CLOSE')}
                                 </Button>
                             </Form.Row>
                         </Form>

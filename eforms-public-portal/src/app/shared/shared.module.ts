@@ -17,15 +17,20 @@ import { DataPropertyGetterPipe } from './components/smart-table/data-property-g
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { AssigneeButtonComponent } from './components/assignee-button/assignee-button.component';
 import { UserComponent } from './components/user/user.component';
+import {AdvancedDialogComponent} from "./components/advanced-dialog/advanced.dialog.component";
+import { environment } from 'src/environments/environment';
+import { LanguageSelectComponent } from './components/language-select/language-select.component';
+import { StaticTableComponent } from './components/static-table/static-table.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, '/assets/i18n/', '.json');
+  return new TranslateHttpLoader(http, `api/public/projects/${environment.formioBaseProject}/i18n/`,  '');
 }
 
 @NgModule({
   declarations: [
     TooltipDirective,
     DialogComponent,
+    AdvancedDialogComponent,
     BreadcrumbsComponent,
     ErrorComponent,
     AssuranceLevelErrorComponent,
@@ -35,13 +40,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     DataPropertyGetterPipe,
     AssigneeButtonComponent,
     UserComponent,
+    LanguageSelectComponent,
+    StaticTableComponent
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
     TranslateModule.forRoot({
-      defaultLanguage: 'bg',
+      defaultLanguage: environment.defaultLanguage,
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
@@ -54,6 +61,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TranslateModule,
     TooltipDirective,
     DialogComponent,
+    AdvancedDialogComponent,
     BreadcrumbsComponent,
     ErrorComponent,
     AssuranceLevelErrorComponent,
@@ -61,7 +69,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     OrnComponent,
     SmartTableComponent,
     DataPropertyGetterPipe,
-    UserComponent
+    UserComponent,
+    LanguageSelectComponent,
+    StaticTableComponent
   ]
 })
 export class SharedModule { }

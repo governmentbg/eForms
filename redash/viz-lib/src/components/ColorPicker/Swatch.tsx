@@ -4,6 +4,7 @@ import cx from "classnames";
 import Tooltip from "antd/lib/tooltip";
 
 import "./swatch.less";
+import { t } from "@/locales";
 
 type OwnProps = {
   className?: string;
@@ -17,6 +18,7 @@ type Props = OwnProps & typeof Swatch.defaultProps;
 
 // @ts-expect-error ts-migrate(2700) FIXME: Rest types may only be created from object types.
 export default function Swatch({ className, color, title, size, style, ...props }: Props) {
+  title = t(title) as never;
   const result = (
     <span
       className={cx("color-swatch", className)}

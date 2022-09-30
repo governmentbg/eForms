@@ -3,6 +3,8 @@
 
 :host {
     .main-footer {
+        position: relative;
+        z-index: 20001; // More than .loader-container-outer in header.component.css
         background-color: $light-gray;
         a {
             display: block;
@@ -12,6 +14,8 @@
     }
 
     .secondary-footer {
+        position: relative;
+        z-index: 20001; // More than .loader-container-outer in header.component.css
         background-color: $medium-gray;
         p {
             font-size: 13px;

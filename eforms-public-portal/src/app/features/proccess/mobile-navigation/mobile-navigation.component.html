@@ -7,9 +7,9 @@
         </div>
     </div>
     <div class="steps-names d-flex overflow-auto">
-        <div class="overflow-ellipsis">{{ currentLaneName }}</div>
+        <div class="overflow-ellipsis">{{ currentLaneName | translate }}</div>
         <div class="px-2"> > </div>
-        <div class="overflow-ellipsis">{{ subStepNumber }} {{ currentSubStepName }}</div>
+        <div class="overflow-ellipsis">{{ subStepNumber }} {{ currentSubStepName | translate  }}</div>
     </div>
     <mat-icon *ngIf="isCollapsed">arrow_drop_down</mat-icon>
     <mat-icon *ngIf="!isCollapsed">arrow_drop_up</mat-icon>

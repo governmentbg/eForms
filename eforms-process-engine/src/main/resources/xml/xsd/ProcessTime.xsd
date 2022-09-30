@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/ProcessTime"
+        xmlns="http://eform.e-gov.bg/dictionary/ProcessTime"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:tax="http://eform.e-gov.bg/dictionary/Tax">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Tax" schemaLocation="Tax.xsd"/>
+
+	<xsd:complexType name="ProcessTime">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+				Видове срокове за предоставяне на публична услуга
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="processTimeType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						// todo
+						Вид срок за изпълнение: обикновена, бърза, експресна.  Номенклатура „Видове срокове за изпълнение на услуга“
+							fastService - Бърза услуга
+							normalService - Нормална услуга
+							expressService - Експресна услуга
+							noDefinitionTermService - Няма нормативно указан срок
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processTimeUnit" type="code:Code" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Мерна единица за срок (часове, дни и т.н.)
+							workDays - Работни дни
+							calendarDays - Календарни дни
+							workHours - Работни часа
+							calendarHours - Календарни часа  
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="processTime" type="xsd:decimal" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Срок за изпълнение на услугата в зададената мерна единица
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="tax" type="tax:Tax" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Такси за предоставяне на услугата
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

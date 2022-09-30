@@ -25,7 +25,7 @@ import { t } from "@/locales/config.jsx";
 function AlertState({ state, lastTriggered }) {
   return (
     <div className="alert-state">
-      <span className={`alert-state-indicator label ${STATE_CLASS[state]}`}>{t("Status:")} {state}</span>
+      <span className={`alert-state-indicator label ${STATE_CLASS[state]}`}>{t("Status:")} {t(state)}</span>
       {state === "unknown" && <div className="ant-form-item-explain">{t("Alert condition has not been evaluated.")}</div>}
       {lastTriggered && (
         <div className="ant-form-item-explain">

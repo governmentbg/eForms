@@ -1,0 +1,37 @@
+<div class="app-advanced-dialog-modal-container">
+    <div class="row background-light-gray">
+        <div class="color-white w-100 header-wrapper">
+            <div>
+                <h3 class="mr-2 mb-0"> {{ data.headerTitle | translate }} </h3>
+            </div>
+            <button class="close-button" [mat-dialog-close]="true"><mat-icon>close</mat-icon> {{ "CLOSE" | translate}}</button>
+        </div>
+    </div>
+    <mat-dialog-content *ngIf="data.bodyIcon || data.mainTitle || data.bodyMessage">
+        <div class="row service-wrapper">
+            <div *ngIf="data.bodyIcon" class="col-12 mt-3 px-0">
+                <mat-icon class="mb-4">{{data.bodyIcon}}</mat-icon>
+            </div>
+
+            <div *ngIf="data.mainTitle" class="col-12 mt-3 px-0 text-center">
+                <h3>{{ data.mainTitle | translate }}</h3>
+            </div>
+
+            <div *ngIf="data.bodyMessage" class="col-12 mt-3 px-0 text-center">
+                <div *ngIf="typeOfBody === 'object'" >
+                    <div *ngFor="let message of data.bodyMessage">
+                        {{ message| translate }}
+                    </div>
+                </div>
+                <div *ngIf="typeOfBody === 'string'">{{ data.bodyMessage | translate }}</div>
+
+            </div>
+        </div>
+    </mat-dialog-content>
+    <div class="row">
+        <div class="col-12 py-3 modal-footer d-flex overflow-auto">
+            <button *ngIf="data.canGoBack" mat-button class="btn-additional-medium mr-2" (click)="reject()" [mat-dialog-close]="true">{{ (data.canGoBackMessage || "BACK") | translate }}</button>
+            <button *ngIf="data.canGoForward" mat-button class="btn-primary-medium" (click)="confirm()" [mat-dialog-close]="true">{{ (data.canGoForwardMessage || "CONTINUE") | translate }}</button>
+        </div>
+    </div>
+</div>

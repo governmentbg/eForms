@@ -3,6 +3,7 @@ package com.bulpros.eforms.processengine.configuration;
 import com.bulpros.eforms.processengine.egov.model.eservice.AssuranceLevelEnum;
 import com.bulpros.eforms.processengine.egov.model.eservice.EServiceDetailsInfo;
 import com.bulpros.eforms.processengine.egov.model.eservice.EServiceDetailsSubmission;
+import com.bulpros.eforms.processengine.egov.model.eservice.YesNoEnum;
 import org.camunda.bpm.model.bpmn.impl.instance.UserTaskImpl;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.Converter;
@@ -21,7 +22,22 @@ public class ModelMapperConfiguration {
             if (source == null || source.isEmpty()) {
                 return AssuranceLevelEnum.NONE.name();
             }
-            return AssuranceLevelEnum.getEnumByType(source).name();
+            try {
+                return AssuranceLevelEnum.getEnumByType(source).name();
+            }
+            catch (Exception е){
+                return AssuranceLevelEnum.NONE.name();
+            }
+        }
+    };
+
+    Converter<String, Boolean> getIsInternalService = new AbstractConverter<String, Boolean>() {
+        @Override
+        protected Boolean convert(String source) {
+            if (source == null || source.isEmpty()) {
+                return YesNoEnum.NO.isValue();
+            }
+            return YesNoEnum.getEnumByType(source).isValue();
         }
     };
 
@@ -43,8 +59,7 @@ public class ModelMapperConfiguration {
                     mapper.map(EServiceDetailsInfo::getServiceNumber, EServiceDetailsSubmission::setArId);
                     mapper.map(EServiceDetailsInfo::getServiceName, EServiceDetailsSubmission::setServiceName);
                     mapper.using(getAssuranceLevelByName).map(EServiceDetailsInfo::getSecurityLevel, EServiceDetailsSubmission::setRequiredSecurityLevel);
-                    mapper.map(EServiceDetailsInfo::getEauApplicationFormLink, EServiceDetailsSubmission::setUrl);
-                    mapper.map(source -> source.getIdentificationMethods().getIdentificationMethod(), EServiceDetailsSubmission::setMeansOfIdentification);
+                    mapper.using(getIsInternalService).map(EServiceDetailsInfo::getIsInternalAdminService, EServiceDetailsSubmission::setIsInternalAdminService);
                 });
 
         return modelMapper;

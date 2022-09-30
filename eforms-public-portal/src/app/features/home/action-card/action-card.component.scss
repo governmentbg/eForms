@@ -47,6 +47,14 @@
     .help-info-processing-eau, 
     .help-info-application-eau,
     .admin-role,
+    .conf-forms,
+    .icon-big-translation,
+    .conf-meta,
+    .dev-publish,
+    .conf-proc,
+    .report-configure,
+    .report-list,
+    .report-main-menu,
     .administration-of-services {
         background-repeat: no-repeat;
         background-size: contain;
@@ -118,6 +126,38 @@
 
     .administration-of-services {
         background-image: $administration-of-services;
+    }
+
+    .conf-forms {
+        background-image: $conf-forms;
+    }
+
+    .icon-big-translation {
+        background-image: $icon-big-translation;
+    }
+
+    .conf-meta {
+        background-image: $conf-meta;
+    }
+
+    .dev-publish {
+        background-image: $dev-publish;
+    }
+    
+    .conf-proc {
+        background-image: $conf-proc;
+    }
+    
+    .report-configure {
+        background-image: $report-configure;
+    }
+
+    .report-list {
+        background-image: $report-list;
+    }
+
+    .report-main-menu {
+        background-image: $report-main-menu;
     }
 
     h3 {

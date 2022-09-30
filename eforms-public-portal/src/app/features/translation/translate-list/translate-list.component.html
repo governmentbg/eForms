@@ -1,0 +1,59 @@
+
+
+
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="translate-container col-12 p-0">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 class="heading-wrapper w-100">
+                {{ 'TRANSLATION.LIST' | translate }}
+            </h2>
+        </div>
+
+        <div class="translate-inner-container">
+
+            <div class="target-language">
+                <mat-form-field>
+                    <mat-select (selectionChange)="handleTargetLanguageCodeChange($event)" [(ngModel)]="targetLanguageSelect">
+                        <mat-select-trigger>
+                            <img class="flag" [src]="targetLanguageSelect?.iconUrl"/>{{targetLanguageSelect?.languageLong}} - {{ 'TRANSLATION.'+targetLanguageSelect?.status | translate}} 
+                        </mat-select-trigger>
+                        <mat-option *ngFor="let language of allLanguagesList" [value]="language.data">
+                            <img class="flag" [src]="language.data.iconUrl"/>{{language.data.languageLong}} - {{ 'TRANSLATION.'+language.data.status | translate}} 
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="row">
+                <formio id="translation-filter" [form]="formSrc" (ready)="handleFormReady($event)"  (customEvent)="handleFilterEvent($event)" class="col-12 p-0 filter-form"></formio>
+            </div>
+
+            <app-smart-table
+            id="additional-profiles-table"
+            [tableColumns]="tableColumns"
+            [isPageable]="true"                               
+            [apiCallUrl]="apiCallUrl"
+            [fetchOnInit]="true"
+            [actionColumnName]="'TRANSLATION.EDIT'"
+            [actionButtonName]=""
+            [filterEvent]="filterEventSubject.asObservable()"
+            [buttonIcon]="'edit'"
+            (rowAction)="handleRowActionEvent($event)"
+            (tableElementsLoaded)="handlePostTableLoad($event)"
+            ></app-smart-table>
+
+            <div class="row" *ngIf="tableElementsLoaded.length">
+                <div class="col pt-3 pb-5 text-center"><button class="btn-primary-medium" (click)="publishAll()">{{ 'TRANSLATION.PUBLISH_ALL' | translate }}</button></div>
+            </div>
+
+        </div>
+
+    </div>
+</div>

@@ -12,7 +12,7 @@ export class ConfirmRedirectGuard implements CanDeactivate<Component>
 
     async canDeactivate(component, route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
 
-        if (component.shouldPromptBeforeLeave) {
+        if (component.shouldPromptBeforeLeave && !localStorage.getItem('INVALID_GRANT_MESSAGE')) {
             const modalRef = this.dialog.open(DialogComponent, {data : {title: 'IMPORTANT', body: 'CONFIRM_LEAVE', canProceed: true}});
             return await new Promise<boolean>(resolve=>{
                 modalRef.afterClosed().pipe()

@@ -91,4 +91,24 @@ public abstract class BaseRepository {
                 .queryParam("person-identificator", personIdentificator);
         return url.toUriString();
     }
+
+    protected String getUrlMalwareScan(){
+        UriComponentsBuilder url = UriComponentsBuilder.fromHttpUrl(integrationsConfProperties.getIntegrationsUrl())
+                .path(SLASH_SYMBOL)
+                .path(integrationsConfProperties.getIntegrationsRootPath())
+                .path(SLASH_SYMBOL)
+                .path(integrationsConfProperties.getMalwareScanResourcePath())
+                .path("/upload");
+        return url.toUriString();
+    }
+
+    protected String getUrlTranslationRequest(){
+        UriComponentsBuilder url = UriComponentsBuilder.fromHttpUrl(integrationsConfProperties.getIntegrationsUrl())
+                .path(SLASH_SYMBOL)
+                .path(integrationsConfProperties.getIntegrationsRootPath())
+                .path(SLASH_SYMBOL)
+                .path(integrationsConfProperties.getETranslationResourcePath())
+                .path("/translate");
+        return url.toUriString();
+    }
 }

@@ -1,21 +1,39 @@
 @import "colors.scss";
-.loader-container-outer {
-    position: fixed;
-    top:0;
-    left:0;
-    height: 100%;
-    width: 100%;
-    z-index: 20000;
-    .loader-container {
-        position: absolute;
+:host{
+    .loader-container-outer {
+        position: fixed;
+        top:0;
+        left:0;
         height: 100%;
         width: 100%;
-        background: $white;
-        opacity: 50%;
         z-index: 20000;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
+        .loader-container {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background: $white;
+            opacity: 100%;
+            z-index: 20000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    }
+    #header-cover {
+        height:150px;
+        width: 100%;
+        position: fixed;
+        top: 0; 
+        left: 0;
+        z-index: 20003;
+    }
+    #footer-cover {
+        height:450px;
+        width: 100%;
+        position: fixed;
+        bottom: 0; 
+        left: 0;
+        z-index: 20003;
     }
 }

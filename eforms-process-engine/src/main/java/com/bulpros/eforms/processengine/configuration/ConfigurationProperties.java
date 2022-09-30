@@ -37,14 +37,17 @@ public class ConfigurationProperties {
     @Value("${com.bulpros.process.form.attachment.json-path-query}")
     private String formAttachmentJsonPathQuery;
 
-    @Value("${com.bulpros.process.form.filename.json-path-query}")
-    private String formFilenameJsonPathQuery;
+    @Value("${com.bulpros.process.form.file-code.json-path-query}")
+    private String formFileCodeJsonPathQuery;
 
     @Value("${com.bulpros.process.form.generate-files-package.json-path-query}")
     private String formGenerateFilesPackageJsonPathQuery;
 
     @Value("${com.bulpros.process.form.is-signable.json-path-query}")
     private String formIsSignableJsonPathQuery;
+
+    @Value("${com.bulpros.process.form.is-documnet-required.json-path-query}")
+    private String isDocumentRequired;
 
     @Value("${com.bulpros.process.form.signees.identifiers.json-path-query}")
     private String formSigneesIdentifiersJsonPathQuery;

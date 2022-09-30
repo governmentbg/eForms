@@ -7,5 +7,6 @@ import java.util.List;
 
 public interface EServiceService {
     EServiceList getServicesBySupplierEIK(String supplierEIK);
+
     EServiceDetails getServiceDetailsByNumber(List<String> serviceNumberList);
 }

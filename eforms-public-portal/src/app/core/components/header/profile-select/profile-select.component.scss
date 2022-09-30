@@ -1,31 +1,32 @@
 @import "colors.scss";
 
 .selected-profile-dropdown {
-    font-weight: 600;
-    color: $main-dark-blue-second;
+  font-weight: 600;
+  color: $main-dark-blue-second;
 }
 
 :host {
+  .selected-profile {
+    justify-content: space-between;
+    border: 1px solid $white;
+    padding: 0.5em;
+    border-radius: 7px;
+    margin-top: 0.5em;
+  }
+
+  .profiles-dropdown {
+    cursor: pointer;
+  }
+
+  @media (min-width: 1000px) {
+    padding-bottom: 0.2em;
+    border-right: 1px solid $dark-gray;
+
     .selected-profile {
-        justify-content: space-between;
-        border: 1px solid $white;
-        padding: 0.5em;
-        border-radius: 7px;
-        margin-top: 0.5em;
+      justify-content: flex-end;
+      padding: 0.3em;
+      border: 1px solid $black;
+      margin-top: 0;
     }
-    
-    .profiles-dropdown {
-        cursor: pointer;
-    }
-
-    @media (min-width: 1000px) {
-        border-right: 1px solid $dark-gray;
-
-        .selected-profile {
-            justify-content: flex-end;
-            padding: 0.5em;
-            border: 1px solid $black;
-            margin-top: 0;
-        }
-    }
+  }
 }

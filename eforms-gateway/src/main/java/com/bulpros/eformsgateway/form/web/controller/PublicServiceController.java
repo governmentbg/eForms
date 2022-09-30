@@ -5,6 +5,7 @@ import com.bulpros.formio.dto.ResourceDto;
 import com.bulpros.formio.model.User;
 import com.bulpros.formio.repository.util.AuthenticationService;
 import com.bulpros.formio.security.FormioUserService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -22,6 +23,7 @@ public class PublicServiceController {
     private final ServiceService serviceService;
     private final FormioUserService userService;
 
+    @Timed(value = "eforms-gateway-public-get-service-submission-by-service-id.time")
     @GetMapping(path = "/projects/{projectId}/eas/{easId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ResourceDto> getServiceSubmissionByServiceId(@PathVariable String projectId, @PathVariable String easId) {
         var authentication = AuthenticationService.createServiceAuthentication();

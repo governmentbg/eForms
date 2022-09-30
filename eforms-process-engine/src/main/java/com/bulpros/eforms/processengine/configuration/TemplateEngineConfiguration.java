@@ -22,7 +22,7 @@ public class TemplateEngineConfiguration {
 
     private ITemplateResolver stringTemplateResolver() {
         final StringTemplateResolver templateResolver = new StringTemplateResolver();
-        templateResolver.setTemplateMode(TemplateMode.TEXT);
+        templateResolver.setTemplateMode(TemplateMode.HTML);
         templateResolver.setCacheable(false);
         return templateResolver;
     }

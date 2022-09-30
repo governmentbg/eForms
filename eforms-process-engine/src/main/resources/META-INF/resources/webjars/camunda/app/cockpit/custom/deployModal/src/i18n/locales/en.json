@@ -1,0 +1,10 @@
+{
+    "DEPLOY_DIAGRAM": "Deploy diagram",
+    "PROCESS_MODEL": "Process Model",
+    "BPMN_REQUIRED": ".bpmn File upload is required.",
+    "SUBMIT": "Submit",
+    "CLOSE": "Close",
+    "DEPLOYMENT_SUCCESSFUl": "Deployment successful!",
+    "DEPLOY_ERROR": "Error during deploy! {{ERROR}}",
+    "DEPLOY": "Deploy"
+}

@@ -39,7 +39,7 @@ export function DatabaseMetrics({ info }) {
           itemLayout="vertical"
           dataSource={info}
           renderItem={([name, size]) => (
-            <List.Item extra={<span className="badge">{prettySize(size)}</span>}>{name}</List.Item>
+            <List.Item extra={<span className="badge">{prettySize(size)}</span>}>{t(name)}</List.Item>
           )}
         />
       )}
@@ -58,7 +58,7 @@ export function Queues({ info }) {
           itemLayout="vertical"
           dataSource={info}
           renderItem={([name, queue]) => (
-            <List.Item extra={<span className="badge">{queue.size}</span>}>{name}</List.Item>
+            <List.Item extra={<span className="badge">{queue.size}</span>}>{t(name)}</List.Item>
           )}
         />
       )}

@@ -1,6 +1,7 @@
 package com.bulpros.eformsgateway.files.service;
 
 import com.bulpros.eformsgateway.eformsintegrations.exception.ServiceNotAvailableException;
+import com.bulpros.eformsgateway.eformsintegrations.exception.SeverityEnum;
 import com.bulpros.eformsgateway.files.repository.MinioRepository;
 import com.bulpros.eformsgateway.files.repository.model.FileDto;
 import com.bulpros.eformsgateway.files.repository.model.FileFilter;
@@ -43,7 +44,8 @@ public class FileServiceImpl implements FileService {
             return FileDto.builder().name(filename)
                     .contentType(contentType).build();
         } catch (Exception e) {
-            throw new ServiceNotAvailableException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new ServiceNotAvailableException(SeverityEnum.ERROR, "MINIO.COMMUNICATION", e.getMessage());
         }
     }
 
@@ -96,8 +98,7 @@ public class FileServiceImpl implements FileService {
                         .build();
                 if (files.stream().noneMatch(f -> f.getName().equals(fileDto.getName()))) {
                     files.add(fileDto);
-                }
-                else if(fileDto.getKey().contains("common_component_attachment_sign")){
+                } else if (fileDto.getKey().contains("common_component_attachment_sign")) {
                     files = files.stream().filter(file -> !file.getName().equals(fileDto.getName())).collect(Collectors.toList());
                     files.add(fileDto);
                 }
@@ -106,8 +107,8 @@ public class FileServiceImpl implements FileService {
         } catch (InvalidKeyException | NoSuchAlgorithmException | ErrorResponseException
                 | InvalidResponseException | ServerException | InsufficientDataException | XmlParserException
                 | InternalException | IOException e) {
-            log.error(e.getMessage());
-            throw new ServiceNotAvailableException(e.getMessage());
+            log.error(e.getMessage(), e);
+            throw new ServiceNotAvailableException(SeverityEnum.ERROR, "MINIO.COMMUNICATION", e.getMessage());
         }
         return files;
     }

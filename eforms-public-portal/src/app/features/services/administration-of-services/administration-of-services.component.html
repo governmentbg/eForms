@@ -13,6 +13,13 @@
             </h2>
         </div>
         <div class="row">
+            <formio id="administration-of-services-filter"
+                    class="col-12 p-0 filter-form"
+                    [form]="formSrc"
+                    (ready)="handleFormReady($event)"
+                    (customEvent)="handleFilterEvent($event)"></formio>
+        </div>
+        <div class="row">
             <app-smart-table
             id="eas-services-table"
             [tableColumns]="tableColumns"
@@ -22,11 +29,12 @@
             [actionButtonName]=""
             [showButtonIf]="'element.data.arId'"
             [apiCallUrl]="apiCallUrl"
+            [classifier]="'?'+serviceStatuses"
             [initialSort]="'SERVICES.SERVICE_ID'"
-            [classifier]="'?serviceStatuses=active,draft&'"            
-            [supplierStatusColumn]="'SERVICES.STATUS'"
             (rowAction)="handleRowActionEvent($event)"
+            [filterEvent]="filterEventSubject.asObservable()"
             ></app-smart-table>
         </div>
+
     </div>
 </div>

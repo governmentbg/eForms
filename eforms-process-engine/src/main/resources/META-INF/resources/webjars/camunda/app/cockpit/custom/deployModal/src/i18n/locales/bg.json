@@ -1,0 +1,10 @@
+{
+    "DEPLOY_DIAGRAM": "Схема за разгръщане",
+    "PROCESS_MODEL": "Модел на процес",
+    "BPMN_REQUIRED": "Разширението на файла трабва да е .bpmn",
+    "SUBMIT": "Изпращане",
+    "CLOSE": "Затвори",
+    "DEPLOYMENT_SUCCESSFUl": "Успешно разгръщане!",
+    "DEPLOY_ERROR": "Грешка при разгръщане! {{ERROR}}",
+    "DEPLOY": "Разгръщане"
+}

@@ -123,9 +123,9 @@ function DashboardMoreOptionsButton({ dashboardConfiguration }) {
 
   const archive = () => {
     Modal.confirm({
-      title: "Archive Dashboard",
-      content: `Are you sure you want to archive the "${dashboard.name}" dashboard?`,
-      okText: "Archive",
+      title: t("Archive Dashboard"),
+      content: t(`Are you sure you want to archive the dashboard?`),
+      okText: t("Archive"),
       okType: "danger",
       onOk: archiveDashboard,
       maskClosable: true,

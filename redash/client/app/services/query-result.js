@@ -442,8 +442,15 @@ class QueryResult {
   static getByQueryId(id, parameters, applyAutoLimit, maxAge) {
     const queryResult = new QueryResult();
 
+    let url = new URL(window.location.href);
+
+    let config = { };
+    if (url.searchParams.has('auth_token')) {
+      config['headers'] = { 'X-Auth': url.searchParams.get('auth_token') };
+    }
+
     axios
-      .post(`api/queries/${id}/results`, { id, parameters, apply_auto_limit: applyAutoLimit, max_age: maxAge })
+      .post(`api/queries/${id}/results`, { id, parameters, apply_auto_limit: applyAutoLimit, max_age: maxAge }, config)
       .then(response => {
         queryResult.update(response);
 

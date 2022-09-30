@@ -1,0 +1,21 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="report-container col-12 p-0">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 id="edit-profile-header" class="heading-wrapper w-100">
+                {{ 'REPORTS.REPORT' | translate }} - {{ dashboardTitle }}
+            </h2>
+        </div>
+        <div class="row">
+            <div *ngIf="publicUrl" class="col-12 responsive-iframe">
+                <iframe [src]="publicUrl" frameborder="0"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

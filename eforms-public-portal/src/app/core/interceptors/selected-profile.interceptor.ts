@@ -17,7 +17,7 @@ export class ProfileInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    if(!request.url.match('nexu') && !request.url.includes('data.applicant=')){
+    if(!request.url.match('nexu') && !request.url.includes('data.applicant')){
       let selectedProfile = this.deepLinkService.getParam('selectedProfile');
       if(selectedProfile) {
         request = request.clone({

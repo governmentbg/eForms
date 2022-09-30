@@ -23,8 +23,8 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     public Suppliers getAllSuppliers() {
         return restTemplate.getForObject(
-                UriComponentsBuilder.fromHttpUrl( configurationProperties.getIntegrationsUrl() +
-                       configurationProperties.getEgovPrefix())
+                UriComponentsBuilder.fromHttpUrl(configurationProperties.getIntegrationsUrl() +
+                        configurationProperties.getEgovPrefix())
                         .path("/get-egov-suppliers")
                         .toUriString(),
                 Suppliers.class);
@@ -34,9 +34,9 @@ public class SupplierServiceImpl implements SupplierService {
     public SupplierDetailsInfo getSupplierDetails(String code) {
         SuppliersDetails suppliers = restTemplate.getForObject(
                 UriComponentsBuilder.fromHttpUrl(configurationProperties.getIntegrationsUrl() + configurationProperties.getEgovPrefix())
-                    .path("/get-egov-supplier-details")
-                    .queryParam("code", code)
-                    .toUriString(),
+                        .path("/get-egov-supplier-details")
+                        .queryParam("code", code)
+                        .toUriString(),
                 SuppliersDetails.class);
         return suppliers.getSuppliers().getSupplier();
     }

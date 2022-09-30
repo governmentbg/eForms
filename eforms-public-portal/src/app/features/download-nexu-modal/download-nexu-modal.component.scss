@@ -11,6 +11,13 @@
     }
 }
 
+::ng-deep #download-nexu-form {
+
+    button[type=submit] {
+        display: none;
+    }
+}
+
 button.close-button {
     background: transparent;
     cursor: pointer;

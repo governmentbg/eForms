@@ -3,6 +3,7 @@ import cx from "classnames";
 
 import { validateColor, getColorName } from "./utils";
 import "./label.less";
+import { t } from "@/locales";
 
 type OwnProps = {
   className?: string;
@@ -22,7 +23,7 @@ export default function Label({ className, color, presetColors, ...props }: Prop
 
   return (
     <span className={cx("color-label", className)} {...props}>
-      {name}
+      {t(name)}
     </span>
   );
 }

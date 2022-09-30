@@ -889,7 +889,7 @@ var FileComponent = /*#__PURE__*/function (_Field) {
 
                     if (_this6.component.filePattern && !_this6.validatePattern(file, _this6.component.filePattern)) {
                       fileUpload.status = 'error';
-                      fileUpload.message = _this6.t('File is the wrong type; it must be {{ pattern }}', {
+                      fileUpload.message = _this6.t('File is the wrong type, it must be {{ pattern }}', {
                         pattern: _this6.component.filePattern
                       });
                     } // Check file minimum size
@@ -897,7 +897,7 @@ var FileComponent = /*#__PURE__*/function (_Field) {
 
                     if (_this6.component.fileMinSize && !_this6.validateMinSize(file, _this6.component.fileMinSize)) {
                       fileUpload.status = 'error';
-                      fileUpload.message = _this6.t('File is too small; it must be at least {{ size }}', {
+                      fileUpload.message = _this6.t('File is too small, it must be at least {{ size }}', {
                         size: _this6.component.fileMinSize
                       });
                     } // Check file maximum size
@@ -905,7 +905,7 @@ var FileComponent = /*#__PURE__*/function (_Field) {
 
                     if (_this6.component.fileMaxSize && !_this6.validateMaxSize(file, _this6.component.fileMaxSize)) {
                       fileUpload.status = 'error';
-                      fileUpload.message = _this6.t('File is too big; it must be at most {{ size }}', {
+                      fileUpload.message = _this6.t('File is too big, it must be at most {{ size }}', {
                         size: _this6.component.fileMaxSize
                       });
                     } // Get a unique name for this file to keep file collisions from occurring.
@@ -1041,7 +1041,14 @@ var FileComponent = /*#__PURE__*/function (_Field) {
                       _this6.emit('fileUploadingEnd', filePromise);
                     }).catch(function (response) {
                       fileUpload.status = 'error';
-                      fileUpload.message = response;
+                      
+                      try {
+                        let parsedError = JSON.parse(response);
+                        fileUpload.message = parsedError.message;
+                      } catch (error) {
+                        fileUpload.message = 'ANTIVIRUS_SCAN_ERROR_OVERWRITE';
+                      }
+
                       delete fileUpload.progress;
                       _this6.fileDropHidden = false;
 

@@ -1,0 +1,27 @@
+@import "colors.scss";
+
+h3 {
+  color: $main-dark-blue;
+  font-size: 1rem;
+}
+
+.toggle-icon {
+  cursor: pointer;
+  align-items: baseline;
+  vertical-align: middle;
+  display: inline-flex;
+  white-space: nowrap;
+}
+
+.title-error{
+  color: $notification-error;
+
+  ::ng-deep .mat-checkbox-background {
+    background-color: $notification-error !important;
+  }
+}
+.togglable-title{
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}

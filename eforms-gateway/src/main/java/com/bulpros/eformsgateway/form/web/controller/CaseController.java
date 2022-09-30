@@ -12,6 +12,7 @@ import com.bulpros.eformsgateway.user.model.User;
 import com.bulpros.formio.dto.ResourceDto;
 import com.bulpros.formio.exception.InvalidCaseStatusClassifierException;
 import com.bulpros.formio.utils.Page;
+import io.micrometer.core.annotation.Timed;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -26,21 +27,20 @@ import java.util.List;
 @RequestMapping("/api")
 @Slf4j
 public class CaseController {
-
     private final CaseService caseService;
     private final UserService userService;
     private final FileService fileService;
     private final FilePermissionEvaluator filePermissionEvaluator;
 
-    public CaseController(CaseService caseService, UserService userService,
-                          FileService fileService, @Qualifier("user") FilePermissionEvaluator filePermissionEvaluator) {
+    public CaseController(CaseService caseService, UserService userService, FileService fileService,
+                          @Qualifier("user") FilePermissionEvaluator filePermissionEvaluator) {
         this.caseService = caseService;
         this.userService = userService;
         this.fileService = fileService;
         this.filePermissionEvaluator = filePermissionEvaluator;
     }
 
-
+    @Timed(value = "eforms-gateway-get-case-submissions-case-status.time")
     @GetMapping(path = "/projects/{projectId}/cases", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<Page<ResourceDto>> getCaseSubmissionsByCaseStatusClassifier(
             Authentication authentication,
@@ -66,6 +66,7 @@ public class CaseController {
         return ResponseEntity.ok(response);
     }
 
+    @Timed(value = "eforms-gateway-get-case-submission-by-id.time")
     @GetMapping(path = "/projects/{projectId}/cases/{caseBusinessKey}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ResourceDto> getCaseSubmissionById(
             Authentication authentication, @PathVariable String projectId, @PathVariable String caseBusinessKey, CaseFilter caseFilter) {

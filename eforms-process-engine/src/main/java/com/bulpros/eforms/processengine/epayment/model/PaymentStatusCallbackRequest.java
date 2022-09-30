@@ -1,5 +1,6 @@
 package com.bulpros.eforms.processengine.epayment.model;
 
+import com.bulpros.eforms.processengine.epayment.model.enums.PaymentStatusType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.Date;
 public class PaymentStatusCallbackRequest {
 
     String id;
-    PaymentStatusEnum status;
+    PaymentStatusType status;
     Date changeTime;
 
     String processId;

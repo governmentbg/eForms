@@ -28,7 +28,21 @@ public abstract class BaseRepository {
         return url.toUriString();
     }
 
-    protected String getHistoryProcessesUrl(Map<String, String> params) {
+    protected String getHistoryProcessInstanceUrl(Map<String, String> params) {
+        UriComponentsBuilder url = getProcessEngineRootUri()
+                .path(SLASH_SYMBOL)
+                .path(camundaConfProperties.getHistoryPath())
+                .path(SLASH_SYMBOL)
+                .path(camundaConfProperties.getProcessInstancePath());
+        if(!params.isEmpty()){
+            for (Map.Entry<String,String> param : params.entrySet()) {
+                url.queryParam(param.getKey(), param.getValue());
+            }
+        }
+        return url.toUriString();
+    }
+
+    protected String getHistoryVariableProcessesUrl(Map<String, String> params) {
         UriComponentsBuilder url = getProcessEngineRootUri()
                 .path(SLASH_SYMBOL)
                 .path(camundaConfProperties.getHistoryPath())
@@ -88,6 +102,14 @@ public abstract class BaseRepository {
                 .path(camundaConfProperties.getPaymentUrl())
                 .path(SLASH_SYMBOL)
                 .path(camundaConfProperties.getPaymentStatusCallbackResourcePath());
+
+        return url.toUriString();
+    }
+
+    protected String getAdminCaseMessageUrl() {
+        UriComponentsBuilder url = UriComponentsBuilder.fromHttpUrl(camundaConfProperties.getProcessEngineUrl())
+                .path(SLASH_SYMBOL)
+                .path(camundaConfProperties.getAdminCaseMessageUrl());
 
         return url.toUriString();
     }

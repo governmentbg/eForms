@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<ServiceRequestEmbedded>
+    <requestURI>
+        <identifier>#{/data/buisnessKey}</identifier>
+        <identifierType>
+            <code>00001</code>
+            <name>URI</name>
+        </identifierType>
+    </requestURI>
+    <requestDateTime>#{/data/issueDateCaseIdentifier}</requestDateTime>
+    <documentType>
+        <code></code>
+        <name></name>
+    </documentType>
+    <specificContent>#{/data/specificContent/*}</specificContent>
+</ServiceRequestEmbedded>

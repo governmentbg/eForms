@@ -92,11 +92,9 @@ public class CompleteTaskRequestGatewayFilterFactory extends AbstractCompleteReq
                                 taskService.getAllTasksByProcessInstanceId(authentication, processInstanceId);
                             }
                             if (getAllHistoryTasksByProcessInstanceIdEvicted) {
-                                taskService.getAllHistoryTasksByProcessInstanceId(authentication, processInstanceId);
+                                taskService.getAdminHistoryTasksByProcessInstanceId(authentication, processInstanceId);
                             }
                         });
-                    } else if (responseStatus == HttpStatus.NOT_FOUND) {
-                        completeRequest(exchange, HttpStatus.OK);
                     }
                 }));
             });

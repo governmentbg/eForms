@@ -4,6 +4,8 @@ import logging
 import time
 from datetime import timedelta
 from urllib.parse import urlsplit, urlunsplit
+from sqlalchemy.orm.exc import NoResultFound
+import jwt
 
 from flask import jsonify, redirect, request, url_for, session
 from flask_login import LoginManager, login_user, logout_user, user_logged_in
@@ -111,13 +113,25 @@ def hmac_load_user_from_request(request):
 
 
 def get_user_from_api_key(api_key, query_id):
+    org = current_org._get_current_object()
+
     if not api_key:
+        token = request.headers.get('X-Authorization', None)
+
+        if token is not None:
+            token = jwt.decode(token, options={"verify_signature": False, "verify_aud": False})
+            try:
+                user = models.User.get_by_email_and_org(token['preferred_username'], org)
+
+                return user
+            except NoResultFound:
+                logging.error("No result found for email: %s", token['preferred_username'])
+
         return None
 
     user = None
 
     # TODO: once we switch all api key storage into the ApiKey model, this code will be much simplified
-    org = current_org._get_current_object()
     try:
         user = models.User.get_by_api_key_and_org(api_key, org)
         if user.is_disabled:

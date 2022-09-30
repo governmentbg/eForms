@@ -4,6 +4,7 @@ export default {
     "fallbackLocale": "bg"
   },
   customScripts: [
+    'custom/fixTranslations',
     'custom/logout'
   ]
 };

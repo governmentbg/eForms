@@ -1,0 +1,1103 @@
+{
+  "data": {
+    "businessKey": "BGES9d5798b",
+    "requestor": "PNOBG-8902267061",
+    "generateFilesPackage": true,
+    "documentTitle": "Основен документ",
+    "documentCode": "ZVLN_CODE",
+    "isSignable": true,
+    "openAll": false,
+    "collapseAll": false,
+    "dataProcessingAgreement": false,
+    "issueDateCaseIdentifier": "2022-03-23T14:26:22.867Z",
+    "buisnessKeyCaseIdentifier": "BGES9d5798b",
+    "administrationUnit": {
+      "administrationUnitEDelivery": "1210150561306",
+      "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК",
+      "channelsAndTermsList": [],
+      "isRowSelected": true
+    },
+    "isRegixSynced": true,
+    "firstName": "Никола",
+    "surName": "Иванов",
+    "familyName": "Първанов",
+    "identifier": "8902267061",
+    "identifierType": {
+      "label": "ЕГН",
+      "value": "idn"
+    },
+    "isRegixSynced1": true,
+    "districtNamePresent": "СОФИЯ",
+    "municipalityNamePresent": "СТОЛИЧНА",
+    "settlementNamePresent": "ГР.СОФИЯ",
+    "locationNamePresent": "УЛ.ВРЪХ МАНЧО",
+    "buildingNumberPresent": "005Б",
+    "entrancePresent": "А",
+    "floorPresent": "01",
+    "apartmentPresent": "145",
+    "channel": {
+      "channelName": "По електронен път чрез системата за сигурно електронно връчване",
+      "channelType": "0006-000080",
+      "level": "1",
+      "isActive": true,
+      "validFrom": "1899-12-30T22:00:00.000Z",
+      "validTo": "9999-12-30T22:00:00.000Z"
+    },
+    "administration": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК",
+    "applicantAssignorType": "optionOwner",
+    "relativesList": [],
+    "openAll1": false,
+    "collapseAll1": false,
+    "hasFormSubmition": false,
+    "termTaxesSubmission": [
+      {
+        "_id": "61b5e7e33d5677fb2d4e1245",
+        "data": {
+          "arId": "unified",
+          "supplierEAS": "814",
+          "channelsAndTermsList": [
+            {
+              "channel": {
+                "channelName": "По електронен път чрез системата за сигурно електронно връчване",
+                "channelType": "0006-000080",
+                "level": "1",
+                "isActive": true,
+                "validFrom": "1899-12-30T22:00:00.000Z",
+                "validTo": "9999-12-30T22:00:00.000Z"
+              },
+              "validFrom": "2021-12-12T10:00:00.000Z",
+              "deadlineType": "normalService",
+              "deadlineTypeLabel": "Нормална услуга",
+              "deadlineUnit": {
+                "label": "Работни дни",
+                "key": "workDays"
+              },
+              "hasPayment": true,
+              "deadlineTerm": 5,
+              "taxAmount": "10",
+              "currency": "BGN"
+            },
+            {
+              "channel": {
+                "channelName": "По електронен път чрез системата за сигурно електронно връчване",
+                "channelType": "0006-000080",
+                "level": "1",
+                "isActive": true,
+                "validFrom": "1899-12-30T22:00:00.000Z",
+                "validTo": "9999-12-30T22:00:00.000Z"
+              },
+              "validFrom": "2021-12-12T10:00:00.000Z",
+              "validTo": "2022-03-30T21:00:00.000Z",
+              "deadlineType": "fastService",
+              "deadlineTypeLabel": "Бърза услуга",
+              "deadlineUnit": {
+                "label": "Календарни дни",
+                "key": "calendarDays"
+              },
+              "hasPayment": true,
+              "deadlineTerm": 3,
+              "taxAmount": "25",
+              "currency": "BGN",
+              "isRowSelected": true
+            },
+            {
+              "channel": {
+                "channelName": "Лично от звеното за административно обслужване",
+                "channelType": "0006-000077",
+                "level": "1",
+                "additionalFields": [
+                  "administrationUnit"
+                ],
+                "isActive": true,
+                "validFrom": "1899-12-30T22:00:00.000Z",
+                "validTo": "9999-12-30T22:00:00.000Z"
+              },
+              "validFrom": "2021-12-12T10:00:00.000Z",
+              "validTo": "2022-01-17T22:00:00.000Z",
+              "deadlineType": "normalService",
+              "deadlineTypeLabel": "Нормална услуга",
+              "deadlineUnit": {
+                "label": "Календарни дни",
+                "key": "calendarDays"
+              },
+              "hasPayment": true,
+              "deadlineTerm": 10,
+              "taxAmount": "15",
+              "currency": "BGN"
+            },
+            {
+              "channel": {
+                "channelName": "По електронен път на електронен адрес",
+                "channelType": "0006-000076",
+                "level": "1",
+                "additionalFields": [
+                  "email"
+                ],
+                "isActive": true,
+                "validFrom": "1899-12-30T22:00:00.000Z",
+                "validTo": "9999-12-30T22:00:00.000Z"
+              },
+              "validFrom": "2021-12-26T10:00:00.000Z",
+              "validTo": "2022-02-27T22:00:00.000Z",
+              "deadlineType": "expressService",
+              "deadlineTypeLabel": "Експресна услуга",
+              "deadlineUnit": {
+                "label": "Работен час",
+                "key": "workHours"
+              },
+              "hasPayment": true,
+              "deadlineTerm": 1,
+              "taxAmount": "20",
+              "currency": "BGN",
+              "isRowSelected": true
+            },
+            {
+              "channel": {
+                "channelName": "По електронен път чрез системата за сигурно електронно връчване",
+                "channelType": "0006-000080",
+                "level": "1",
+                "isActive": true,
+                "validFrom": "1899-12-30T22:00:00.000Z",
+                "validTo": "9999-12-30T22:00:00.000Z"
+              },
+              "validFrom": "2022-01-17T10:00:00.000Z",
+              "validTo": "2022-01-17T22:00:00.000Z",
+              "deadlineType": "noDefinitionTermService",
+              "deadlineTypeLabel": "Няма нормативно указан срок",
+              "deadlineUnit": {},
+              "hasPayment": false
+            }
+          ]
+        },
+        "modified": "2022-01-20T13:40:10.119Z"
+      }
+    ],
+    "caseDataSource": [
+      {
+        "_id": "623b2e0fcc7de542a744a8ee",
+        "data": {
+          "businessKey": "BGES9d5798b",
+          "requestorIdentifierType": "1",
+          "requestor": "PNOBG-8902267061",
+          "requestorName": "MARTIN SASHOV PETROV",
+          "supplier": "121015056",
+          "serviceId": "unified",
+          "serviceName": "Унифициран процес",
+          "serviceSupplierId": "814",
+          "serviceSupplierName": "Агенция за социално подпомагане",
+          "processInstanceId": "36e80330-aab5-11ec-a874-0242ac110002",
+          "maxExecutionDuration": "-",
+          "projectId": "60929223b1258f297e4bb85b",
+          "administrationUnitEDelivery": "1210150561306",
+          "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК",
+          "dataProcessingAgreement": false,
+          "statusCode": "11",
+          "issueDate": "2022-03-23T14:26:22.867Z",
+          "deadlineTerm": "0",
+          "statusFixedTax": "noPayment",
+          "statusCalculatedTax": "no",
+          "stage": "01"
+        },
+        "modified": "2022-03-23T14:26:23.049Z"
+      }
+    ],
+    "checkAdminUnitsSupplier": {
+      "_id": "61b5e5c83d567732b04e0419"
+    },
+    "adminUnitsFromSupplierDataSource": {
+      "_id": "61b5e5c83d567732b04e0419",
+      "data": {
+        "arId": "unified",
+        "serviceTitle": "Унифициран процес",
+        "supplierEAS": "814",
+        "serviceSupplierTitle": "Агенция за социално подпомагане",
+        "hasPayment": "no",
+        "hasFixedPayment": "beforeDelivery",
+        "isNotProcessable": false,
+        "hasAdministrativeUnits": "yes",
+        "administrativeUnitsList": [
+          {
+            "administrationUnitEDelivery": "1210150560329",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - АЙТОС",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560684",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - АРДИНО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561310",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - АСЕНОВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561306",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК",
+            "channelsAndTermsList": [],
+            "isRowSelected": true
+          },
+          {
+            "administrationUnitEDelivery": "1210150562413",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАТАК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562806",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЕЛЕНЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561031",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЕЛОГРАДЧИК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561619",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЕРКОВИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560822",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЛАГОЕВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561280",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БОБОВ ДОЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561409",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БОБОШЕВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562496",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БОТЕВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562756",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БРЕГОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560314",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БУРГАС",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561604",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЯЛА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560932",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЯЛА СЛАТИНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560386",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВАРНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562691",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИКИ ПРЕСЛАВ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560333",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИКО ТЪРНОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562668",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИНГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562600",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕНЕЦ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562038",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕТОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562439",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВИДИН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561890",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВРАЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561779",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЪЛЧИ ДОЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562531",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГАБРОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561325",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГЕНЕРАЛ-ТОШЕВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561829",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГОРНА ОРЯХОВИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561046",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГОЦЕ ДЕЛЧЕВ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562198",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГУРКОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562208",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГЪЛЪБОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561661",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДВЕ МОГИЛИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563015",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДЕВИН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561428",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДЕВНЯ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560959",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДЖЕБЕЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561921",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДИМИТРОВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561501",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДИМОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561237",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДОБРИЧ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562336",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДОЛНА МИТРОПОЛИЯ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561008",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДОЛНИ ЧИФЛИК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561569",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДУЛОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561153",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДУПНИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560539",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕЛЕНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563049",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕЛИН ПЕЛИН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562672",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕЛХОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562928",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕТРОПОЛЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563000",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЗЛАТОГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562393",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ИВАЙЛОВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561902",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ИСПЕРИХ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562966",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ИХТИМАН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561382",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАВАРНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560894",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАЗАНЛЪК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562458",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАОЛИНОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561363",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАРЛОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560390",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАРНОБАТ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560455",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КИРКОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562722",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КНЕЖА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560963",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КОЗЛОДУЙ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562095",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КОТЕЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560982",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КРУМОВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561084",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КУБРАТ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562737",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КУЛА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560837",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КЪРДЖАЛИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561516",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КЮСТЕНДИЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562145",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛЕВСКИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561726",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛОВЕЧ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562340",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛОМ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562462",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛУКОВИТ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562878",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МАДАН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561496",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МАРИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561470",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МЕЗДРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561241",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МОМЧИЛГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561623",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МОНТАНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562687",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МЪГЛИЖ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561730",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - НИКОПОЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562080",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - НОВА ЗАГОРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562286",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - НОВИ ПАЗАР",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562360",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ОБЩИНА КОСТИНБРОД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560489",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ОМУРТАГ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561940",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПАВЛИКЕНИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561852",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПАЗАРДЖИК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563118",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЕРНИК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561128",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЕТРИЧ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562233",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЕЩЕРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562546",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПИРДОП",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561917",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЛЕВЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560631",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЛОВДИВ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560493",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПОПОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563309",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПРАВЕЦ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561695",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПРОВАДИЯ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560608",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЪРВОМАЙ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562741",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАДНЕВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563103",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАДОМИР",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561256",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАЗГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561027",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАЗЛОГ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562629",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАКИТОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560596",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАКОВСКИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561168",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РОДОПИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560371",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РУЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562248",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РУСЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563072",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - САМОКОВ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560474",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - САМУИЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561149",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - САНДАНСКИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562302",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СВИЛЕНГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561936",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СВИЩОВ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562355",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СВОГЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560699",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЕВЛИЕВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560436",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЕПТЕМВРИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561680",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СИЛИСТРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562271",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЛИВЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562781",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЛИВНИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562424",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СМОЛЯН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560402",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОЗОПОЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561100",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ - ВРЪБНИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560860",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ - ВЪЗРАЖДАНЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560700",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ - ОБОРИЩЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560665",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -КРАСНО СЕЛО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561993",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -ЛОЗЕНЕЦ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561554",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -ЛЮЛИН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560875",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -МЛАДОСТ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560727",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -СЕРДИКА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560803",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -СЛАТИНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560543",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СТАМБОЛИЙСКИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561012",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СТАРА ЗАГОРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560787",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СТРАЖИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563366",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТВЪРДИЦА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561294",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТЕРВЕЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561075",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТЕТЕВЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562164",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТОПОЛОВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562111",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТРОЯН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563122",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТРЪН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560306",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТУТРАКАН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560612",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТЪРГОВИЩЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561359",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ХАДЖИДИМОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562214",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ХАРМАНЛИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562076",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ХАСКОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560352",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЦАРЕВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562512",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЧЕРВЕН БРЯГ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562004",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЧИПРОВЦИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561657",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЧИРПАН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562061",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ШУМЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561275",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЯКОРУДА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562405",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЯМБОЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561535",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ- ОРЯХОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561378",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ ХИСАРЯ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150562019",
+            "administrationUnit": "ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ-ПАНАГЮРИЩЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560558",
+            "administrationUnit": "ДИРИКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПОМОРИЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560211",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - БУРГАС",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560123",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВАРНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560180",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИКО ТЪРНОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560230",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВИДИН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560073",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ГАБРОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560069",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ГР.ДОБРИЧ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560054",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - КЪРДЖАЛИ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560104",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - КЮСТЕНДИЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560226",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - МОНТАНА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560092",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПАЗАРДЖИК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560157",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПЕРНИК",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560138",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПЛЕВЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560279",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПЛОВДИВ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560161",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - РАЗГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560142",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - РУСЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560035",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СИЛИСТРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560264",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СЛИВЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560283",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СМОЛЯН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560207",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЙСКА ОБЛАСТ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150561549",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ-ГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560176",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СТАРА ЗАГОРА",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560253",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ТЪРГОВИЩЕ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560119",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ХАСКОВО",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560088",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ШУМЕН",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150563182",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ЯМБОЛ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560298",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЛАГОЕВГРАД",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560245",
+            "administrationUnit": "РЕГИОНАЛНА ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛОВЕЧ",
+            "channelsAndTermsList": []
+          },
+          {
+            "administrationUnitEDelivery": "1210150560195",
+            "administrationUnit": "РЕГИОНАРНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВРАЦА",
+            "channelsAndTermsList": []
+          }
+        ],
+        "aisClientEPayment": "testAisClient",
+        "status": "active"
+      },
+      "modified": "2022-03-08T10:14:47.460Z"
+    },
+    "isValid": true
+  }
+}

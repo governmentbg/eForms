@@ -13,6 +13,7 @@ export const NOTIFICATION_BAR_MESSAGES_CONFIG = new InjectionToken('notification
 export class NotificationsBannerComponent implements OnDestroy {
   notifications: NotificationBarModel[] = [];
   placeholders = {};
+  additionalMessage: string;
 
   @Output() closed = new EventEmitter<any>();
   @Output() action = new EventEmitter<any>();
@@ -61,6 +62,7 @@ export class NotificationsBannerComponent implements OnDestroy {
     let newNotificationBar = Object.assign({}, this.defaultNotification, notificationBar);
 
     this.placeholders = notificationBar.placeholders;
+    this.additionalMessage = notificationBar.additionalMessage;
 
     if (this.config && this.config.messages) {
       newNotificationBar.message = this.config.messages[notificationBar.message] || notificationBar.message;
@@ -80,6 +82,7 @@ export class NotificationsBannerComponent implements OnDestroy {
   hideNotification(notificationBar: NotificationBarModel) {
     let index = this.notifications.indexOf(notificationBar);
     this.notifications.splice(index, 1);
+    this.notificationsBannerService.closeNotification()
   }
 
   hideOnHover(notificationBar: NotificationBarModel) {
@@ -131,5 +134,4 @@ export class NotificationsBannerComponent implements OnDestroy {
 
   // to show notfication call notifications banner service from any other component:
   // this.notificationsBannerService.show({ message: 'Error', type: NotificationBarType.Error });
-  // this.notificationsBannerService.show({ message: 'Attention', type: NotificationBarType.Attention });
 }

@@ -1,0 +1,86 @@
+@import "colors.scss";
+
+.header{
+    font-weight: 600;
+}
+
+.cards-wrapper {
+    display: grid;
+    gap: 20px;
+    grid-template-columns:repeat(auto-fit, minmax(270px, 1fr));
+}
+
+
+.nested-card{
+    background: $main-light-blue-hover;
+    text-align: center;
+    border-radius: 7px;
+    height: 300px;
+    margin-bottom: 2em;
+    padding: 0;
+    width: 100%;
+    position: relative;
+    cursor: pointer;
+    &.card-non-required{
+        opacity: 0.6
+    }
+}
+.nested-triangle-white{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15%;
+    background-color: white;
+    padding-top: 15%;
+    clip-path: polygon(0 0, 100% 0, 100% 100%);
+    z-index: 2;
+}
+.nested-triangle-blue{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 15%;
+    background-color: $main-light-blue;
+    padding-top: 15%;
+}
+.nested-card-inner{
+    position: absolute;
+    top: 20%;
+    padding: 0 1em;
+    width: 100%;
+    font-weight: 500;
+    font-size: 1.25em;
+    text-align: left;
+}
+
+.completed {
+    position: absolute;
+    background: $white;
+    padding: 0.25rem 1rem;
+    right: 1rem;
+    bottom: 1rem;
+    border-radius: 7px;
+    font-weight: 500;
+    .fa-check{
+        color: $success-green;
+        font-size: 1.25em;
+        padding-left: 0.25em;
+    }
+    .fa-exclamation-triangle{
+        color: $notification-attention;
+        font-size: 1.25em;
+        padding-left: 0.25em;
+    }
+}
+
+.document-not-required{
+    position: absolute;
+    background: $white;
+    padding: 0.25rem 1rem;
+    left: 50%;
+    bottom: 1rem;
+    border-radius: 7px;
+    font-weight: 500;
+    transform: translate(-50%);
+    width: 90%;
+}

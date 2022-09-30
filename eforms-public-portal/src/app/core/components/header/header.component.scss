@@ -2,116 +2,129 @@
 @import "colors.scss";
 
 :host {
-    .container {
-        height: 55px;
-        padding: 0px 15px;
-        background-color: $main-dark-blue-second;
-    }
+  .container {
+    height: 55px;
+    padding: 0px 15px;
+    background-color: $main-dark-blue-second;
+  }
 
+  #header-main {
+    align-items: center;
+  }
+
+  .logo {
+    margin-right: 12px;
+    cursor: pointer;
+  }
+
+  .desktop-logo {
+    display: none;
+  }
+
+  app-logout {
+    color: $white;
+  }
+
+  .hide-small-screen {
+    display: none;
+  }
+
+  .language {
+    cursor: pointer;
+    color: $white;
+  }
+
+  .desktop-header-section-outer {
+    display: flex;
+    align-items: center;
+  }
+
+  .desktop-header-section-inner {
+    display: none;
+  }
+
+  .mobile-menu-button {
+    display: block;
+    color: $white;
+    margin-left: 1.7142em;
+  }
+
+  @media (min-width: 640px) {
     #header-main {
-        align-items: center;
-    }
-
-    .logo {
-        margin-right: 12px;
-        cursor: pointer;
+      align-items: center;
     }
 
     .desktop-logo {
-        display: none;
+      display: block;
+    }
+
+    .mobile-logo {
+      display: none;
+    }
+
+    .container {
+      height: 150px;
+      padding: 25px 19px;
+      background-color: $white;
     }
 
     app-logout {
-        color: $white;
-    }
-
-    .hide-small-screen {
-        display: none;
+      color: $black;
     }
 
     .language {
-        cursor: pointer;
-        color: $white;
+      color: $black;
     }
 
-    .desktop-header-section-outer {
-        display: flex;
-        align-items: center;
-    }
-
-    .desktop-header-section-inner {
-        display: none;
+    .hide-small-screen {
+      display: block;
     }
 
     .mobile-menu-button {
-        display: block;
-        color: $white;
-        margin-left: 1.7142em;
+      color: $black;
+    }
+  }
+
+  @media (min-width: 1000px) {
+    .desktop-header-section-outer {
+      display: block;
+    }
+    .desktop-header-section-inner {
+      display: flex;
     }
 
-    @media (min-width: 640px) {
-        #header-main {
-            align-items: center;
-        }
-
-        .desktop-logo {
-            display: block;
-        }
-
-        .mobile-logo {
-            display: none;
-        }
-
-        .container {
-            height: 150px;
-            padding: 25px 19px;
-            background-color: $white;
-        }
-
-        app-logout {
-            color: $black;
-        }
-
-        .language {
-            color: $black;
-        }
-
-        .hide-small-screen {
-            display: block;
-        }
-
-        .mobile-menu-button {
-            color: $black;
-        }
+    .mobile-menu-button {
+      display: none;
     }
+  }
 
-    @media (min-width: 1000px) {
-        .desktop-header-section-outer {
-            display: block;
-        
-        }
-        .desktop-header-section-inner {
-            display: flex;
-        }
-
-        .mobile-menu-button {
-            display: none;
-        }
-
-        .language {
-            margin-bottom: 1em;
-        }
+  @media (max-width: 770px) {
+    app-user-name-header {
+      display: none;
     }
+  }
 
-    @media (max-width: 770px) {
-        app-user-name-header {
-            display: none;
-        }
+  @media (min-width: 1000px) {
+    .container.header-wraper {
+      z-index: 20001; // More than .loader-container-outer in header.component.css
+      position: relative;
+      padding-bottom: 20px;
+      padding-top: 20px;
     }
+    .desktop-header-section-outer {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-end;
+      min-height: 110px;
 
-    @media (min-width: $container-max-width) {
-        .container {
-            padding: 25px 0px;
-        }
+      // d-flex flex-column justify-content-between align-items-end
     }
+  }
+
+  @media (min-width: $container-max-width) {
+    .container {
+      padding: 25px 0px;
+    }
+  }
 }

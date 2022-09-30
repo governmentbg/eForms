@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.micrometer.core.annotation.Timed;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.text.CaseUtils;
 import org.modelmapper.ModelMapper;
 import org.springframework.cache.annotation.Cacheable;
@@ -41,14 +43,17 @@ import com.bulpros.formio.repository.util.DataUtil;
 import com.bulpros.formio.service.SubmissionService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import net.minidev.json.JSONArray;
 import net.minidev.json.JSONObject;
+import org.springframework.web.client.HttpClientErrorException;
 
 @Service(value = "userProfileServiceImpl")
 @RequiredArgsConstructor
+@Slf4j
 public class UserProfileServiceImpl implements UserProfileService {
     
     public static final String GET_USER_PROFILE_DATA_CACHE = "getUserProfileDataCache";
@@ -68,6 +73,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     private final static String PUBLIC_INSTITUTION_PROFILE_TYPE = "4";
     private final static String INSTITUTION_PROFILE_TYPE = "3";
 
+    @Timed(value = "eforms-gateway-get-user-profile-data.time")
     @Override
     public UserProfileDto getUserProfileData(String projectId, Authentication authentication) {
         return getUserProfileData(projectId, authentication, PUBLIC_CACHE);
@@ -145,15 +151,14 @@ public class UserProfileServiceImpl implements UserProfileService {
 
     @Override
     public boolean hasProfileType(UserProfileDto userProfileDto, String applicant, ProfileTypeEnum profileTypeEnum) {
-        return userProfileDto.getProfiles()
+        if(StringUtils.isEmpty(applicant)) return false;
+        var filteredProfilesByApplicant = userProfileDto.getProfiles()
                 .stream()
-                .filter(s -> s.getIdentifier().equals(applicant))
-                .allMatch(profile -> profileTypeEnum.equals(
-                        ProfileTypeEnum.getByType(
-                                Integer.parseInt(profile.getProfileType())
-                        )
-                        )
-                );
+                .filter(s -> s.getIdentifier().equals(applicant)).collect(Collectors.toList());
+        if(filteredProfilesByApplicant.isEmpty()) return false;
+        return filteredProfilesByApplicant.stream().allMatch(
+                profile -> profileTypeEnum.equals(
+                ProfileTypeEnum.getByType(Integer.parseInt(profile.getProfileType()))));
     }
 
     @Override
@@ -213,8 +218,16 @@ public class UserProfileServiceImpl implements UserProfileService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        submissionService.createSubmission(new ResourcePath(projectId, configurationProperties.getAdditionalUserProfilePath()),
+
+        try {
+            submissionService.createSubmission(new ResourcePath(projectId, configurationProperties.getAdditionalUserProfilePath()),
                 authentication, data);
+        } catch (HttpClientErrorException e){
+            if ( nonNull(e.getMessage()) && !e.getMessage().contains("Composite Key must be unique")){
+                log.warn("Submission in Additional Profile failed. Reason: " + e.getMessage());
+                throw e;
+            }
+        }
     }
 
     private void deactivateUserAdditionalProfile(String projectId, Authentication authentication, UserAdditionalProfile profile) {

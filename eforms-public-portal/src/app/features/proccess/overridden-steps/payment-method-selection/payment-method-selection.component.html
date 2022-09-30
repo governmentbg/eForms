@@ -1,0 +1,111 @@
+<p class="warning mt-4" *ngIf="queryParamsObj.hasFixedPayment === 'beforeDelivery' && showRequiredPaymentMessage">
+    {{ 'PAYMENT.SERVICE_REQUIRES_PAYMENT' | translate }}</p>
+<div class="payment-preview p-3 mt-4">
+    <h3 class="mb-5">{{ 'PAYMENT.PREVIEW' | translate }}</h3>
+    <p>{{ 'PAYMENT.DOCUMENT_DELIVERY' | translate }}</p>
+    <p class="font-weight-bold mb-4">{{ ('CHANNELS.' + queryParamsObj.channelType) | translate }}</p>
+
+    <div class="row">
+        <div class="col-6 pl-0">
+            <p>
+                <span>
+                    <mat-icon inline="true">update</mat-icon>
+                </span>
+                {{ 'PAYMENT.DEADLINE' | translate }}
+            </p>
+            <p class="font-weight-bold">
+                {{ queryParamsObj.deadlineTerm | translate }} {{ queryParamsObj.deadlineUnitLabel | translate }}
+            </p>
+        </div>
+        <div class="col-6">
+            <p>{{ 'PAYMENT.PAY_AMOUNT' | translate }}</p>
+            <p class="font-weight-bold">
+                {{ queryParamsObj.termTaxAmount }} {{ queryParamsObj.termTaxCurrency | translate }}
+            </p>
+        </div>
+    </div>
+</div>
+<div class="pb-2 method-selection">
+    <p class="mt-4 mb-3">{{ 'PAYMENT.PAY_QUESTION' | translate }}</p>
+
+    <p *ngIf="showCopyError" class="warning mb-3">{{ 'PAYMENT.CANT_COPY' | translate }}</p>
+    <p *ngIf="showCopySuccess" class="success mb-3">{{ 'PAYMENT.SUCCESSFUL_COPY' | translate }}</p>
+
+    <div class="row align-items-start">
+        <div class="col-lg-4 pl-0 pr-0 method" [class.active]="selectedMethods.includes('bank-card')"
+            (click)="handlePaymentMethodChange('bank-card')"
+            [@expandPaymentMethod]="selectedMethods.includes('bank-card') ? 'active' : 'inactive'">
+            <div class="row p-3 align-items-center">
+                <div class="col-9 text-left pl-0">
+                    <p class="font-weight-bold blue">{{ 'PAYMENT.BANK_CARD' | translate }}</p>
+                </div>
+                <div class="col-3 text-right icon-wrapper p-0">
+                    <span class="payment-card"></span>
+                </div>
+            </div>
+            <div (click)="$event.stopPropagation()">
+                <div class="row h-50">
+                    <div class="col-lg-12">
+                        <button [disabled]="!isOnline" class="payment-action-button w-100" mat-button (click)="handleCardPaymentClick()">
+                            {{ 'PAYMENT.TO_PAYMENT' | translate }}
+                        </button>
+                    </div>
+                </div>
+                <div class="text-center service-info">
+                    <a [disabled]="!isOnline" [href]="payEgovInfoPage" target="_blank" mat-button>
+                        <mat-icon inline="true">info_outline</mat-icon>{{ 'PAYMENT.SERVICE_INFO' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 pl-0 pr-0 method" [class.active]="selectedMethods.includes('code')"
+            (click)="handlePaymentMethodChange('code')"
+            [@expandPaymentMethod]="selectedMethods.includes('code') ? 'active' : 'inactive'">
+            <div class="row p-3 align-items-center">
+                <div class="col-9 text-left pl-0">
+                    <p class="font-weight-bold blue">{{ 'PAYMENT.EPAYMENT' | translate }}</p>
+                </div>
+                <div class="col-3 text-right icon-wrapper p-0">
+                    <span class="payment-ePay"></span>
+                </div>
+            </div>
+
+            <div class="mr-2 ml-2" (click)="$event.stopPropagation()">
+                <p class="font-weight-bold">{{ 'PAYMENT.TO_CODE' | translate }}</p>
+                <div class="payment-code-row pt-2 pb-2">
+                    <div class="row payment-code align-items-center">
+                        <div class="col-9">
+                            <span class="font-weight-bold">{{ queryParamsObj.ePaymentAccessCode }}</span>
+                        </div>
+                        <div class="col-3 text-center">
+                            <button [disabled]="!isOnline" mat-icon-button (click)="handlePaymentCodeCopy()">
+                                <mat-icon>content_copy</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="row h-50 mt-2">
+                        <div class="col-lg-12 pl-0 pr-0">
+                            <button [disabled]="!isOnline" (click)="handlePayWithCodeClick()" target="_blank"
+                                class="payment-action-button w-100" mat-button>
+                                {{ 'PAYMENT.PAY_WITH_CODE' | translate }}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="font-weight-bold">{{ 'PAYMENT.THROUGH_PROFILE' | translate }}</p>
+                <div class="row pt-2">
+                    <div class="col-lg-12 pl-0 pr-0">
+                        <button [disabled]="!isOnline" class="payment-action-button w-100" mat-button (click)="handleEPaymentClick()">
+                            {{ 'PAYMENT.TO_EPAYMENT' | translate }}
+                        </button>
+                    </div>
+                </div>
+                <div class="text-center service-info">
+                    <a [disabled]="!isOnline" [href]="payEgovInfoPage + '?focus=access_code'" target="_blank" mat-button>
+                        <mat-icon inline="true">info_outline</mat-icon>{{ 'PAYMENT.SERVICE_INFO' | translate }}
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

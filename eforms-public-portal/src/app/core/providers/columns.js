@@ -269,8 +269,8 @@ var ColumnsComponent = /*#__PURE__*/function (_NestedComponent) {
     key: "checkComponentConditions",
     value: function checkComponentConditions(data, flags, row) {
       if (this.component.autoAdjust) {
-        this.rebuild();
-        this.justify();
+        //this.rebuild();
+        //this.justify();
       }
 
       return _get(_getPrototypeOf(ColumnsComponent.prototype), "checkComponentConditions", this).call(this, data, flags, row);

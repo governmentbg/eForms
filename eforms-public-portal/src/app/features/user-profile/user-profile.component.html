@@ -12,25 +12,21 @@
                 {{ 'PROFILE_DATA' | translate }}
             </h2>
         </div>
-        <formio id="user-data-user-form" [form]="formSrc" (ready)="handleFormReady($event)" [readOnly]="true" [refresh]="refreshForm" *ngIf="userProfile"></formio>
 
-        <div class="profile-additional" >
-            <div  ref="header" class="card-header bg-default" (click)="isProfilesOpen=!isProfilesOpen">
-                <span >
-                {{ "PROFILE_ROLES.RELATED_PROFILES" | translate }}
-                </span>                                   
-            </div>
-            <div [ngClass]="{'table-hide' : !isProfilesOpen}">                
-                <app-smart-table
-                id="additional-profiles-table"
-                [tableColumns]="tableColumns"
-                [isPageable]="false"                               
-                [apiCallUrl]="apiCallUrl"   
-                [subData]="subData"                                      
-                ></app-smart-table>
+        <div class="profile-inner-container">
+            <formio id="user-data-user-form" [form]="formSrc" (ready)="handleFormReady($event)" [readOnly]="true" [refresh]="refreshForm" *ngIf="userProfile"></formio>
+
+            <div class="profile-additional" >
+                    <app-smart-table 
+                    *ngIf="!errorMsg"
+                    id="additional-profiles-table"
+                    [tableColumns]="tableColumns"
+                    [isPageable]="false"                               
+                    [apiCallUrl]="apiCallUrl"   
+                    [subData]="subData"                                      
+                    ></app-smart-table>
             </div>
         </div>
-        
 
  
 

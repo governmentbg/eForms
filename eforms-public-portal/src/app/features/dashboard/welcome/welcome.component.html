@@ -33,17 +33,18 @@
                               [formControl]="selectedSupplier"
                               required
                               [matAutocomplete]="matAutocomplete">
-                            <button *ngIf="selectedSupplier.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectedSupplier()">
+                            <button *ngIf="selectedSupplier.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectedSupplier($event)">
                                 <mat-icon>close</mat-icon>
                             </button>
                             <mat-autocomplete #matAutocomplete="matAutocomplete" id="welcome-select-supplier" [displayWith]="displayFnSupplier" >
-                                <mat-option
+                                <mat-option class="scroll-mat-option"
                                     *ngFor="let supplier of suppliersFiltered | async" 
                                     [id]="'welcome-supplier-' + supplier.data.supplierEAS"
                                     [value]="supplier">
                                     {{supplier.data.serviceSupplierTitle}}
                                 </mat-option>
                             </mat-autocomplete>
+                            <mat-error *ngIf="selectedSupplier.hasError('no_results_from_service')">{{ 'SERVICES.ERRORS.SERVICE_NOT_FOUND'| translate}}</mat-error>
                         </mat-form-field>
                         <div>
                             <ng-template #elseBlock>
@@ -72,17 +73,18 @@
                                 [formControl]="selectedUnit"
                                 required
                                 [matAutocomplete]="matAutocomplete">
-                              <button *ngIf="selectedUnit.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectedUnit()" >
+                              <button *ngIf="selectedUnit.value" matSuffix mat-icon-button aria-label="Clear" (click)="clearSelectedUnitOnClose($event)" >
                                   <mat-icon>close</mat-icon>
                               </button>
                               <mat-autocomplete #matAutocomplete="matAutocomplete" id="welcome-select-unit" [displayWith]="displayFnUnit">
-                                <mat-option
+                                <mat-option class="scroll-mat-option"
                                     *ngFor="let unit of unitsFiltered | async" 
                                     [id]="'welcome-supplier-unit-' + unit.administrationUnit"
                                     [value]="unit">
                                     {{ unit.administrationUnit }}
                                 </mat-option>
                             </mat-autocomplete>
+                            <mat-error *ngIf="selectedUnit.hasError('no_results_from_service')">{{ 'SERVICES.ERRORS.SERVICE_NOT_FOUND'| translate}}</mat-error>
                             </mat-form-field>
                             <ng-template #elseBlock1>
                                 <div [id]="'welcome-supplier-unit-' + selectedSupplier.value.easAdministrativeUnitsList[0].administrationUnit.administrationUnitID"> {{

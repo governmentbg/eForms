@@ -12,10 +12,18 @@
     font-size: 14px;
     width: 100%;
 
+    .notification-bar-inner-wrapper {
+      position: relative;
+    }
+
     button.notification-close-button {
       background: transparent;
       cursor: pointer;
       border: 0;
+
+      position: absolute;
+      right: 0;
+      top: 13px;
     }
 
     .notification-bar-message {
@@ -50,6 +58,17 @@
       .notification-bar-message {
           padding: 0;
       }
-  }
+    }
+
+    ::ng-deep mat-expansion-panel {
+      background-color: transparent;
+      box-shadow: none;
+
+      mat-expansion-panel-header {
+        background-color: transparent;
+        height: auto !important;
+        min-height: 48px;
+      }
+    }
   }
 }

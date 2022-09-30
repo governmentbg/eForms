@@ -178,10 +178,10 @@ export class ParameterMappingInput extends React.Component {
     return (
       <Radio.Group value={this.props.mapping.type} onChange={e => this.updateSourceType(e.target.value)}>
         <Radio className="radio" value={MappingType.DashboardAddNew} data-test="NewDashboardParameterOption">
-          New dashboard parameter
+          {t("New dashboard parameter")}
         </Radio>
         <Radio className="radio" value={MappingType.DashboardMapToExisting} disabled={noExisting}>
-          Existing dashboard parameter{" "}
+          {t("Existing dashboard parameter")}{" "}
           {noExisting ? (
             <Tooltip title="There are no dashboard parameters corresponding to this data type">
               <QuestionCircleFilledIcon />
@@ -189,10 +189,10 @@ export class ParameterMappingInput extends React.Component {
           ) : null}
         </Radio>
         <Radio className="radio" value={MappingType.WidgetLevel} data-test="WidgetParameterOption">
-          Widget parameter
+          {t("Widget parameter")}
         </Radio>
         <Radio className="radio" value={MappingType.StaticValue} data-test="StaticValueOption">
-          Static value
+          {t("Static value")}
         </Radio>
       </Radio.Group>
     );
@@ -236,11 +236,11 @@ export class ParameterMappingInput extends React.Component {
     const { mapping } = this.props;
     switch (mapping.type) {
       case MappingType.DashboardAddNew:
-        return ["Key", "Enter a new parameter keyword", this.renderDashboardAddNew()];
+        return [t("Key"), t("Enter a new parameter keyword"), this.renderDashboardAddNew()];
       case MappingType.DashboardMapToExisting:
-        return ["Key", "Select from a list of existing parameters", this.renderDashboardMapToExisting()];
+        return [t("Key"), t("Select from a list of existing parameters"), this.renderDashboardMapToExisting()];
       case MappingType.StaticValue:
-        return ["Value", null, this.renderStaticValue()];
+        return [t("Value"), null, this.renderStaticValue()];
       default:
         return [];
     }
@@ -252,7 +252,7 @@ export class ParameterMappingInput extends React.Component {
 
     return (
       <Form layout="horizontal">
-        <Form.Item label="Source" {...this.formItemProps}>
+        <Form.Item label={t("Source")} {...this.formItemProps}>
           {this.renderMappingTypeSelector()}
         </Form.Item>
         <Form.Item
@@ -326,7 +326,7 @@ class MappingEditor extends React.Component {
     return (
       <div className="parameter-mapping-editor" data-test="EditParamMappingPopover">
         <header>
-          Edit Source and Value <HelpTrigger type="VALUE_SOURCE_OPTIONS" />
+          {t("Edit Source and Value")} <HelpTrigger type="VALUE_SOURCE_OPTIONS" />
         </header>
         <ParameterMappingInput
           mapping={mapping}
@@ -335,9 +335,9 @@ class MappingEditor extends React.Component {
           inputError={inputError}
         />
         <footer>
-          <Button onClick={this.hide}>Cancel</Button>
+          <Button onClick={this.hide}>{t("Cancel")}</Button>
           <Button onClick={this.save} disabled={!!inputError} type="primary">
-            OK
+            {t("OK")}
           </Button>
         </footer>
       </div>
@@ -447,7 +447,7 @@ class TitleEditor extends React.Component {
     const { mapping } = this.props;
     if (mapping.type === MappingType.StaticValue) {
       return (
-        <Tooltip placement="right" title="Titles for static values don't appear in widgets">
+        <Tooltip placement="right" title={t("Titles for static values don't appear in widgets")}>
           {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex */}
           <span tabIndex={0}>
             <i className="fa fa-eye-slash" aria-hidden="true" />
@@ -553,9 +553,9 @@ export class ParameterMappingListInput extends React.Component {
           </Fragment>
         );
       case MappingType.WidgetLevel:
-        return "Widget parameter";
+        return t("Widget parameter");
       case MappingType.StaticValue:
-        return "Static value";
+        return t("Static value");
       default:
         return ""; // won't happen (typescript-ftw)
     }
@@ -581,7 +581,7 @@ export class ParameterMappingListInput extends React.Component {
       <div className="parameters-mapping-list">
         <Table dataSource={dataSource} size="middle" pagination={false} rowKey={(record, idx) => `row${idx}`} locale={{ emptyText: t('No Data') }}>
           <Table.Column
-            title="Title"
+            title={t("Title")}
             dataIndex="mapping"
             key="title"
             render={mapping => (
@@ -593,20 +593,20 @@ export class ParameterMappingListInput extends React.Component {
             )}
           />
           <Table.Column
-            title="Keyword"
+            title={t("Keyword")}
             dataIndex="mapping"
             key="keyword"
             className="keyword"
             render={mapping => <code>{`{{ ${mapping.name} }}`}</code>}
           />
           <Table.Column
-            title="Default Value"
+            title={t("Default Value")}
             dataIndex="mapping"
             key="value"
             render={mapping => this.constructor.getDefaultValue(mapping, this.props.existingParams)}
           />
           <Table.Column
-            title="Value Source"
+            title={t("Value Source")}
             dataIndex="mapping"
             key="source"
             render={mapping => {

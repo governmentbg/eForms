@@ -9,6 +9,7 @@ import com.bulpros.eformsgateway.security.service.UserService;
 import com.bulpros.eformsgateway.user.model.User;
 import com.bulpros.formio.dto.ResourceDto;
 import com.bulpros.formio.exception.ResourceNotFoundException;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -28,18 +29,20 @@ public class ServiceController {
     private final UserService userService;
     private final EDeliveryRegistrationService eDeliveryRegistrationService;
 
+    @Timed(value = "eforms-gateway-eas-easid.time")
     @GetMapping(path = "/projects/{projectId}/eas/{easId}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ServiceSubmissionResponseDto> getServiceSubmissionByServiceId(Authentication authentication,
                                                                                  @PathVariable String projectId, @PathVariable String easId,
                                                                                  @RequestParam(required = false) String applicant) {
         User user = userService.getUser(authentication);
-        ServiceSubmissionResponseDto response = serviceService.getServicesById(projectId, authentication, easId);
+        ServiceSubmissionResponseDto response = serviceService.getServiceInfo(projectId, authentication, easId, applicant);
         CheckEDeliveryRegistrationResult checkEDeliveryRegistrationResult = eDeliveryRegistrationService.checkRegistration(user,
                 authentication, projectId, applicant);
         response.setEDeliveryStatus(checkEDeliveryRegistrationResult.getStatus().getValue());
         return ResponseEntity.ok(response);
     }
 
+    @Timed(value = "eforms-gateway-eas-easid-suppliers.time")
     @GetMapping(path = "/projects/{projectId}/eas/{easId}/suppliers", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<List<ResourceDto>> getServiceSuppliersByTitle(Authentication authentication,
                                                                  @PathVariable String projectId,
@@ -50,12 +53,13 @@ public class ServiceController {
         return ResponseEntity.ok(response);
     }
 
+    @Timed(value = "eforms-gateway-get-service-supplier-by-code.time")
     @GetMapping(path = "/projects/{projectId}/eas/{easId}/suppliers/{code}", produces = MediaType.APPLICATION_JSON_VALUE)
     ResponseEntity<ResourceDto> getServiceSupplierByCode(Authentication authentication,
-                                                         @PathVariable String easId,
-                                                         @PathVariable String projectId,
-                                                         @PathVariable String code) {
-        ResourceDto response = serviceSupplierService.getSupplierWithAdminUnitsByCode(projectId, authentication, easId, code);
+                                                                       @PathVariable String easId,
+                                                                       @PathVariable String projectId,
+                                                                       @PathVariable String code) {
+        ResourceDto response = serviceSupplierService.getServiceSupplierMetadata(projectId, authentication, easId, code);
         if (response == null) {
             throw new ResourceNotFoundException("Service with id: " + easId + " or supplier with code: "
                     + code + " are not found!");

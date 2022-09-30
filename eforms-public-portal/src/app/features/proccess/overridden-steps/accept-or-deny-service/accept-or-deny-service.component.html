@@ -1,0 +1,21 @@
+<div class="w-100 p-3 accept-or-deny-service" [formGroup]="acceptOrDenyForm">
+    <div>
+        <label id="example-radio-group-label" class="mt-3">{{'SERVICE_RESULT' | translate}} <span class="text-danger">*</span></label>
+        <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                formControlName="serviceResult">
+            <div>
+                <mat-radio-button class="example-radio-button" [value]="true">
+                    {{'SERVICE_ACCEPTED' | translate}}
+                </mat-radio-button>
+            </div>
+            <div>
+                <mat-radio-button class="example-radio-button" [value]="false">
+                    {{'SERVICE_REJECTED'|translate}}
+                </mat-radio-button>
+            </div>
+            <mat-error *ngIf="acceptOrDenyForm.controls.serviceResult.hasError('required') && acceptOrDenyForm.controls.serviceResult.touched"> {{ 'REQUIRED_FIELD'| translate}}</mat-error>
+        </mat-radio-group>
+    </div>
+</div>

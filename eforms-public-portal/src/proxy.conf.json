@@ -4,5 +4,26 @@
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
+  },
+  "/reports": {
+    "target": "http://redash.daeudev.loc:8010",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "pathRewrite": {
+      "^/reports": "/api"
+    }
+  },
+  "/Vpos": {
+    "target": "https://pay-test.egov.bg",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
+  },
+  "/Payment": {
+    "target": "https://pay-test.egov.bg",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug"
   }
 }

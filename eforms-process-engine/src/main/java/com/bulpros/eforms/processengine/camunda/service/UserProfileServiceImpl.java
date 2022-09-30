@@ -11,7 +11,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import com.bulpros.eforms.processengine.camunda.model.AdditionalProfileDto;
-import com.bulpros.eforms.processengine.camunda.model.AdditionalProfileRoleEnum;
+import com.bulpros.eforms.processengine.camunda.model.enums.AdditionalProfileRoleEnum;
 import com.bulpros.eforms.processengine.camunda.model.UserProfileDto;
 import com.bulpros.eforms.processengine.configuration.ConfigurationProperties;
 import com.bulpros.eforms.processengine.security.AuthenticationFacade;
@@ -66,7 +66,7 @@ public class UserProfileServiceImpl implements UserProfileService {
     public boolean hasUserRole(UserProfileDto userProfile, String applicant, AdditionalProfileRoleEnum role) {
         boolean result = false;
         if (applicant == null || applicant.isEmpty() ||
-            userProfile.getProfiles() == null ||
+                userProfile.getProfiles() == null ||
                 role == null || role.role.isEmpty()) {
             return result;
         }

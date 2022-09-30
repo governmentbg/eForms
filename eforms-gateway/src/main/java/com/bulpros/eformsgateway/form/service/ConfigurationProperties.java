@@ -8,6 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Data
 @Configuration
@@ -31,7 +34,13 @@ public class ConfigurationProperties {
 
     @Value("${com.bulpros.formio.service-suppliers.resource.path}")
     private String serviceSuppliersResourcePath;
-    
+
+    @Value("${com.bulpros.formio.term-taxes.resource.path}")
+    private String termTaxesResourcePath;
+
+    @Value("${com.bulpros.formio.metadata-history.resource.path}")
+    private String metadataHistoryResourcePath;
+
     @Value("${com.bulpros.formio.service.category.id.property.key}")
     private String serviceCategoryIdPropertyKey;
     
@@ -61,6 +70,21 @@ public class ConfigurationProperties {
 
     @Value("${com.bulpros.formio.case.channel.resource.path}")
     private String caseChannelResourcePath;
+
+    @Value("${com.bulpros.formio.regix.services.resource.path}")
+    private String regixServicesResourcePath;
+
+    @Value("${com.bulpros.formio.translation-request.resource.path}")
+    private String translationRequest;
+
+    @Value("${com.bulpros.formio.regix.services.resource.operation.name}")
+    private String regixServiceOperationName;
+
+    @Value("${com.bulpros.formio.regix.services.resource.has.restrictions}")
+    private String regixServicesHasRestrictions;
+
+    @Value("${com.bulpros.formio.regix.services.resource.identifier.param.path}")
+    private String regixServicesIdentifierParamPath;
 
     @Value("${com.bulpros.formio.case.status.code.property.key}")
     private String caseStatusCodePropertyKey;
@@ -95,6 +119,9 @@ public class ConfigurationProperties {
     @Value("${com.bulpros.formio.case.requestor.property.key}")
     private String requestorPropertyKey;
 
+    @Value("${com.bulpros.formio.case.requestor.name.property.key}")
+    private String requestorNamePropertyKey;
+
     @Value("${com.bulpros.formio.case.applicant.property.key}")
     private String applicantPropertyKey;
 
@@ -118,7 +145,10 @@ public class ConfigurationProperties {
 
     @Value("${com.bulpros.formio.additional-profile.identifier.property.key}")
     private String additionalProfileIdentifierPropertyKey;
-    
+
+    @Value("${com.bulpros.formio.administration.unit.edelivery.property.key}")
+    private String administrationUnitEDeliveryKey;
+
     @Value("${com.bulpros.formio.resource.property.pathname.personidentifier}")
     private String personIdentifier;
 
@@ -185,8 +215,8 @@ public class ConfigurationProperties {
     @Value("${com.bulpros.formio.process.instance.id.property.key}")
     private String processInstanceId;
 
-    @Value("${com.bulpros.formio.issue.date.property.key}")
-    private String issueDate;
+    @Value("${com.bulpros.formio.delivery.date.property.key}")
+    private String deliveryDate;
 
     @Value("${com.bulpros.formio.status.property.key}")
     private String status;
@@ -200,12 +230,125 @@ public class ConfigurationProperties {
     @Value("${com.bulpros.formio.additional-userprofile.resource.roles.to.sync}")
     private String rolesToSync;
 
+    @Value("${com.bulpros.start.service.statuses}")
+    private String serviceStatuses;
+
+    @Value("${com.bulpros.service.supplier.statuses}")
+    private String supplierStatuses;
+
+    @Value("${com.bulpros.formio.language-translations.resource.path}")
+    private String languageTranslations;
+
+    @Value("${com.bulpros.formio.language.property.key}")
+    private String language;
+
+    @Value("${com.bulpros.formio.key.property.key}")
+    private String key;
+
+    @Value("${com.bulpros.formio.external.reference.property.key}")
+    private String externalReference;
+
+    @Value("${com.bulpros.formio.request.id.property.key}")
+    private String requestId;
+
+    @Value("${com.bulpros.formio.channels.and.terms.property.key}")
+    private String channelsAndTermsList;
+
+    @Value("${com.bulpros.formio.valid.from.property.key}")
+    private String validFrom;
+
+    @Value("${com.bulpros.formio.valid.to.property.key}")
+    private String validTo;
+
+    @Value("${com.bulpros.formio.translation.property.key}")
+    private String translation;
+
+    @Value("${com.bulpros.formio.languages.resource.path}")
+    private String languages;
+
+    @Value("${com.bulpros.formio.language.long.property.key}")
+    private String languageLong;
+
+    @Value("${com.bulpros.formio.common.component.attachment.sign.form.path}")
+    private String signForm;
+
+    @Value("${com.bulpros.etranslation.requesterCallback}")
+    private String requesterCallback;
+
+    @Value("${com.bulpros.etranslation.errorCallback}")
+    private String errorCallback;
+
+    @Value("${com.bulpros.formio.translated.text.property.key}")
+    private String translatedText;
+
+    @Value("${com.bulpros.formio.external.translation.service.error.message.property.key}")
+    private String externalTranslationServiceErrorMessage;
+
+    @Value("${com.bulpros.formio.external.translation.service.error.code.property.key}")
+    private String externalTranslationServiceErrorCode;
+
+    @Value("${com.bulpros.etranslation.default.language.code}")
+    private String defaultLanguageCode;
+
+    @Value("${com.bulpros.formio.target.language.code.property.key}")
+    private String targetLanguageCode;
+
+    @Value("${com.bulpros.translation.has.translation}")
+    private String hasTranslation;
+
+    @Value("${com.bulpros.translation.target.translation}")
+    private String targetTranslation;
+
+    @Value("${com.bulpros.formio.identifier.property.key}")
+    private String identifier;
+
+    @Value("${com.bulpros.translation.dash.separator}")
+    private String dashSeparator;
+
+    public List<String> getStartServiceStatuses() {
+        String[] statuses = getServiceStatuses().split(",");
+        var serviceStatuses = Arrays.stream(statuses)
+            .map(status -> {
+                try {
+                    return ServiceStatusEnum.valueOf(status.trim().toUpperCase(Locale.ROOT)).status;
+                } catch (Exception e) {
+                    return null;
+                }
+            })
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
+        if(serviceStatuses.isEmpty()){
+            serviceStatuses.add(ServiceStatusEnum.PUBLISHED.status);
+            return serviceStatuses;
+        }
+        return serviceStatuses;
+    }
+
+    public List<String> getServiceSupplierAllowedStatuses() {
+        String[] statuses = getSupplierStatuses().split(",");
+        var supplierStatuses = Arrays.stream(statuses)
+                .map(status -> {
+                    try {
+                        return ServiceSupplierStatusEnum.valueOf(status.trim().toUpperCase(Locale.ROOT)).status;
+                    } catch (Exception e) {
+                        return null;
+                    }
+                })
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+        if(supplierStatuses.isEmpty()){
+            supplierStatuses.add(ServiceSupplierStatusEnum.PUBLISHED.status);
+            return supplierStatuses;
+        }
+        return supplierStatuses;
+    }
+
     public boolean isMetadataProcess(String processKey) {
         String[] services = metadataServices.split(",");
         List<String> servicesList = Arrays.asList(services);
         return servicesList.stream()
-                .map(String::trim)
-                .filter(s-> s.equals(processKey))
-                .findFirst().isPresent();
+            .map(String::trim)
+            .filter(s-> s.equals(processKey))
+            .findFirst().isPresent();
     }
 }

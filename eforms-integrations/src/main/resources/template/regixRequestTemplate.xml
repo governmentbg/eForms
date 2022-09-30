@@ -1,0 +1,36 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:reg="http://egov.bg/RegiX" xmlns:tem="http://egov.bg/RegiX/SignedData">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <reg:Execute>
+            <reg:request>
+                <tem:ServiceRequestData>
+                    <tem:Operation/>
+                    <tem:Argument/>
+                    <tem:CallContext>
+                        <tem:ServiceURI>132-11123-01.01.2016</tem:ServiceURI>
+                        <tem:ServiceType>За проверовъчна дейност</tem:ServiceType>
+                        <!--Optional:-->
+                        <tem:EmployeeIdentifier/>
+                        <!--Optional:-->
+                        <tem:EmployeeNames/>
+                        <!--Optional:-->
+                        <tem:EmployeeAditionalIdentifier/>
+                        <!--Optional:-->
+                        <tem:EmployeePosition/>
+                        <!--Optional:-->
+                        <tem:AdministrationOId/>
+                        <!--Optional:-->
+                        <tem:AdministrationName/>
+                        <!--Optional:-->
+                        <tem:ResponsiblePersonIdentifier/>
+                        <tem:LawReason>?</tem:LawReason>
+                        <!--Optional:-->
+                        <tem:Remark/>
+                    </tem:CallContext>
+                    <tem:SignResult>true</tem:SignResult>
+                    <tem:ReturnAccessMatrix>false</tem:ReturnAccessMatrix>
+                </tem:ServiceRequestData>
+            </reg:request>
+        </reg:Execute>
+    </soapenv:Body>
+</soapenv:Envelope>

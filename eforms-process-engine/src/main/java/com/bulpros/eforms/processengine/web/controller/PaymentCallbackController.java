@@ -1,7 +1,8 @@
 package com.bulpros.eforms.processengine.web.controller;
 
+import com.bulpros.eforms.processengine.epayment.model.PaymentCallbackStatusResponse;
 import com.bulpros.eforms.processengine.epayment.model.PaymentStatusCallbackRequest;
-import com.bulpros.eforms.processengine.epayment.model.PaymentStatusResponse;
+import io.micrometer.core.annotation.Timed;
 import lombok.AllArgsConstructor;
 import org.camunda.bpm.engine.RuntimeService;
 import org.camunda.bpm.engine.runtime.Execution;
@@ -17,15 +18,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping({ "/eforms-rest/payment" })
+@RequestMapping({"/eforms-rest/payment"})
 @AllArgsConstructor
 public class PaymentCallbackController {
 
     private final RuntimeService runtimeService;
 
+    @Timed(value = "eforms-process-engine-set-payment-status.time")
     @PostMapping(value = "/payment-status-callback", produces = MediaType.APPLICATION_JSON_VALUE)
-    ResponseEntity<PaymentStatusResponse> setPaymentStatus(@RequestBody PaymentStatusCallbackRequest paymentStatus) {
-        PaymentStatusResponse response;
+    ResponseEntity<PaymentCallbackStatusResponse> setPaymentStatus(@RequestBody PaymentStatusCallbackRequest paymentStatus) {
+        PaymentCallbackStatusResponse response;
         try {
             Execution execution = runtimeService.createExecutionQuery()
                     .messageEventSubscriptionName(paymentStatus.getMessage())
@@ -39,12 +41,12 @@ public class PaymentCallbackController {
                 variables.put("ePaymentStatusChangeTime",
                         paymentStatus.getChangeTime() != null ? paymentStatus.getChangeTime() : Calendar.getInstance().getTime());
                 runtimeService.messageEventReceived(paymentStatus.getMessage(), execution.getId(), variables);
-                response = new PaymentStatusResponse(true);
+                response = new PaymentCallbackStatusResponse(true);
             } else {
-                response = new PaymentStatusResponse(false);
+                response = new PaymentCallbackStatusResponse(false);
             }
         } catch (Exception e) {
-            response = new PaymentStatusResponse(false);
+            response = new PaymentCallbackStatusResponse(false);
             System.out.println(e.getMessage());
             // Query return ??? results instead of max 1
         }

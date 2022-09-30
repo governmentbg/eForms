@@ -1,0 +1,21 @@
+<div class="mb-2 pt-2 pl-3 pr-3 rounded" [class]="(isGrey && visible) ? 'bg-light' : ''">
+    <h3 *ngIf="!toggleOnlyOnIcon" (click)="toggle()" role="button">
+        <span *ngIf="visible" class="mr-2">-</span>
+        <span *ngIf="!visible" class="mr-2">+</span>
+        {{title}}
+    </h3>
+    <h3 *ngIf="toggleOnlyOnIcon" role="button" [class]="hasError ? 'title-error' : ''">
+        <ng-content select="[app-card-title]"></ng-content>
+        <span (click)="toggle()" class="ml-2 toggle-icon togglable-title">
+            <ng-content select="[app-card-toggle]"></ng-content>
+        </span>
+
+        <span *ngIf="visible" (click)="toggle()"class="ml-2 toggle-icon h3">-</span>
+        <span *ngIf="!visible" (click)="toggle()" class="ml-2 toggle-icon h3">+</span>
+    </h3>
+    <div class="card-body" *ngIf="visible">
+        <div class="form-group">
+            <ng-content></ng-content>
+        </div>
+    </div>
+</div>

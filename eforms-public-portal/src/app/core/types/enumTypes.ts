@@ -1,9 +1,12 @@
 import { profileStatusEnum } from "./profileStatusEnum";
 import { profileTypeEnum } from "./profileTypeEnum";
-import { serviceButtonEnum } from "./serviceButtonEnum";
+import { serviceAdminButtonEnum, serviceButtonEnum } from "./serviceButtonEnum";
+import {serviceWithSuppliersStatusEnum} from "./serviceWithSuppliersStatusEnum";
 
 export const enumTypes = {
   "profileTypeEnum" : profileTypeEnum,
   "profileStatusEnum" : profileStatusEnum,
-  "serviceButtonEnum": serviceButtonEnum
+  "serviceButtonEnum": serviceButtonEnum,
+  "serviceWithSuppliersStatusEnum": serviceWithSuppliersStatusEnum,
+  "serviceAdminButtonEnum" : serviceAdminButtonEnum
 };

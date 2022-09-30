@@ -38,7 +38,7 @@ export class HelpCenterComponent implements OnInit {
   }
 
   back() {
-    this.router.navigate(['help-info']);
+    this.router.navigate(['home']);
   }
 
 

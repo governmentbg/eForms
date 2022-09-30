@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/CyrillicLatinNameType"
+        xmlns="http://eform.e-gov.bg/dictionary/CyrillicLatinNameType"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+    <xsd:simpleType name="CyrillicLatinNameType">
+        <xsd:annotation>
+            <xsd:documentation xml:lang="bg">Име на лице, населено място и т.н. на кирилица</xsd:documentation>
+        </xsd:annotation>
+        <xsd:restriction base="xsd:string">
+            <xsd:pattern value="[А-Яа-яA-Za-z]+([' \-А-Яа-яA-Za-z]+)*" />
+        </xsd:restriction>
+    </xsd:simpleType>
+
+</xsd:schema>

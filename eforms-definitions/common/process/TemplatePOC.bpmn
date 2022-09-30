@@ -1,0 +1,259 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1lls4id" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.8.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:collaboration id="Collaboration_143i9p1">
+    <bpmn:participant id="Participant_17xr5t7" name="eForms" processRef="Process_11jiq4l" />
+  </bpmn:collaboration>
+  <bpmn:process id="Process_11jiq4l" name="Приложени документи заглавие" isExecutable="true">
+    <bpmn:laneSet id="LaneSet_0hl93k5">
+      <bpmn:lane id="Lane_ExpertDA" name="Експерт ДА">
+        <bpmn:childLaneSet id="LaneSet_0pvnghj">
+          <bpmn:lane id="expertDASuccessDelivery" name="Регистриране на заявление" />
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+      <bpmn:lane id="Lane_Requestor" name="Заявител на ЕАУ">
+        <bpmn:flowNodeRef>Event_0sza47a</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_15cx7m3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Event_1cgai04</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>FillAplication_2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>CallEdelivery_4</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_0ktslj3</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_12wnuza</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Gateway_1dfumhx</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0piremg</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ChangeStatusSubmited</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>ChooseProfile</bpmn:flowNodeRef>
+        <bpmn:childLaneSet id="LaneSet_1266iiy">
+          <bpmn:lane id="requestorCallEDelivery" name="Връчване на документи към администрация">
+            <bpmn:flowNodeRef>Event_1cgai04</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>CallEdelivery_4</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>ChangeStatusSubmited</bpmn:flowNodeRef>
+          </bpmn:lane>
+          <bpmn:lane id="requestorBasicInfo" name="Попълване на формуляр за заявяване">
+            <bpmn:extensionElements>
+              <camunda:properties>
+                <camunda:property name="Role" value="Requestor" />
+              </camunda:properties>
+            </bpmn:extensionElements>
+            <bpmn:flowNodeRef>Event_0sza47a</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_15cx7m3</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>FillAplication_2</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Gateway_0ktslj3</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_12wnuza</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Gateway_1dfumhx</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>Activity_0piremg</bpmn:flowNodeRef>
+            <bpmn:flowNodeRef>ChooseProfile</bpmn:flowNodeRef>
+            <bpmn:childLaneSet id="LaneSet_1cvnche" />
+          </bpmn:lane>
+        </bpmn:childLaneSet>
+      </bpmn:lane>
+    </bpmn:laneSet>
+    <bpmn:startEvent id="Event_0sza47a">
+      <bpmn:outgoing>Flow_0uo82iu</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:scriptTask id="Activity_15cx7m3" name="Създаване на преписка">
+      <bpmn:incoming>Flow_0uo82iu</bpmn:incoming>
+      <bpmn:outgoing>Flow_0mkvbjp</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:endEvent id="Event_1cgai04">
+      <bpmn:incoming>Flow_1ezvqbz</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:userTask id="FillAplication_2" name="Попълване на заявление" camunda:candidateUsers="#{initiator}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_18vfoj6" label="Попълване на заявление" type="string" />
+        </camunda:formData>
+        <camunda:properties>
+          <camunda:property name="Order" value="2" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1vdyrjb</bpmn:incoming>
+      <bpmn:incoming>Flow_16ohsvw</bpmn:incoming>
+      <bpmn:incoming>Flow_1ilq92a</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ioq590</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:userTask id="CallEdelivery_4" name="Връчване на администрацията" camunda:candidateUsers="#{initiator}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_38a8u7p" label="потвърждаване" type="string" />
+        </camunda:formData>
+        <camunda:properties>
+          <camunda:property name="Order" value="1" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1taugg7</bpmn:incoming>
+      <bpmn:outgoing>Flow_0hsgnl3</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_0ktslj3" default="Flow_1taugg7">
+      <bpmn:incoming>Flow_065pn4o</bpmn:incoming>
+      <bpmn:outgoing>Flow_1taugg7</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ilq92a</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:userTask id="Activity_12wnuza" name="Преглед на попълнени данни" camunda:candidateUsers="#{initiator}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_15ba58e" label="Приложени документи" type="string" />
+        </camunda:formData>
+        <camunda:properties>
+          <camunda:property name="Order" value="4" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0ioq590</bpmn:incoming>
+      <bpmn:outgoing>Flow_065pn4o</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:exclusiveGateway id="Gateway_1dfumhx" default="Flow_1mumrhi">
+      <bpmn:incoming>Flow_1bhioru</bpmn:incoming>
+      <bpmn:outgoing>Flow_16ohsvw</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1mumrhi</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:serviceTask id="Activity_0piremg" name="Автоматично попълване на данни от Regix">
+      <bpmn:incoming>Flow_1mumrhi</bpmn:incoming>
+      <bpmn:outgoing>Flow_1vdyrjb</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:scriptTask id="ChangeStatusSubmited" name="Смяна на статус &#34;Подадено заявление&#34; и дата на първоначално заявяване">
+      <bpmn:incoming>Flow_0hsgnl3</bpmn:incoming>
+      <bpmn:outgoing>Flow_1ezvqbz</bpmn:outgoing>
+    </bpmn:scriptTask>
+    <bpmn:sequenceFlow id="Flow_0uo82iu" sourceRef="Event_0sza47a" targetRef="Activity_15cx7m3" />
+    <bpmn:sequenceFlow id="Flow_0mkvbjp" sourceRef="Activity_15cx7m3" targetRef="ChooseProfile" />
+    <bpmn:sequenceFlow id="Flow_0hsgnl3" sourceRef="CallEdelivery_4" targetRef="ChangeStatusSubmited" />
+    <bpmn:sequenceFlow id="Flow_1ezvqbz" sourceRef="ChangeStatusSubmited" targetRef="Event_1cgai04" />
+    <bpmn:sequenceFlow id="Flow_1ilq92a" name="редакция на заявление" sourceRef="Gateway_0ktslj3" targetRef="FillAplication_2" />
+    <bpmn:sequenceFlow id="Flow_0ioq590" sourceRef="FillAplication_2" targetRef="Activity_12wnuza" />
+    <bpmn:sequenceFlow id="Flow_1taugg7" sourceRef="Gateway_0ktslj3" targetRef="CallEdelivery_4" />
+    <bpmn:sequenceFlow id="Flow_065pn4o" sourceRef="Activity_12wnuza" targetRef="Gateway_0ktslj3" />
+    <bpmn:sequenceFlow id="Flow_1bhioru" sourceRef="ChooseProfile" targetRef="Gateway_1dfumhx" />
+    <bpmn:sequenceFlow id="Flow_1mumrhi" name="лично качество" sourceRef="Gateway_1dfumhx" targetRef="Activity_0piremg" />
+    <bpmn:sequenceFlow id="Flow_16ohsvw" name="представител" sourceRef="Gateway_1dfumhx" targetRef="FillAplication_2" />
+    <bpmn:sequenceFlow id="Flow_1vdyrjb" sourceRef="Activity_0piremg" targetRef="FillAplication_2" />
+    <bpmn:userTask id="ChooseProfile" name="Избор на профил от еВръчване" camunda:candidateUsers="#{initiator}">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="FormField_1fs1lcj" label="Избор на профил" type="string" />
+        </camunda:formData>
+        <camunda:properties>
+          <camunda:property name="Order" value="1" />
+        </camunda:properties>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0mkvbjp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1bhioru</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_143i9p1">
+      <bpmndi:BPMNShape id="Participant_17xr5t7_di" bpmnElement="Participant_17xr5t7" isHorizontal="true">
+        <dc:Bounds x="160" y="80" width="2181" height="700" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0q45nff_di" bpmnElement="Lane_ExpertDA" isHorizontal="true">
+        <dc:Bounds x="190" y="580" width="2151" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_06s0akg_di" bpmnElement="expertDASuccessDelivery" isHorizontal="true">
+        <dc:Bounds x="220" y="580" width="2121" height="200" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0nq9i8j_di" bpmnElement="Lane_Requestor" isHorizontal="true">
+        <dc:Bounds x="190" y="80" width="2151" height="500" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_0vlvpt4_di" bpmnElement="requestorCallEDelivery" isHorizontal="true">
+        <dc:Bounds x="220" y="400" width="2121" height="180" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Lane_1xeqvfr_di" bpmnElement="requestorBasicInfo" isHorizontal="true">
+        <dc:Bounds x="220" y="80" width="2121" height="320" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_0uo82iu_di" bpmnElement="Flow_0uo82iu">
+        <di:waypoint x="288" y="270" />
+        <di:waypoint x="350" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0mkvbjp_di" bpmnElement="Flow_0mkvbjp">
+        <di:waypoint x="450" y="270" />
+        <di:waypoint x="550" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0hsgnl3_di" bpmnElement="Flow_0hsgnl3">
+        <di:waypoint x="1730" y="490" />
+        <di:waypoint x="1780" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ezvqbz_di" bpmnElement="Flow_1ezvqbz">
+        <di:waypoint x="1880" y="490" />
+        <di:waypoint x="1922" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ilq92a_di" bpmnElement="Flow_1ilq92a">
+        <di:waypoint x="1450" y="245" />
+        <di:waypoint x="1450" y="190" />
+        <di:waypoint x="1030" y="190" />
+        <di:waypoint x="1030" y="230" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1209" y="156" width="63" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ioq590_di" bpmnElement="Flow_0ioq590">
+        <di:waypoint x="1080" y="270" />
+        <di:waypoint x="1270" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1taugg7_di" bpmnElement="Flow_1taugg7">
+        <di:waypoint x="1475" y="270" />
+        <di:waypoint x="1510" y="270" />
+        <di:waypoint x="1510" y="490" />
+        <di:waypoint x="1630" y="490" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_065pn4o_di" bpmnElement="Flow_065pn4o">
+        <di:waypoint x="1370" y="270" />
+        <di:waypoint x="1425" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1bhioru_di" bpmnElement="Flow_1bhioru">
+        <di:waypoint x="650" y="270" />
+        <di:waypoint x="785" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1mumrhi_di" bpmnElement="Flow_1mumrhi">
+        <di:waypoint x="810" y="295" />
+        <di:waypoint x="810" y="350" />
+        <di:waypoint x="850" y="350" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="761" y="353" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16ohsvw_di" bpmnElement="Flow_16ohsvw">
+        <di:waypoint x="835" y="270" />
+        <di:waypoint x="980" y="270" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="873" y="252" width="70" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1vdyrjb_di" bpmnElement="Flow_1vdyrjb">
+        <di:waypoint x="950" y="350" />
+        <di:waypoint x="1030" y="350" />
+        <di:waypoint x="1030" y="310" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_0sza47a_di" bpmnElement="Event_0sza47a">
+        <dc:Bounds x="252" y="252" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_15cx7m3_di" bpmnElement="Activity_15cx7m3">
+        <dc:Bounds x="350" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1cgai04_di" bpmnElement="Event_1cgai04">
+        <dc:Bounds x="1922" y="472" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_18aqr4l_di" bpmnElement="FillAplication_2">
+        <dc:Bounds x="980" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0lymm0c_di" bpmnElement="CallEdelivery_4">
+        <dc:Bounds x="1630" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0ktslj3_di" bpmnElement="Gateway_0ktslj3" isMarkerVisible="true">
+        <dc:Bounds x="1425" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_12wnuza_di" bpmnElement="Activity_12wnuza">
+        <dc:Bounds x="1270" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1dfumhx_di" bpmnElement="Gateway_1dfumhx" isMarkerVisible="true">
+        <dc:Bounds x="785" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0ju6f5i_di" bpmnElement="Activity_0piremg">
+        <dc:Bounds x="850" y="310" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1fn9j67_di" bpmnElement="ChangeStatusSubmited">
+        <dc:Bounds x="1780" y="450" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0kul55h_di" bpmnElement="ChooseProfile">
+        <dc:Bounds x="550" y="230" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

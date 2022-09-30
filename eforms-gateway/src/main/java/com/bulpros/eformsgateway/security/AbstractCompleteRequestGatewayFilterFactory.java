@@ -10,7 +10,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.nio.charset.StandardCharsets;
 
 public abstract class AbstractCompleteRequestGatewayFilterFactory<C> extends AbstractGatewayFilterFactory<C> {
     
@@ -18,14 +17,13 @@ public abstract class AbstractCompleteRequestGatewayFilterFactory<C> extends Abs
         return completeRequest(exchange, status, null);
     }
     
-    protected Mono<Void> completeRequest(ServerWebExchange exchange, HttpStatus status, String body) {
+    protected Mono<Void> completeRequest(ServerWebExchange exchange, HttpStatus status, byte[] body) {
         var response = exchange.getResponse();
         response.setStatusCode(status);
         if (body != null) {
             response.getHeaders().set("x-intercepted", "true");
             response.getHeaders().set("Content-Type", MediaType.APPLICATION_JSON_VALUE);
-            byte[] bytes = body.getBytes(StandardCharsets.UTF_8);
-            DataBuffer buffer = response.bufferFactory().wrap(bytes);
+            DataBuffer buffer = response.bufferFactory().wrap(body);
             return response.writeWith(Mono.just(buffer));
         }
         return response.setComplete();

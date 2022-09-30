@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/Person"
+        xmlns="http://eform.e-gov.bg/dictionary/Person"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:ident="http://eform.e-gov.bg/dictionary/Identifier"
+		xmlns:loc="http://eform.e-gov.bg/dictionary/Location"
+		xmlns:jur="http://eform.e-gov.bg/dictionary/Jurisdiction"
+        xmlns:iddoc="http://eform.e-gov.bg/dictionary/IdentificationDocument"
+		xmlns:contact="http://eform.e-gov.bg/dictionary/ContactPoint"
+		xmlns:cname="http://eform.e-gov.bg/dictionary/CyrillicNameType"
+		xmlns:lname="http://eform.e-gov.bg/dictionary/LatinNameType"
+		xmlns:regix="http://eform.e-gov.bg/dictionary/RegixSync">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Identifier" schemaLocation="Identifier.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/Location" schemaLocation="Location.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/Jurisdiction" schemaLocation="Jurisdiction.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/IdentificationDocument" schemaLocation="IdentificationDocument.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ContactPoint" schemaLocation="ContactPoint.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/CyrillicNameType" schemaLocation="CyrillicNameType.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/LatinNameType" schemaLocation="LatinNameType.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/RegixSync" schemaLocation="RegixSync.xsd"/>
+
+	<xsd:complexType name="Person">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+		  Основни данни за физическо лице
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="identifier" type="ident:Identifier" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Уникален идентификатор на физическото лице.
+			  В настоящия модел като основен идентификатор се ползва ЕГН/ЛНЧ
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="fullName" type="cname:CyrillicNameType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Пълното име на физическото лице, представено като един низ
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="firstName" type="cname:CyrillicNameType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Собственото име
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="middleName" type="cname:CyrillicNameType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Бащиното име
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="familyName" type="cname:CyrillicNameType" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Фамилно име
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="alternativeName" type="cname:CyrillicNameType" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Псевдоним - всяко име, с което е известно физическо лице, освен пълното му име.
+			  Алтернативното име дава възможност за записване на имена, чрез които дадено лице е общоизвестно или професионално познато
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="gender" type="code:Code" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Пол на физическото лице. Номенклатурата „Пол“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="birthName" type="cname:CyrillicNameType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Име на лицето при раждане
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="fullNameLatin" type="lname:LatinNameType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Пълното име на физическото лице на латиница, представено като един низ
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="firstNameLatin" type="lname:LatinNameType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Собственото име на латиница
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="middleNameLatin" type="lname:LatinNameType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Бащиното име на латиница
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="familyNameLatin" type="lname:LatinNameType" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Фамилно име на латиница
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dateOfBirth" type="xsd:date" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Дата на раждане
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="countryOfBirth" type="loc:Location" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Държава на раждане
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="placeOfBirth" type="loc:Location" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Място на раждане
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="dateOfDeath" type="xsd:date" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Дата, на която е починало лицето
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="countryOfDeath" type="loc:Location" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Държава, в която е починало лицето
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="placeOfDeath" type="loc:Location" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Място, на което е починало лицето
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identificationDocument" type="iddoc:IdentificationDocument" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Документ за самоличност
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="permanentAddress" type="loc:Location" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Постоянен адрес на физическо лице
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="presentAddress" type="loc:Location" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Настоящ адрес на физическо лице
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="citizenship" type="jur:Jurisdiction" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Гражданство. Едно лице може да има едно или повече от едно гражданства или дори да е без гражданство. 
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="residency" type="jur:Jurisdiction" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Място на пребиваване
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contactPoint" type="contact:ContactPoint" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+			  Точки за осъществяване на комуникация с лицето: мейл, телефон и т.н. 
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="regix" type="regix:RegixSync" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Данните за лицето са синхронизирани от RegiX
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

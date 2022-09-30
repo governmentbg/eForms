@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/RequestAuthor"
+        xmlns="http://eform.e-gov.bg/dictionary/RequestAuthor"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+		xmlns:ident="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns:doc="http://eform.e-gov.bg/dictionary/Document"
+        xmlns:person="http://eform.e-gov.bg/dictionary/Person"
+		xmlns:legal="http://eform.e-gov.bg/dictionary/LegalEntity">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/Identifier" schemaLocation="Identifier.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Document" schemaLocation="Document.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Person" schemaLocation="Person.xsd"/>
+	<xsd:import namespace="http://eform.e-gov.bg/dictionary/LegalEntity" schemaLocation="LegalEntity.xsd"/>
+
+	<xsd:complexType name="RequestAuthor">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Автор на заявлението
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="person" type="person:Person" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Автор на заявлението - физическо лице
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="legalEntity" type="legal:LegalEntity" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Юридическо лице, от името на което действа автора (посредници, представители)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="authorType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                    Качество на автора.
+                    Номенклатура „Качество на автора на заявлението“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="authorizationURI" type="ident:Identifier" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						ORN при овластяване - уникалния номер на транзакцията, с която е извършено овластяването в БД „Овластяване“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="authorizationDocument" type="doc:Document" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+						Документ, удостоверяващ качеството на автора – задължителен само за пълномощник
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="authorizationDocumentNumber" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                    Номер на документ, удостоверяващ качеството на автора – задължителен само за пълномощник
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="authorizationDocumentNumberDate" type="xsd:date" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                    Дата на документ, удостоверяващ качеството на автора – задължителен само за пълномощник
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

@@ -2,12 +2,14 @@ package com.bulpros.eforms.processengine.camunda.listener;
 
 import com.bulpros.eforms.processengine.camunda.model.ProcessConstants;
 import com.bulpros.eforms.processengine.camunda.model.UserProfileDto;
-import com.bulpros.eforms.processengine.camunda.service.IdentifierTypeEnum;
+import com.bulpros.eforms.processengine.camunda.model.enums.IdentifierTypeEnum;
+import com.bulpros.eforms.processengine.camunda.model.enums.RequiredSignaturesEnum;
 import com.bulpros.eforms.processengine.camunda.util.EFormsUtils;
 import com.bulpros.eforms.processengine.configuration.ConfigurationProperties;
 import com.bulpros.eforms.processengine.security.AuthenticationFacade;
 import com.bulpros.eforms.processengine.security.UserService;
 import com.bulpros.eforms.processengine.web.exception.EFormsProcessEngineException;
+import com.bulpros.eforms.processengine.web.exception.SeverityEnum;
 import com.bulpros.formio.dto.ResourceDto;
 import com.bulpros.formio.repository.formio.ResourcePath;
 import com.bulpros.formio.repository.formio.SubmissionFilter;
@@ -72,14 +74,14 @@ public class ValidateSigneesListener implements TaskListener {
         List<UserProfileDto> foundProfiles = new ArrayList<>();
         if (jsonArray.isEmpty()) {
             log.warn("List of signees is expected but none was found.");
-            throw new EFormsProcessEngineException("EMPTY_SIGNEES_LIST");
+            throw new EFormsProcessEngineException(SeverityEnum.WARN, "EMPTY_SIGNEES_LIST");
         }
         String[] signees;
         try {
             signees = objectMapper.readValue(jsonArray.toString(), String[].class);
         } catch (JsonProcessingException e) {
-            log.error(e.getMessage());
-            throw new EFormsProcessEngineException(String.format("Couldn't read signees: %s", e.getMessage()));
+            log.error(e.getMessage(), e);
+            throw new EFormsProcessEngineException(SeverityEnum.ERROR, "VALIDATE_SIGNEES", e.getMessage());
         }
         for (String signee : signees) {
             String identifier = IdentifierTypeEnum.PERSONAL_NUMBER.getIdentifierFromNumber(signee);
@@ -93,7 +95,7 @@ public class ValidateSigneesListener implements TaskListener {
                     new SubmissionFilter(
                             SubmissionFilterClauseEnum.NONE,
                             Map.of(configuration.getUserIdPropertyKey(), identifier,
-                                   configuration.getUserIsActivePropertyKey(), true)));
+                                    configuration.getUserIsActivePropertyKey(), true)));
             List<ResourceDto> userProfiles = new ArrayList<>();
             try {
                 userProfiles = submissionService.getSubmissionsWithFilter(
@@ -112,15 +114,17 @@ public class ValidateSigneesListener implements TaskListener {
         }
         if (!missingProfiles.isEmpty()) {
             log.warn(String.format("The following person identifiers have no active profiles but are selected as signees: %s", String.join(", ", missingProfiles)));
-            throw new EFormsProcessEngineException("MISSING_SIGNEES_PROFILES", missingProfiles);
+            String warnMessage = "MISSING_SIGNEES_PROFILES_" + (missingProfiles.size() == 1 ? "1" : "N");
+            throw new EFormsProcessEngineException(SeverityEnum.WARN, warnMessage, missingProfiles);
         } else if (foundProfiles.isEmpty()) {
             log.warn("List of signees is expected but none was found.");
-            throw new EFormsProcessEngineException("EMPTY_SIGNEES_LIST");
+            throw new EFormsProcessEngineException(SeverityEnum.WARN, "EMPTY_SIGNEES_LIST");
         } else {
             try {
                 jsonContext.put("$.data", "signeesProfiles", foundProfiles);
             } catch (Exception ex) {
                 log.warn("Couldn't add user profiles to submission data.");
+                throw new EFormsProcessEngineException(SeverityEnum.ERROR, "VALIDATE_SIGNEES", ex.getMessage());
             }
             delegateTask.setVariable(ProcessConstants.SUBMISSION_DATA + formDataSubmissionKey, jsonContext.json());
         }

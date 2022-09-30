@@ -44,10 +44,10 @@ public class EFormsExceptionMapper extends RestExceptionHandler implements Excep
             }
         } else if (t instanceof EFormsProcessEngineException) {
             EFormsProcessEngineException e = (EFormsProcessEngineException) t;
-            return new ExceptionBody(httpStatus, e.getMessage(), e.getData());
+            return new ExceptionBody(httpStatus, e.getFullCode(), e.getData());
         }
         ExceptionDto dto = ExceptionHandlerHelper.getInstance().fromException(t);
-        return new ExceptionBody(httpStatus, dto.getMessage());
+        return new ExceptionBody(httpStatus, "ERROR.PROCESS-ENGINE", dto.getMessage());
     }
 
     public Response.Status getStatus(Throwable t) {

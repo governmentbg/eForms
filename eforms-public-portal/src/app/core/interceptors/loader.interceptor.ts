@@ -26,7 +26,7 @@ export class LoaderInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.headers.has('Hide-Loader')) {
+    if (req.headers.has('Hide-Loader') || req.url.includes('cgi-bin/cgi_link')) {
       req = req.clone({ headers: req.headers.delete('Hide-Loader', '') });
 
       return next.handle(req);

@@ -1,0 +1,153 @@
+<div class="table-container d-md-block d-none">
+    <table mat-table [dataSource]="channelTaxList" [class]="isGrey ? 'bg-light' : ''">
+        <ng-container matColumnDef="typeChannel">
+            <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.TYPE_CHANNEL' | translate}}</th>
+            <td mat-cell *matCellDef="let element">
+                {{element.channel.channelName}}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="typeTerm">
+            <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.TYPE_DEADLINE'|translate}}</th>
+            <td mat-cell *matCellDef="let element"> {{ getDeadlineTrans (element.deadlineType) }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="term">
+            <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.DEADLINE'|translate}}</th>
+            <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngIf="element.deadlineUnit && element.deadlineTerm">
+                    {{element.deadlineTerm}} {{ getDeadlineUnitLabel(element.deadlineUnit, element.deadlineTerm) }} 
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>{{'METADATA_REVIEW.CHAN_TAX.AMOUNT' | translate}}</th>
+            <td mat-cell *matCellDef="let element"> 
+                <ng-container *ngIf="element.taxAmount && element.currency">
+                    {{element.taxAmount}} {{element.currency}}
+                </ng-container>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element; index as i">
+                <button mat-button (click)="editChannel(i)" [disabled]="editChannels">
+                    <mat-icon>edit</mat-icon>
+                </button>
+                <button mat-button (click)="deleteChannel(i)" [disabled]="editChannels || channelTaxList.length <= 1">
+                    <mat-icon>delete</mat-icon>
+                </button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+</div>
+
+<form #editSigneeForm="ngForm" *ngIf="editChannels" class="add-channel-form" (submit)="saveChannelData()" [formGroup]="editChannelFormGroup" autocomplete="off">
+                
+    <div class="row">
+        <div class="col-lg-8">
+            <p class="signee-field-label"> {{'METADATA_REVIEW.CHAN_TAX.TYPE_CHANNEL' | translate}} <span class="text-danger ml-1">*</span></p>
+            <mat-form-field class="w-100">
+                <mat-select formControlName="channel" (selectionChange)="handleChannelChange()" disableOptionCentering panelClass="dropdown-pannel">
+                    <mat-option *ngFor="let channel of availableChannels" [value]="channel">
+                        {{channel.channelName}}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editChannelFormGroup.controls.channel.hasError('required')" class="mb-1">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                <mat-error *ngIf="editChannelFormGroup.controls.channel.hasError('channelAndTaxMustBeUnique')" class="mb-1">{{ 'CHANNEL_AND_TAXT_MUST_BE_UNIQUE'| translate}}</mat-error>
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4" [appTooltip]="'METADATA_REVIEW.DATE_FORMAT'" placement="bottom-right">
+            <p class="signee-field-label">{{'METADATA_REVIEW.CHAN_TAX.VALID_FROM' | translate}}<span class="text-danger ml-1">*</span></p>
+            <mat-form-field class="w-100">
+                <input (dateChange) = "handleDateChange()" matInput [matDatepicker]="validFrom" formControlName="validFrom">
+                <mat-datepicker-toggle matSuffix [for]="validFrom"></mat-datepicker-toggle>
+                <mat-datepicker #validFrom></mat-datepicker>
+                <mat-error *ngIf="!editChannelFormGroup.controls.validFrom.valid">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+              </mat-form-field>
+        </div> 
+        <div class="col-lg-4" [appTooltip]="'METADATA_REVIEW.DATE_FORMAT'" placement="bottom-right">
+            <p class="signee-field-label">{{'METADATA_REVIEW.CHAN_TAX.VALID_TO' | translate}}</p>
+            <mat-form-field class="w-100">
+                <input (dateChange) = "handleDateChange()" matInput [matDatepicker]="validTo" formControlName="validTo">
+                <mat-datepicker-toggle matSuffix [for]="validTo"></mat-datepicker-toggle>
+                <mat-datepicker #validTo></mat-datepicker>
+                <mat-error *ngIf="editChannelFormGroup.controls.validTo.hasError('validToMustBeBiggerThanValidFrom')">
+                    {{ 'ERRORS.VALID_FROM_MUST_BE_BEFORE_VALID_TO'| translate}}
+                </mat-error>
+            </mat-form-field>
+        </div> 
+    </div>
+    
+    <div class="row">
+        <div class="col-lg-6">
+            <p class="signee-field-label">{{'METADATA_REVIEW.CHAN_TAX.TYPE_DEADLINE'|translate}}<span class="text-danger ml-1">*</span></p>
+            <mat-form-field class="w-100">
+                <mat-select formControlName="deadlineType" (selectionChange)="handleDeadLineChange()" disableOptionCentering panelClass="dropdown-pannel">
+                    <mat-option *ngFor="let deadline of availableDeadlines" [value]="deadline.key">
+                    {{ deadline.transKey | translate }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editChannelFormGroup.controls.deadlineType.hasError('required')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>                
+                <mat-error *ngIf="editChannelFormGroup.controls.channel.hasError('channelAndTaxMustBeUnique')" class="mb-1">{{ 'CHANNEL_AND_TAXT_MUST_BE_UNIQUE'| translate}}</mat-error>             
+            </mat-form-field>
+
+        </div> 
+        <div class="col-lg-3">
+            <p class="signee-field-label">{{'Срок' | translate}} <span *ngIf="editChannelFormGroup.controls.deadlineType.value !== 'noDefinitionTermService'" class="text-danger ml-1">*</span></p>
+            <mat-form-field class="w-100">
+                <input type="number" matInput [min]="1" formControlName="deadlineTerm"/>
+                <mat-error *ngIf="editChannelFormGroup.controls.deadlineTerm.hasError('required')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+            </mat-form-field>
+        </div>        
+        <div class="col-lg-3">
+            <p class="signee-field-label">{{'METADATA_REVIEW.CHAN_TAX.DEADLINE_UNIT'|translate}}<span *ngIf="editChannelFormGroup.controls.deadlineType.value !== 'noDefinitionTermService'" class="text-danger ml-1">*</span></p>
+            <mat-form-field class="w-100">
+                <mat-select formControlName="deadlineUnit" disableOptionCentering panelClass="dropdown-pannel">
+                    <mat-option *ngFor="let deadlineUnit of availableDeadlineUnits" [value]="deadlineUnit" class="text-capitalize">
+                        {{ getDeadlineUnitLabel(deadlineUnit, editChannelFormGroup.value.deadlineTerm, true) }} 
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="editChannelFormGroup.controls.deadlineUnit.hasError('required')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+            </mat-form-field>
+
+        </div> 
+    </div>
+    <div class="row">
+        <div class="col-lg-4 pt-3">
+            <mat-checkbox formControlName="hasPayment" (change)="handleHasPaymentChange()">{{'METADATA_REVIEW.CHAN_TAX.HAS_PAYMENT' | translate}}</mat-checkbox>
+            <div class="w-100" *ngIf="editChannelFormGroup.value.hasPayment">
+                <p class="signee-field-label">{{'METADATA_REVIEW.CHAN_TAX.SUM' | translate}}<span class="text-danger ml-1">*</span></p>
+                <mat-form-field class="w-100">
+                    <input type="number" [min]="0" matInput formControlName="taxAmount"/>
+                    <mat-error *ngIf="editChannelFormGroup.controls.taxAmount.hasError('taxAmountRequiredWithHasPayment')">{{ 'REQUIRED_FIELD'| translate}}</mat-error>
+                </mat-form-field>
+            </div>  
+        </div>      
+    </div>
+    <div class="row">
+        <div class="col-12 text-right">
+            <button mat-button type="button" class="decline-channel-button upper-spacing pr-4" (click)="declineChannel()">{{'CANCEL' | translate}}</button>
+            <button mat-button type="submit" class="save-channel-button upper-spacing">
+                <mat-icon>save</mat-icon>{{'SAVE' | translate}}
+            </button>
+        </div>
+    </div>
+    
+</form>
+<div class="row" *ngIf="!editChannels">
+    <div class="col-lg-2">
+        <button mat-button class="add-signee-button upper-spacing" (click)="addChannel()">
+            <mat-icon>add</mat-icon>
+            {{'METADATA_REVIEW.CHAN_TAX.ADD_CHANNEL' | translate}}
+        </button>
+    </div>
+</div>

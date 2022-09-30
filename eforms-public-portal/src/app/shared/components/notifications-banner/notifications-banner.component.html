@@ -1,13 +1,24 @@
 <div class="notification-bar-wrapper" id="notification-bar-wrapper">
     <div *ngFor="let notification of notifications; let index=index"
         [ngClass]="'notification-bar notification-bar-' + notification.type">
-        <div class="container d-flex justify-content-between align-items-center">
+        <div class="notification-bar-inner-wrapper container d-flex justify-content-between align-items-center">
             <div class="notification-bar-message text-left">
-                <p *ngIf="notification.isHtml" [innerHTML]="notification.message"></p>
-                <p *ngIf="!notification.isHtml">
-                    {{ (notification.message | translate:placeholders) == notification.message ? ('ERRORS.500' | translate) : (notification.message | translate:placeholders) }} <a [href]="notification.url" [target]="notification.openInNewTab ? '_blank' : '_self'" *ngIf="notification.actionable" class="notification-action-button">{{ notification.actionText | translate }}</a>
-                </p>
-                </div>
+                
+
+                <mat-expansion-panel [disabled]="!(additionalMessage && additionalMessage.length>0)">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <p *ngIf="notification.isHtml" [innerHTML]="notification.message"></p>
+                            <p *ngIf="!notification.isHtml">
+                                {{ (notification.message | translate:placeholders) == notification.message ? ('ERRORS.500' | translate) : (notification.message | translate:placeholders) }} <a [href]="notification.url" [target]="notification.openInNewTab ? '_blank' : '_self'" *ngIf="notification.actionable" class="notification-action-button">{{ notification.actionText | translate }}</a>
+                            </p>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <p *ngIf="additionalMessage">{{additionalMessage}}</p>
+                </mat-expansion-panel>
+                
+            </div>
+            
             <button *ngIf="notification.closeable" class="notification-close-button"
                 (click)="onClose(notification, index)">
                 <mat-icon>close</mat-icon>

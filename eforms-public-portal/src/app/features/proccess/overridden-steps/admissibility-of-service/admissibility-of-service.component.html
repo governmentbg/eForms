@@ -1,0 +1,99 @@
+<div class="w-100 p-3 admissibility-of-service" [formGroup]="admissibilityForm">
+  <div>
+    <label id="example-radio-group-label" class="mt-3"
+      >{{ "ADMISABILITY_OF_SERVICE" | translate }}
+      <span class="text-danger">*</span></label
+    >
+    <mat-radio-group
+      (change)="handleAdmissibilityOfServiceChange()"
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      formControlName="admissibilityOfService"
+    >
+      <div>
+        <mat-radio-button class="example-radio-button" [value]="true">
+          {{ "ADMISIBLE" | translate }}
+        </mat-radio-button>
+      </div>
+      <div>
+        <mat-radio-button class="example-radio-button" [value]="false">
+          {{ "NON_ADMISIBLE" | translate }}
+        </mat-radio-button>
+      </div>
+      <mat-error
+        *ngIf="
+          admissibilityForm.controls.admissibilityOfService.hasError(
+            'required'
+          ) && admissibilityForm.controls.admissibilityOfService.touched
+        "
+      >
+        {{ "REQUIRED_FIELD" | translate }}</mat-error
+      >
+    </mat-radio-group>
+  </div>
+  <div *ngIf="admissibilityForm.value.admissibilityOfService">
+    <label class="mt-3"
+      >{{ "ADDITIONAL_TAX" | translate }} <span class="text-danger">*</span>
+    </label>
+    <mat-radio-group
+      (change)="handleAdditionalTaxChange()"
+      aria-labelledby="example-radio-group-label"
+      class="example-radio-group"
+      formControlName="additionalTax"
+    >
+      <div>
+        <mat-radio-button class="example-radio-button" [value]="true">
+          {{ "OWNED" | translate }}
+        </mat-radio-button>
+      </div>
+      <div>
+        <mat-radio-button class="example-radio-button" [value]="false">
+          {{ "NOT_OWNED" | translate }}
+        </mat-radio-button>
+      </div>
+      <mat-error
+        *ngIf="
+          admissibilityForm.controls.additionalTax.hasError('required') &&
+          admissibilityForm.controls.additionalTax.touched
+        "
+      >
+        {{ "REQUIRED_FIELD" | translate }}</mat-error
+      >
+    </mat-radio-group>
+  </div>
+  <div class="mt-2" *ngIf="admissibilityForm.value.additionalTax">
+    {{ "SUMM_WILL_GENERATE_PAYMENT" | translate }} <br />
+    {{ "SUM_CANNOT_BE_REDACTED" | translate }}
+  </div>
+  <div *ngIf="admissibilityForm.value.additionalTax" class="w-50">
+    <label id="example-radio-group-label" class="mt-3"
+      >{{ "EPAYMENT_AMAOUNT" | translate }}
+      <span class="text-danger">*</span></label
+    >
+    <mat-form-field class="w-100">
+      <input
+        type="number"
+        [min]="1"
+        matInput
+        formControlName="amount"
+        (change)="handleAmountChange()"
+      />
+    </mat-form-field>
+    <mat-error
+      *ngIf="
+        admissibilityForm.controls.amount.hasError('required') &&
+        admissibilityForm.controls.amount.touched
+      "
+    >
+      {{ "REQUIRED_FIELD" | translate }}</mat-error
+    >
+    <mat-error
+      *ngIf="
+        admissibilityForm.controls.amount.hasError('min') &&
+        admissibilityForm.controls.amount.touched
+      "
+    >
+      {{ "FIELD_MUST_BE_GREATER_THAN_ZERO" | translate }}</mat-error
+    >
+  </div>
+</div>

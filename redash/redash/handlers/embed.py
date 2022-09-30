@@ -6,7 +6,8 @@ from redash import models
 from redash.handlers import routes
 from redash.handlers.base import get_object_or_404, org_scoped_rule, record_event
 from redash.handlers.static import render_index
-from redash.security import csp_allows_embeding
+from redash.security import csp_allows_embeding, valid_supplier
+import sys
 
 
 @routes.route(
@@ -33,8 +34,9 @@ def embed(query_id, visualization_id, org_slug=None):
 
 @routes.route(org_scoped_rule("/public/dashboards/<token>"), methods=["GET"])
 @login_required
+@valid_supplier
 @csp_allows_embeding
-def public_dashboard(token, org_slug=None):
+def public_dashboard(token, org_slug=None, auth_token=None):
     if current_user.is_api_user():
         dashboard = current_user.object
     else:

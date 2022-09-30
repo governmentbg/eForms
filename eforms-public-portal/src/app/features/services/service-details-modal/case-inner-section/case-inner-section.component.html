@@ -1,0 +1,71 @@
+<div class="col-12 mt-3 px-0">
+    <div id="service-details-modal-case-inner-field" class="text-center text-uppercase"> <h2> {{ "SERVICES.CASE_INNER_FIELD" | translate}}</h2> </div>
+</div>
+<div>
+<div class="col-12 mt-3 px-0"> 
+    <div id="service-details-modal-current-task-in-service"><h4 class="blue-main mb-4">{{ 'USER_DATA' | translate }}</h4></div>
+    <div class="row">
+        <div class="col-md-4 col-sm-12 px-0"> 
+            <div id="service-details-modal-status" class="label mb-1"> {{ 'REQUESTOR_NAME' | translate}}</div> 
+            <div id="service-details-modal-status-value"> {{ caseData.requestorName }}</div>
+        </div>
+        <div class="col-md-4 col-sm-12 px-0"> 
+            <div id="service-details-modal-status" class="label mb-1"> {{ 'REQUESTOR_IDENTIFIER' | translate}} </div> 
+            <div id="service-details-modal-status-value"> {{ caseData.requestor.split('-')[1] }}</div>
+        </div>
+        <div class="col-md-4 col-sm-12 px-0"> 
+            <div id="service-details-modal-status" class="label mb-1"> {{ 'IDENTIFIER_TYPE' | translate}} </div> 
+            <div id="service-details-modal-status-value"> {{ 'EGN' | translate }} </div>
+        </div>
+    </div>
+    <div *ngIf="this.applicant" class="row">
+        <div class="col-md-4 col-sm-12 px-0"> 
+            <div id="service-details-modal-status" class="label mb-1"> {{ 'ON_BEHAVE_OF_NAME' | translate}} </div> 
+            <div id="service-details-modal-status-value"> {{this.applicant.title }} </div>
+        </div>
+        <div class="col-md-4 col-sm-12 px-0"> 
+            <div id="service-details-modal-status" class="label mb-1"> {{ 'EIK_OF_UL' | translate}} </div> 
+            <div id="service-details-modal-status-value"> {{ this.applicant.identifier }}</div>
+        </div>
+        <div class="col-md-4 col-sm-12 px-0"> 
+            <div id="service-details-modal-status" class="label mb-1">{{ 'UL_TYPE' | translate}} </div> 
+            <div id="service-details-modal-status-value"> {{ this.applicant.profileType | translate }} </div>
+        </div>
+    </div>
+</div>
+<div *ngIf="this.signeesProfiles?.length" class="col-12 mt-3 px-0"> 
+    <div id="service-details-modal-current-task-in-service"><h4 class="blue-main mb-4">{{ 'ADDED_SIGNEES' | translate}} </h4></div>
+    <div class="row">
+        <app-static-table [data]="signeesProfiles" [tableColumns]="staticTableColumns"></app-static-table>
+    </div>
+</div>
+</div>
+<div *ngIf="!isServiceCompleted" class="col-12  mt-3 mb-4 px-0">
+    <div id="service-details-modal-current-task-in-service"><h4 class="blue-main">{{ 'SERVICES.CURRENT_TASK_IN_SERVICE' | translate}}</h4></div>
+</div>
+<div class="w-100 my-4">
+    <div *ngIf="tasks.length && isLastTaskActive" class="row">
+        <div class="col-12 col-md-6 text-center " *ngIf="!isLastTaskAssigned">
+            <button mat-button class="btn-secondary-small text-center" (click)="handleClaimUnclaim()">
+                {{  'ASSIGN_CASE' | translate }}
+            </button>
+        </div>
+        <div class="col-12 col-md-6 text-center" *ngIf="isLastTaskAssigned">
+            <span class="align-middle">{{ 'CURRENT_ASSIGNEE' | translate }} : {{ tasks[tasks.length - 1].assigneeFullName }}</span>
+            <button (click)="handleClaimUnclaim()" mat-icon-button [class]="'unassigned'">
+                <mat-icon> highlight_off </mat-icon>
+            </button>
+        </div>
+        <div class="col-12 col-md-6 text-center">
+            <button mat-button (click)="handleRowActionEvent()"  [disabled]="!isLastTaskAssigned || !isLastTaskAssignedToMe" class="btn-secondary-small">
+                {{ 'SERVICES.TO_TASK' | translate }}
+                <mat-icon inline>
+                    arrow_forward
+                </mat-icon>
+            </button>
+        </div>
+    </div> 
+</div>
+<div *ngIf="tasks.length" class="row">
+    <app-static-table [data]="tasks" [tableColumns]="tableColumns" [refreshData]="refreshDataEmmiter.asObservable()"></app-static-table>
+</div>

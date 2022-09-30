@@ -2,6 +2,7 @@ package com.bulpros.eformsgateway.form.service;
 
 import static com.bulpros.eformsgateway.form.service.UserProfileServiceImpl.GET_USER_PROFILE_DATA_CACHE;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -76,6 +77,24 @@ public class AdditionalProfileServiceImpl implements AdditionalProfileService {
                 patchData.toString()
         );
         cacheService.evictIfPresent(GET_USER_PROFILE_DATA_CACHE, additionalProfile.getPersonIdentifier());
+    }
+
+    @Override
+    public ResourceDto getAdditionalProfileNameByApplicant(String projectId, Authentication authentication, String applicant) {
+        var profileFilter = new ArrayList<SubmissionFilter>();
+        profileFilter.add(new SubmissionFilter(
+                SubmissionFilterClauseEnum.IN,
+                Map.of(configuration.getIdentifier(), applicant)));
+        profileFilter.add(SubmissionFilter.build("select", "data.identifier"));
+        profileFilter.add(SubmissionFilter.build("select", "data.title"));
+        profileFilter.add(SubmissionFilter.build("select", "data.profileType"));
+        List<ResourceDto> profile = submissionService.getAllSubmissionsWithFilter(
+                new ResourcePath(projectId, configuration.getAdditionalUserProfilePath()),
+                authentication, profileFilter, 1L, false);
+        if(profile.isEmpty()){
+            throw new ResourceNotFoundException(String.format("No profiles with identifier = %s found.", applicant));
+        }
+        return profile.get(0);
     }
 
     private List<UserProfileDto> getUserProfiles(String projectId, Authentication authentication,

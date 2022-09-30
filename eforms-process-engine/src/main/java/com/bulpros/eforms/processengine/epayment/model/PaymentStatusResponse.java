@@ -1,16 +1,17 @@
 package com.bulpros.eforms.processengine.epayment.model;
 
-import lombok.AllArgsConstructor;
+import com.bulpros.eforms.processengine.epayment.model.enums.PaymentStatusType;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class PaymentStatusResponse {
 
-    Boolean success;
+    private String paymentId;
+    private PaymentStatusType status;
+    private Date changeTime;
 
 }

@@ -1,0 +1,22 @@
+@import "colors.scss";
+
+.blue-main {
+    color: $main-dark-blue;
+}
+
+.service-wrapper {
+    padding: 16px 16px 16px 32px;
+    @media screen and (max-width: 840px) {
+        padding: 16px;
+    }
+}
+.label {
+    font-weight: bold;
+    @media screen and (max-width: 840px) {
+        font-weight: initial;
+        font-style: italic;
+    }
+}
+.unassigned {
+    color: $light-green;
+}

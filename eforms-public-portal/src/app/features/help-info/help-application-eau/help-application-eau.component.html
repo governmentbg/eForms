@@ -9,11 +9,11 @@
                 <span>{{ 'BACK' | translate }}</span>
             </div>
             <h2 id="help-application-eau-header" class="heading-wrapper w-100">
-                {{ 'HELP_INFO_LIST.APPLICATION_TO_EAU' | translate }}
+                {{ 'USER_GUIDE' | translate }}
             </h2>
         </div>
         <div class="row">
-            <formio id="help-application-eau-form" [form]="formSrc" (ready)="handleFormReady($event)"  class="col-12 p-0"></formio>
+            <formio id="help-application-eau-form" [form]="formSrc" (ready)="handleFormReady($event)"  class="col-12 p-0" [submission]='formSubmition' [readOnly]="true"></formio>
         </div>
       
     </div>

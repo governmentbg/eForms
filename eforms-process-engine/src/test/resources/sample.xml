@@ -1,0 +1,915 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<document>
+  <data>
+    <businessKey>BGES9d5798b</businessKey>
+    <requestor>PNOBG-8902267061</requestor>
+    <generateFilesPackage>true</generateFilesPackage>
+    <documentTitle>Основен документ</documentTitle>
+    <documentCode>ZVLN_CODE</documentCode>
+    <isSignable>true</isSignable>
+    <openAll>false</openAll>
+    <collapseAll>false</collapseAll>
+    <dataProcessingAgreement>false</dataProcessingAgreement>
+    <issueDateCaseIdentifier>2022-03-23T14:26:22.867Z</issueDateCaseIdentifier>
+    <buisnessKeyCaseIdentifier>BGES9d5798b</buisnessKeyCaseIdentifier>
+    <administrationUnit>
+      <administrationUnitEDelivery>1210150561306</administrationUnitEDelivery>
+      <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК</administrationUnit>
+      <isRowSelected>true</isRowSelected>
+    </administrationUnit>
+    <isRegixSynced>true</isRegixSynced>
+    <firstName>Никола</firstName>
+    <surName>Иванов</surName>
+    <familyName>Първанов</familyName>
+    <identifier>8902267061</identifier>
+    <identifierType>
+      <label>ЕГН</label>
+      <value>idn</value>
+    </identifierType>
+    <isRegixSynced1>true</isRegixSynced1>
+    <districtNamePresent>СОФИЯ</districtNamePresent>
+    <municipalityNamePresent>СТОЛИЧНА</municipalityNamePresent>
+    <settlementNamePresent>ГР.СОФИЯ</settlementNamePresent>
+    <locationNamePresent>УЛ.ВРЪХ МАНЧО</locationNamePresent>
+    <buildingNumberPresent>005Б</buildingNumberPresent>
+    <entrancePresent>А</entrancePresent>
+    <floorPresent>01</floorPresent>
+    <apartmentPresent>145</apartmentPresent>
+    <channel>
+      <channelName>По електронен път чрез системата за сигурно електронно връчване</channelName>
+      <channelType>0006-000080</channelType>
+      <level>1</level>
+      <isActive>true</isActive>
+      <validFrom>1899-12-30T22:00:00.000Z</validFrom>
+      <validTo>9999-12-30T22:00:00.000Z</validTo>
+    </channel>
+    <administration>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК</administration>
+    <applicantAssignorType>optionOwner</applicantAssignorType>
+    <openAll1>false</openAll1>
+    <collapseAll1>false</collapseAll1>
+    <hasFormSubmition>false</hasFormSubmition>
+    <termTaxesSubmission>
+      <_id>61b5e7e33d5677fb2d4e1245</_id>
+      <data>
+        <arId>unified</arId>
+        <supplierEAS>814</supplierEAS>
+        <channelsAndTermsList>
+          <channel>
+            <channelName>По електронен път чрез системата за сигурно електронно връчване</channelName>
+            <channelType>0006-000080</channelType>
+            <level>1</level>
+            <isActive>true</isActive>
+            <validFrom>1899-12-30T22:00:00.000Z</validFrom>
+            <validTo>9999-12-30T22:00:00.000Z</validTo>
+          </channel>
+          <validFrom>2021-12-12T10:00:00.000Z</validFrom>
+          <deadlineType>normalService</deadlineType>
+          <deadlineTypeLabel>Нормална услуга</deadlineTypeLabel>
+          <deadlineUnit>
+            <label>Работни дни</label>
+            <key>workDays</key>
+          </deadlineUnit>
+          <hasPayment>true</hasPayment>
+          <deadlineTerm>5</deadlineTerm>
+          <taxAmount>10</taxAmount>
+          <currency>BGN</currency>
+        </channelsAndTermsList>
+        <channelsAndTermsList>
+          <channel>
+            <channelName>По електронен път чрез системата за сигурно електронно връчване</channelName>
+            <channelType>0006-000080</channelType>
+            <level>1</level>
+            <isActive>true</isActive>
+            <validFrom>1899-12-30T22:00:00.000Z</validFrom>
+            <validTo>9999-12-30T22:00:00.000Z</validTo>
+          </channel>
+          <validFrom>2021-12-12T10:00:00.000Z</validFrom>
+          <validTo>2022-03-30T21:00:00.000Z</validTo>
+          <deadlineType>fastService</deadlineType>
+          <deadlineTypeLabel>Бърза услуга</deadlineTypeLabel>
+          <deadlineUnit>
+            <label>Календарни дни</label>
+            <key>calendarDays</key>
+          </deadlineUnit>
+          <hasPayment>true</hasPayment>
+          <deadlineTerm>3</deadlineTerm>
+          <taxAmount>25</taxAmount>
+          <currency>BGN</currency>
+          <isRowSelected>true</isRowSelected>
+        </channelsAndTermsList>
+        <channelsAndTermsList>
+          <channel>
+            <channelName>Лично от звеното за административно обслужване</channelName>
+            <channelType>0006-000077</channelType>
+            <level>1</level>
+            <additionalFields>administrationUnit</additionalFields>
+            <isActive>true</isActive>
+            <validFrom>1899-12-30T22:00:00.000Z</validFrom>
+            <validTo>9999-12-30T22:00:00.000Z</validTo>
+          </channel>
+          <validFrom>2021-12-12T10:00:00.000Z</validFrom>
+          <validTo>2022-01-17T22:00:00.000Z</validTo>
+          <deadlineType>normalService</deadlineType>
+          <deadlineTypeLabel>Нормална услуга</deadlineTypeLabel>
+          <deadlineUnit>
+            <label>Календарни дни</label>
+            <key>calendarDays</key>
+          </deadlineUnit>
+          <hasPayment>true</hasPayment>
+          <deadlineTerm>10</deadlineTerm>
+          <taxAmount>15</taxAmount>
+          <currency>BGN</currency>
+        </channelsAndTermsList>
+        <channelsAndTermsList>
+          <channel>
+            <channelName>По електронен път на електронен адрес</channelName>
+            <channelType>0006-000076</channelType>
+            <level>1</level>
+            <additionalFields>email</additionalFields>
+            <isActive>true</isActive>
+            <validFrom>1899-12-30T22:00:00.000Z</validFrom>
+            <validTo>9999-12-30T22:00:00.000Z</validTo>
+          </channel>
+          <validFrom>2021-12-26T10:00:00.000Z</validFrom>
+          <validTo>2022-02-27T22:00:00.000Z</validTo>
+          <deadlineType>expressService</deadlineType>
+          <deadlineTypeLabel>Експресна услуга</deadlineTypeLabel>
+          <deadlineUnit>
+            <label>Работен час</label>
+            <key>workHours</key>
+          </deadlineUnit>
+          <hasPayment>true</hasPayment>
+          <deadlineTerm>1</deadlineTerm>
+          <taxAmount>20</taxAmount>
+          <currency>BGN</currency>
+          <isRowSelected>true</isRowSelected>
+        </channelsAndTermsList>
+        <channelsAndTermsList>
+          <channel>
+            <channelName>По електронен път чрез системата за сигурно електронно връчване</channelName>
+            <channelType>0006-000080</channelType>
+            <level>1</level>
+            <isActive>true</isActive>
+            <validFrom>1899-12-30T22:00:00.000Z</validFrom>
+            <validTo>9999-12-30T22:00:00.000Z</validTo>
+          </channel>
+          <validFrom>2022-01-17T10:00:00.000Z</validFrom>
+          <validTo>2022-01-17T22:00:00.000Z</validTo>
+          <deadlineType>noDefinitionTermService</deadlineType>
+          <deadlineTypeLabel>Няма нормативно указан срок</deadlineTypeLabel>
+          <deadlineUnit/>
+          <hasPayment>false</hasPayment>
+        </channelsAndTermsList>
+      </data>
+      <modified>2022-01-20T13:40:10.119Z</modified>
+    </termTaxesSubmission>
+    <caseDataSource>
+      <_id>623b2e0fcc7de542a744a8ee</_id>
+      <data>
+        <businessKey>BGES9d5798b</businessKey>
+        <requestorIdentifierType>1</requestorIdentifierType>
+        <requestor>PNOBG-8902267061</requestor>
+        <requestorName>MARTIN SASHOV PETROV</requestorName>
+        <supplier>121015056</supplier>
+        <serviceId>unified</serviceId>
+        <serviceName>Унифициран процес</serviceName>
+        <serviceSupplierId>814</serviceSupplierId>
+        <serviceSupplierName>Агенция за социално подпомагане</serviceSupplierName>
+        <processInstanceId>36e80330-aab5-11ec-a874-0242ac110002</processInstanceId>
+        <maxExecutionDuration>-</maxExecutionDuration>
+        <projectId>60929223b1258f297e4bb85b</projectId>
+        <administrationUnitEDelivery>1210150561306</administrationUnitEDelivery>
+        <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК</administrationUnit>
+        <dataProcessingAgreement>false</dataProcessingAgreement>
+        <statusCode>11</statusCode>
+        <issueDate>2022-03-23T14:26:22.867Z</issueDate>
+        <deadlineTerm>0</deadlineTerm>
+        <statusFixedTax>noPayment</statusFixedTax>
+        <statusCalculatedTax>no</statusCalculatedTax>
+        <stage>01</stage>
+      </data>
+      <modified>2022-03-23T14:26:23.049Z</modified>
+    </caseDataSource>
+    <checkAdminUnitsSupplier>
+      <_id>61b5e5c83d567732b04e0419</_id>
+    </checkAdminUnitsSupplier>
+    <adminUnitsFromSupplierDataSource>
+      <_id>61b5e5c83d567732b04e0419</_id>
+      <data>
+        <arId>unified</arId>
+        <serviceTitle>Унифициран процес</serviceTitle>
+        <supplierEAS>814</supplierEAS>
+        <serviceSupplierTitle>Агенция за социално подпомагане</serviceSupplierTitle>
+        <hasPayment>no</hasPayment>
+        <hasFixedPayment>beforeDelivery</hasFixedPayment>
+        <isNotProcessable>false</isNotProcessable>
+        <hasAdministrativeUnits>yes</hasAdministrativeUnits>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560329</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - АЙТОС</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560684</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - АРДИНО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561310</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - АСЕНОВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561306</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАЛЧИК</administrationUnit>
+          <isRowSelected>true</isRowSelected>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562413</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БАТАК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562806</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЕЛЕНЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561031</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЕЛОГРАДЧИК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561619</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЕРКОВИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560822</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЛАГОЕВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561280</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БОБОВ ДОЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561409</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БОБОШЕВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562496</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БОТЕВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562756</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БРЕГОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560314</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БУРГАС</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561604</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЯЛА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560932</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЯЛА СЛАТИНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560386</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВАРНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562691</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИКИ ПРЕСЛАВ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560333</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИКО ТЪРНОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562668</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИНГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562600</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕНЕЦ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562038</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЕТОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562439</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВИДИН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561890</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВРАЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561779</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ВЪЛЧИ ДОЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562531</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГАБРОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561325</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГЕНЕРАЛ-ТОШЕВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561829</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГОРНА ОРЯХОВИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561046</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГОЦЕ ДЕЛЧЕВ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562198</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГУРКОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562208</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ГЪЛЪБОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561661</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДВЕ МОГИЛИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563015</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДЕВИН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561428</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДЕВНЯ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560959</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДЖЕБЕЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561921</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДИМИТРОВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561501</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДИМОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561237</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДОБРИЧ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562336</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДОЛНА МИТРОПОЛИЯ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561008</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДОЛНИ ЧИФЛИК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561569</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДУЛОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561153</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ДУПНИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560539</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕЛЕНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563049</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕЛИН ПЕЛИН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562672</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕЛХОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562928</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЕТРОПОЛЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563000</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЗЛАТОГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562393</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ИВАЙЛОВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561902</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ИСПЕРИХ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562966</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ИХТИМАН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561382</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАВАРНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560894</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАЗАНЛЪК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562458</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАОЛИНОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561363</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАРЛОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560390</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КАРНОБАТ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560455</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КИРКОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562722</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КНЕЖА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560963</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КОЗЛОДУЙ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562095</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КОТЕЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560982</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КРУМОВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561084</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КУБРАТ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562737</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КУЛА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560837</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КЪРДЖАЛИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561516</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - КЮСТЕНДИЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562145</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛЕВСКИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561726</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛОВЕЧ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562340</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛОМ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562462</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛУКОВИТ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562878</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МАДАН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561496</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МАРИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561470</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МЕЗДРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561241</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МОМЧИЛГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561623</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МОНТАНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562687</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - МЪГЛИЖ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561730</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - НИКОПОЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562080</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - НОВА ЗАГОРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562286</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - НОВИ ПАЗАР</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562360</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ОБЩИНА КОСТИНБРОД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560489</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ОМУРТАГ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561940</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПАВЛИКЕНИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561852</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПАЗАРДЖИК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563118</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЕРНИК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561128</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЕТРИЧ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562233</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЕЩЕРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562546</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПИРДОП</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561917</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЛЕВЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560631</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЛОВДИВ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560493</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПОПОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563309</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПРАВЕЦ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561695</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПРОВАДИЯ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560608</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПЪРВОМАЙ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562741</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАДНЕВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563103</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАДОМИР</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561256</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАЗГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561027</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАЗЛОГ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562629</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАКИТОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560596</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РАКОВСКИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561168</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РОДОПИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560371</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РУЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562248</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - РУСЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563072</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - САМОКОВ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560474</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - САМУИЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561149</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - САНДАНСКИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562302</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СВИЛЕНГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561936</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СВИЩОВ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562355</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СВОГЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560699</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЕВЛИЕВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560436</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЕПТЕМВРИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561680</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СИЛИСТРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562271</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЛИВЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562781</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СЛИВНИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562424</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СМОЛЯН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560402</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОЗОПОЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561100</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ - ВРЪБНИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560860</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ - ВЪЗРАЖДАНЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560700</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ - ОБОРИЩЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560665</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -КРАСНО СЕЛО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561993</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -ЛОЗЕНЕЦ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561554</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -ЛЮЛИН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560875</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -МЛАДОСТ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560727</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -СЕРДИКА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560803</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ -СЛАТИНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560543</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СТАМБОЛИЙСКИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561012</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СТАРА ЗАГОРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560787</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - СТРАЖИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563366</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТВЪРДИЦА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561294</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТЕРВЕЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561075</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТЕТЕВЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562164</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТОПОЛОВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562111</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТРОЯН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563122</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТРЪН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560306</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТУТРАКАН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560612</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ТЪРГОВИЩЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561359</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ХАДЖИДИМОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562214</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ХАРМАНЛИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562076</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ХАСКОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560352</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЦАРЕВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562512</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЧЕРВЕН БРЯГ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562004</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЧИПРОВЦИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561657</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЧИРПАН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562061</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ШУМЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561275</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЯКОРУДА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562405</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЯМБОЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561535</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ- ОРЯХОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561378</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ ХИСАРЯ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150562019</administrationUnitEDelivery>
+          <administrationUnit>ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ-ПАНАГЮРИЩЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560558</administrationUnitEDelivery>
+          <administrationUnit>ДИРИКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ПОМОРИЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560211</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - БУРГАС</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560123</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВАРНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560180</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВЕЛИКО ТЪРНОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560230</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВИДИН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560073</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ГАБРОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560069</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ГР.ДОБРИЧ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560054</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - КЪРДЖАЛИ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560104</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - КЮСТЕНДИЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560226</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - МОНТАНА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560092</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПАЗАРДЖИК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560157</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПЕРНИК</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560138</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПЛЕВЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560279</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ПЛОВДИВ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560161</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - РАЗГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560142</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - РУСЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560035</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СИЛИСТРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560264</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СЛИВЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560283</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СМОЛЯН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560207</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЙСКА ОБЛАСТ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150561549</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СОФИЯ-ГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560176</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - СТАРА ЗАГОРА</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560253</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ТЪРГОВИЩЕ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560119</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ХАСКОВО</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560088</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ШУМЕН</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150563182</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ЯМБОЛ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560298</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - БЛАГОЕВГРАД</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560245</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАЛНА ДИРЕКЦИЯ СОЦИАЛНО ПОДПОМАГАНЕ - ЛОВЕЧ</administrationUnit>
+        </administrativeUnitsList>
+        <administrativeUnitsList>
+          <administrationUnitEDelivery>1210150560195</administrationUnitEDelivery>
+          <administrationUnit>РЕГИОНАРНА ДИРЕКЦИЯ ЗА СОЦИАЛНО ПОДПОМАГАНЕ - ВРАЦА</administrationUnit>
+        </administrativeUnitsList>
+        <aisClientEPayment>testAisClient</aisClientEPayment>
+        <status>active</status>
+      </data>
+      <modified>2022-03-08T10:14:47.460Z</modified>
+    </adminUnitsFromSupplierDataSource>
+    <isValid>true</isValid>
+  </data>
+</document>

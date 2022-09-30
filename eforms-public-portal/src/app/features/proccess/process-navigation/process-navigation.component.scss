@@ -12,12 +12,14 @@ mat-tree {
 }
 
 .navigation {
+    min-height: 600px;
     @media screen and (max-width: 840px) and (min-width: 768px) {      
         padding: 1em;
         font-size: 0.85em;
     }
     @media screen and (max-width: $phone-max-width) {
         margin-bottom: 0;
+        min-height: initial;
     }
 }
 

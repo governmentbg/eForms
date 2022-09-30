@@ -9,9 +9,9 @@
             <app-action-card id="home-user-profile" serviceIcon="user-profile" serviceLabel="{{ 'PROFILE_DATA' | translate }}" serviceLink="user-profile"></app-action-card>
         </div>
         <div id="home-right-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
-            <app-action-card id="home-settings" serviceIcon="settings" serviceLabel="{{ 'SETTINGS' | translate }}" serviceLink="settings"></app-action-card>
-            <app-action-card id="home-help-info" serviceIcon="help-info" serviceLabel="{{ 'HELP_INFO' | translate }}" serviceLink="help-info"></app-action-card>
-            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.user])" id="home-notifications" serviceIcon="notifications" serviceLabel="{{ 'NOTIFICATIONS' | translate }}" [serviceLink]="fulleDeliveryLink"></app-action-card> 
+            <app-action-card id="help-info-application-eau" serviceIcon="help-info-application-eau" serviceLabel="{{ 'USER_GUIDE' | translate }}" serviceLink="help-application-eau"></app-action-card>
+            <app-action-card id="help-info-center" serviceIcon="help-info-center" serviceLabel="{{ 'FOOTER.CONTACT_CENTER' | translate }}" serviceLink="help-center"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.user])" id="home-notifications" serviceIcon="notifications" serviceLabel="{{ 'NOTIFICATIONS' | translate }}" [serviceLink]="fulleDeliveryLink" [onNewTab]="true"></app-action-card> 
         </div>
     </div>
 
@@ -23,12 +23,12 @@
 
     <div class="row">
         <div id="home-left-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
-            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager],[profileTypes.administration])" id="admin-services-in-progress" serviceIcon="admin-services-in-progress" serviceLabel="{{ 'SERVICES.ADMIN.SERVICES_IN_PROGRESS' | translate }}" serviceLink="admin-services/in-progress"></app-action-card>
             <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="admin-role" serviceIcon="admin-role" serviceLabel="{{ 'PROFILE_ROLES.ADMIN_ROLES' | translate }}" serviceLink="edit-profile-roles"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.metadataManager],[profileTypes.administration]) && isProduction === false" id="administration-of-services" serviceIcon="administration-of-services" serviceLabel="{{ 'SERVICES.ADMIN.ADMINISTRATION_OF_SERVICES' | translate }}" serviceLink="administration-of-services/services"></app-action-card>
         </div>
         <div id="home-right-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
-            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager],[profileTypes.administration])" id="admin-services-completed" serviceIcon="admin-services-completed" serviceLabel="{{ 'SERVICES.COMPLETED_SERVICES' | translate }}" serviceLink="admin-services/completed"></app-action-card>
-            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.metadataManager],[profileTypes.administration])" id="administration-of-services" serviceIcon="administration-of-services" serviceLabel="{{ 'SERVICES.ADMIN.ADMINISTRATION_OF_SERVICES' | translate }}" serviceLink="administration-of-services"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration]) && isProduction === false" id="admin-panel" serviceIcon="help-info-processing-eau" serviceLabel="{{ 'ADMIN_PANEL_MENU' | translate }}" serviceLink="admin-panel"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.serviceManager],[profileTypes.administration])" id="admin-services-in-progress" serviceIcon="admin-services-in-progress" serviceLabel="{{ 'SERVICES.ADMIN.SERVICES_IN_PROGRESS' | translate }}" serviceLink="admin-services/in-progress"></app-action-card>
         </div>
     </div>
 

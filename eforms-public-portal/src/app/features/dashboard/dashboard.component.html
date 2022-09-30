@@ -1,7 +1,7 @@
 <div class="row position-relative h-100">
     <app-breadcrumbs></app-breadcrumbs>
     <app-loader></app-loader>
-    <app-welcome *ngIf="daefServiceData" [service]="daefServiceData.service"
+    <app-welcome *ngIf="daefServiceData && !stateCustomError" [service]="daefServiceData.service"
         [suppliers]="daefServiceData.service.data.serviceSupplierList"
         [serviceCategory]="daefServiceData.serviceCategory"
         [easId]="serviceId"

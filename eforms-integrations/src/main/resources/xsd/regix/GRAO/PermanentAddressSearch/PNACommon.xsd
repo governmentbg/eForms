@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns="http://egov.bg/RegiX/GRAO/PNA" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://egov.bg/RegiX/GRAO/PNA" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:simpleType name="EGN">
+		<xs:annotation>
+			<xs:documentation xml:lang="bg">ЕГН</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\d{10}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="EGN" type="EGN"/>
+</xs:schema>

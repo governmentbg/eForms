@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { IoForm } from '../types/io-form';
 import { DeepLinkService } from './deep-link.service';
+import {Observable} from "rxjs";
+import * as moment from 'moment';
 
 @Injectable({
   providedIn: 'root'
@@ -40,13 +42,64 @@ export class FormIoService {
     }
     return obj
   }
+  
 
-  getFormSubmitionByBuissnessKey(formPath: string, businessKey: string){
+  getFormSubmitionByBuissnessKey(formPath: string, businessKey: string, limitValue = 1, sortValue = '-modified', withApplicant = true){
     let selectedProfile = this.deepLinkService.getParam('selectedProfile');
     let applicant = ''
     if(selectedProfile){
-      applicant = `&data.applicant=${selectedProfile.identifier}`
+      if(withApplicant) {
+        applicant = `&data.applicant=${selectedProfile.identifier}`
+      } else {
+        applicant = `&data.applicant__exists=false`
+      }
+      
     }
-    return this.http.get<any>(`api/project/${environment.formioBaseProject}/${formPath}/submission?data.businessKey=${businessKey}${applicant}&sort=-modified&limit=1`);
+    return this.http.get<any>(`api/project/${environment.formioBaseProject}/${formPath}/submission?data.businessKey=${businessKey}${applicant}&limit=${limitValue}&sort=${sortValue}`);
+  }
+
+  getFormIoSubmissionsBySupplierId(formId: string, arId: string, serviceSupplierCode: string): Observable<any>{
+    return this.http.get(`${environment.apiUrl}/project/${environment.formioBaseProject}/${formId}/submission?data.arId=${arId}&data.supplierEAS=${serviceSupplierCode}`);
+  }
+
+  getFormIoResource(formId : string, filter = '') {
+    return this.http.get(`${environment.apiUrl}/project/${environment.formioBaseProject}/${formId}/submission?limit=999999${filter ? '&' + filter : ''}`);
+  }
+  getFormIoSubmissionById(formId : string, id : string) {
+    return this.http.get(`${environment.apiUrl}/project/${environment.formioBaseProject}/${formId}/submission/${id}`);
+  }
+
+  getFormIoSupplier(code : string) {
+    return this.http.get(`${environment.apiUrl}/project/${environment.formioBaseProject}/common/nom/service-supplier/submission?data.code=${code}&select=data`);
+  }
+  getFormIoSupplierByIdentifier(identifier : string) {
+    return this.http.get(`${environment.apiUrl}/project/${environment.formioBaseProject}/common/nom/service-supplier/submission?data.eik=${identifier}&select=data`);
+  }
+
+  submitMetaData(data) {
+    return this.http.post(`${environment.apiUrl}/admin/projects/${environment.formioBaseProject}/metadata/update`, data);
+  }
+  getEASforSupplier(statusCodes: Array<number>, fromIssueDate, toIssueDate = '', administrationUnitEDelivery = '', withLoader = false){
+    let statusCode = statusCodes.join(',')
+    let unit = administrationUnitEDelivery ? '&administrationUnitEDelivery=' + administrationUnitEDelivery : ''
+    let fromIssueDateParam = ''
+    if (fromIssueDate) {
+      fromIssueDateParam = '&fromIssueDate='
+      fromIssueDateParam += moment(fromIssueDate).format("YYYY-MM-DD");
+      fromIssueDateParam += 'T00:00:00';
+    }    
+    let toIssueDateParam = ''
+    if (toIssueDate) {
+      toIssueDateParam = '&toIssueDate='
+      toIssueDateParam += moment(toIssueDate).format("YYYY-MM-DD");
+      toIssueDateParam += "T23:59:59";
+    }
+    let headers = {}
+    if(!withLoader) {
+      headers = {
+        'Hide-Loader': ''
+      }
+    }
+    return this.http.get(`${environment.apiUrl}/admin/projects/${environment.formioBaseProject}/eas/identifiers?caseStatus=${statusCode}${fromIssueDateParam}${toIssueDateParam}${unit}`, {headers: headers});
   }
 }

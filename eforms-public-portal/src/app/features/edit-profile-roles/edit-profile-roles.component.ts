@@ -58,6 +58,8 @@ export class EditProfileRolesComponent implements OnInit {
   }
 
     handleRowActionEvent(event) {
+      delete event.data.uniqueKey;
+
       const dialogRef = this.dialog.open(ProfileRolesModalComponent, {data: event});
       dialogRef.afterClosed().subscribe(result => {
         if(result !== true){

@@ -124,7 +124,7 @@ export default class ItemsTable extends React.Component {
 
     orderByField: null,
     orderByReverse: false,
-    toggleSorting: () => {},
+    toggleSorting: () => { },
   };
 
   prepareColumns() {
@@ -174,10 +174,10 @@ export default class ItemsTable extends React.Component {
     // Bind events only if `onRowClick` specified
     const onTableRow = isFunction(this.props.onRowClick)
       ? row => ({
-          onClick: event => {
-            this.props.onRowClick(event, row.item);
-          },
-        })
+        onClick: event => {
+          this.props.onRowClick(event, row.item);
+        },
+      })
       : null;
 
     const { showHeader } = this.props;
@@ -198,7 +198,12 @@ export default class ItemsTable extends React.Component {
 
     return (
       <Table
-        locale={{ emptyText: t('No Data') }}
+        locale={{
+          emptyText: t('No Data'),
+          cancelSort: t('Click to cancel sort'),
+          triggerAsc: t('Click sort by ascend'),
+          triggerDesc: t('Click sort by descend')
+        }}
         className={classNames("table-data", { "ant-table-headerless": !showHeader })}
         showHeader={showHeader}
         rowKey={this.getRowKey}

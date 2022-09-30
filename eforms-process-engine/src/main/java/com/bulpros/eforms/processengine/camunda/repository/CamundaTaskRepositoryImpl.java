@@ -1,7 +1,8 @@
 package com.bulpros.eforms.processengine.camunda.repository;
 
 import com.bulpros.eforms.processengine.camunda.model.ProcessConstants;
-import com.bulpros.eforms.processengine.camunda.service.UserStageTypeEnum;
+import com.bulpros.eforms.processengine.camunda.model.enums.UserStageTypeEnum;
+import com.bulpros.eforms.processengine.camunda.service.ExpressionEvaluationService;
 import com.bulpros.eforms.processengine.security.UserService;
 import lombok.RequiredArgsConstructor;
 import org.camunda.bpm.engine.HistoryService;
@@ -26,6 +27,7 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
     private final HistoryService historyService;
     private final CamundaProcessRepository camundaProcessRepository;
     private final UserService userService;
+    private final ExpressionEvaluationService expressionEvaluationService;
 
     @Override
     public void completeTaskByTaskId(String taskId, Map<String, Object> variables) {
@@ -73,6 +75,12 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
     }
 
     @Override
+    public HistoricTaskInstance getLastFinishedTaskForProcessInstance(String processInstanceId) {
+        return this.historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).finished()
+                .orderByHistoricActivityInstanceStartTime().desc().list().get(0);
+    }
+
+    @Override
     public Collection<UserTask> getAllTasksForLane(Lane lane, String processInstanceId, UserStageTypeEnum userStageTypeEnum, boolean checkAssigneeAndUserGroup) {
         Set<String> flowNodes = lane.getFlowNodeRefs().stream().map(FlowElement::getName)
                 .collect(Collectors.toSet());
@@ -90,7 +98,7 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
             // check assignee with user preferred name
 
             camundaUserTasks = camundaUserTasks.stream()
-                    .filter(task -> isCamundaAssigneeNotPresent(task) || isPrincipleProcessInitiator(processInstanceId))
+                    .filter(task -> isCamundaAssigneeNotPresent(task) || isPrincipleProcessInitiator(processInstanceId, task))
                     .collect(Collectors.toList());
 
             camundaUserTasks = camundaUserTasks.stream()
@@ -102,7 +110,7 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
     }
 
     @Override
-    public HashMap<String, String> getTaskProperties(UserTask userTask) {
+    public HashMap<String, String> getTaskProperties(UserTask userTask, String processInstanceId) {
         ExtensionElements extensionElements = userTask.getExtensionElements();
         if (extensionElements == null) return null;
         Query<CamundaProperties> result = extensionElements.getElementsQuery()
@@ -110,7 +118,20 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
         int resultCount = extensionElements.getElementsQuery().filterByType(CamundaProperties.class).count();
         if (resultCount == 0) return null;
         return (HashMap<String, String>) result.singleResult().getCamundaProperties().stream()
-                .collect(Collectors.toMap(CamundaProperty::getCamundaName, CamundaProperty::getCamundaValue));
+                .collect(Collectors.toMap(CamundaProperty::getCamundaName,
+                        p -> {
+                            if (p.getCamundaName().equals(ProcessConstants.IS_COMPLETABLE)
+                                    || p.getCamundaName().equals(ProcessConstants.IS_FINAL)
+                                    || p.getCamundaName().equals(ProcessConstants.GO_TO_NEXT_STEP)) {
+                                if (expressionEvaluationService.isElExpression(p.getCamundaValue())) {
+                                    return Optional.ofNullable(expressionEvaluationService.evaluateBoolean(p.getCamundaValue(), processInstanceId))
+                                            .map(Object::toString)
+                                            .orElse(Boolean.FALSE.toString());
+                                }
+                                return p.getCamundaValue();
+                            }
+                            return p.getCamundaValue();
+                        }));
     }
 
     @Override
@@ -121,6 +142,9 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
             HashMap<String, String> properties = (HashMap<String, String>) userTaskProperties.stream()
                     .collect(Collectors.toMap(CamundaProperty::getCamundaName, CamundaProperty::getCamundaValue));
             if (properties.get("isCompletable") != null) {
+                if (expressionEvaluationService.isElExpression(properties.get("isCompletable"))) {
+                    return expressionEvaluationService.evaluateBoolean(properties.get("isCompletable"), processInstanceId);
+                }
                 return Boolean.parseBoolean(properties.get("isCompletable"));
             }
         }
@@ -168,7 +192,14 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
                     if (defaultFlowNode instanceof UserTask) {
                         defaultUserTaskFlow.add((UserTask) defaultFlowNode);
                     }
-                    flowNode = defaultFlowNode;
+                    if(defaultFlowNode instanceof ExclusiveGateway) {
+                        flowNode = ((ExclusiveGateway) defaultFlowNode).getDefault().getTarget();
+                        if (flowNode instanceof UserTask) {
+                            defaultUserTaskFlow.add((UserTask) flowNode);
+                        }
+                    } else {
+                        flowNode = defaultFlowNode;
+                    }
                 } else if (nextFlowNode instanceof ComplexGateway) {
                     SequenceFlow defaultFlow = ((ComplexGateway) nextFlowNode).getDefault();
                     FlowNode defaultFlowNode = defaultFlow.getTarget();
@@ -214,17 +245,17 @@ public class CamundaTaskRepositoryImpl implements CamundaTaskRepository {
         return defaultUserTaskFlow;
     }
 
-    private boolean isCamundaAssigneeNotPresent(UserTask task ) {
+    private boolean isCamundaAssigneeNotPresent(UserTask task) {
         return task.getCamundaAssignee() == null;
     }
 
-    private boolean isPrincipleProcessInitiator(String processInstanceId) {
-        String assignee = this.camundaProcessRepository.getRuntimeVariableByNameAsString(processInstanceId, ProcessConstants.INITIATOR);
+    private boolean isPrincipleProcessInitiator(String processInstanceId, UserTask task) {
+        String assignee = this.expressionEvaluationService.evaluateString(task.getCamundaAssignee(),processInstanceId);
         String username = this.userService.getPrincipalIdentifier();
         if (assignee != null) {
             return assignee.equals(username);
         }
 
         return false;
-    };
+    }
 }

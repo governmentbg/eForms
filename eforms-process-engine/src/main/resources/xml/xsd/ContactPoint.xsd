@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/ContactPoint"
+        xmlns="http://eform.e-gov.bg/dictionary/ContactPoint"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+		xmlns:loc="http://eform.e-gov.bg/dictionary/Location">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Location" schemaLocation="Location.xsd"/>
+
+	<xsd:complexType name="ContactPoint">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+          Данни за контакт с физическо лице или организация, вкл. и видовете адреси. Класът съдържа различните видове контактна информация: адрес, телефон, имейл и т.н. а.  
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="contactType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+              Вид на контакта. Номенклатура „Вид данни за контакт“
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:choice minOccurs="1" maxOccurs="1">
+				<xsd:element name="contact" type="xsd:string" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+				  Стойност за контакт от указания вид, ако не е адрес.
+				  Задължително трябва да има стойност, ако контакта не е от вид адрес
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+				<xsd:element name="contactAddress" type="loc:Location" minOccurs="0" maxOccurs="1">
+					<xsd:annotation>
+						<xsd:documentation xml:lang="bg">
+				  Стойност за контакт от вид адрес.
+				  Задължително трябва да има стойност, ако контакта е от вид адрес
+						</xsd:documentation>
+					</xsd:annotation>
+				</xsd:element>
+			</xsd:choice>		
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

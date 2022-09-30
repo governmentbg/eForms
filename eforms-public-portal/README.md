@@ -1,10 +1,6 @@
 # Prerequests
 
-[Angular CLI](https://github.com/angular/angular-cli) installed globally.
-
-[EForms Provisionin](https://bitbucket.org/intracol/eforms-provisioning/src/master/) running.
-
-Import the [Keyclock Configuration](https://intracol.atlassian.net/wiki/spaces/DA/pages/2693758977/Keycloak).
+[Angular CLI](https://github.com/angular/angular-cli) installed globally..
 
 Have installed and added to PATH [Python](https://www.python.org/downloads/)
 
@@ -16,7 +12,7 @@ Add Form.io Premium components registry with the following commands(for Docker):
 
 1. 
 ```
-FORMIO_REGISTRY=pkg.form.io && FORMIO_REGISTRY_USER=<username> && FORMIO_REGISTRY_PASSWORD=<password>
+FORMIO_REGISTRY=pkg.form.io && FORMIO_REGISTRY_USER=<user> && FORMIO_REGISTRY_PASSWORD=<password>
 ```
 2. 
 ```

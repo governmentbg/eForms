@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface CaseService {
 
-    Page<ResourceDto> getAdminCasesByUserIdAndStatusClassifier(String projectId, Authentication authentication, String classifier,
-                                                               AdminCaseFilter caseFilter, Long page, Long size, String sort);
+    Page<ResourceDto> getAdminCasesByFilterParameters(String projectId, Authentication authentication,
+                                                      AdminCaseFilter caseFilter, Long page, Long size, String sort);
 
     ResourceDto getAdminCaseByUserIdAndCaseBusinessKey(String projectId, Authentication authentication, String caseBusinessKey,
                                                        AdminCaseFilter caseFilter);
@@ -29,6 +29,17 @@ public interface CaseService {
                                                  CaseFilter caseFilter);
 
     List<ResourceDto> getIncompleteCasesByUserIdAndServiceIds(String projectId, Authentication authentication,
-                                                              List<String> serviceIds);
+                                                              String applicant, List<String> serviceIds);
 
+    List<ResourceDto> getCaseStatusesByClassifier(String projectId, Authentication authentication, String classifier);
+
+    List<ResourceDto> getCaseStatusesByClassifier(String projectId, Authentication authentication, String classifier, String cacheControl);
+
+    List<ResourceDto> getCaseStatuses(String projectId, Authentication authentication, List<Integer> statuses);
+
+    List<ResourceDto> getCaseStatuses(String projectId, Authentication authentication, List<Integer> statuses, String cacheControl);
+
+    String getCaseApplicantByBusinessKey(String projectId, Authentication authentication, String businessKye);
+
+    String getCaseSupplierByBusinessKey(String projectId, Authentication authentication, String businessKye);
 }

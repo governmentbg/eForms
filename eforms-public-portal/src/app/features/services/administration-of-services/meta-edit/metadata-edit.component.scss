@@ -1,0 +1,93 @@
+@import "colors.scss";
+@import "variables.scss";
+
+hr {
+  width: 30%;
+  height: 4px;
+  background-color: $main-light-blue-hover;
+  border: none;
+  float: left;
+  margin-left: 1rem;
+}
+
+#meta-review-header {
+  width: calc(100% - 20rem);
+  margin: 0 auto;
+  @media screen and (max-width: 840px) {
+    width: 100%;
+  }
+}
+
+:host {
+  height: calc(100% - #{$desktop-header-height});
+
+  .services-container {
+    margin-bottom: 2em;
+    background-color: $white;
+
+    @media screen and (max-width: 840px) {
+      div:nth-child(0) {
+        flex-direction: column;
+      }
+
+      .back-button {
+        padding: 8px 0 0 8px;
+        display: flex;
+        align-self: flex-start;
+      }
+    }
+  }
+}
+
+.supplier-form{
+  padding-top: 1em;
+
+  ::ng-deep .mat-form-field-underline {
+    display: none;
+  }
+
+  ::ng-deep .mat-form-field-flex {
+    border: 1px solid $main-dark-blue;
+    border-radius: 7px;
+    padding: 0.4375em;
+  }
+
+  ::ng-deep .mat-form-field-infix{
+    border-top: none;
+  }
+
+  ::ng-deep .mat-input-element {
+    font-size: initial !important;
+    color: initial !important;
+  }
+  ::ng-deep  .mat-datepicker-toggle-default-icon{
+    color: $main-dark-blue;
+  }
+  ::ng-deep .mat-form-field-disabled{
+    .mat-form-field-flex{
+      opacity: 0.4;
+      cursor: no-drop;
+      .mat-select-trigger {
+        cursor: no-drop;
+      }
+    }
+  }
+  ::ng-deep .mat-form-field-invalid{
+    .mat-form-field-flex{
+    color: $notification-error;
+    border: 1px solid $notification-error;
+    }
+  }
+  ::ng-deep .mat-form-field-invalid{
+    .mat-form-field-flex{
+    color: $notification-error;
+    border: 1px solid $notification-error;
+    }
+    .mat-datepicker-toggle-default-icon{
+      color: $notification-error;
+    }
+  }
+}
+.dropdown-pannel{
+  margin-top: 35px;
+}

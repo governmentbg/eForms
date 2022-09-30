@@ -2,6 +2,7 @@ package com.bulpros.eformsgateway.files.web;
 
 import com.bulpros.eformsgateway.files.repository.model.FileDto;
 import com.bulpros.eformsgateway.files.service.FileService;
+import io.micrometer.core.annotation.Timed;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -18,6 +19,7 @@ public class DownloadsController {
 
     private final FileService fileService;
 
+    @Timed(value = "eforms-gateway-download.time")
     @GetMapping("/project/{projectId}/downloads/{filePath}")
     @ResponseBody
     public ResponseEntity<Resource> handleDownload(Authentication authentication,

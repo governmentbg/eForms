@@ -27,4 +27,10 @@ public class IntegrationsConfigurationProperties {
 
     @Value("${com.bulpros.integrations.edelivery.prefix}")
     private String eDeliveryResourcePath;
+
+    @Value("${com.bulpros.integrations.antivirus.prefix}")
+    private String malwareScanResourcePath;
+
+    @Value("${com.bulpros.integrations.etranslation.prefix}")
+    private String eTranslationResourcePath;
 }

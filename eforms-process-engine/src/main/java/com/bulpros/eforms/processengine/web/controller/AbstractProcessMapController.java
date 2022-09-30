@@ -1,5 +1,6 @@
 package com.bulpros.eforms.processengine.web.controller;
 
+import com.bulpros.eforms.processengine.camunda.service.ProcessService;
 import com.bulpros.eforms.processengine.security.AssuranceLevelEnum;
 import com.bulpros.eforms.processengine.security.UserService;
 import com.jayway.jsonpath.Configuration;
@@ -15,32 +16,31 @@ import java.util.Map;
 public class AbstractProcessMapController {
 
     protected final UserService userService;
+    protected final ProcessService processService;
 
-    public AbstractProcessMapController(UserService userService) {
+    public AbstractProcessMapController(UserService userService, ProcessService processService) {
         this.userService = userService;
+        this.processService = processService;
     }
 
-    protected boolean checkAssuranceLevel(Map<String, Object> context){
-        Configuration pathConfiguration = Configuration.builder().options(Option.DEFAULT_PATH_LEAF_TO_NULL).build();
+    protected boolean checkAssuranceLevel(Map<String, Object> context) {
+        Configuration pathConfiguration = Configuration.builder()
+                .options(Option.DEFAULT_PATH_LEAF_TO_NULL, Option.SUPPRESS_EXCEPTIONS).build();
         String serviceRequiredAssuranceLevel = JsonPath.using(pathConfiguration).parse(context)
                 .read("$.context.service.data.requiredSecurityLevel");
         AssuranceLevelEnum requiredAssuranceLevel;
-        if(serviceRequiredAssuranceLevel==null) {
+        if (serviceRequiredAssuranceLevel == null) {
             requiredAssuranceLevel = AssuranceLevelEnum.NONE;
-        }
-        else {
-            try{
+        } else {
+            try {
                 requiredAssuranceLevel = AssuranceLevelEnum.valueOf(serviceRequiredAssuranceLevel.toUpperCase(Locale.ROOT));
-            }catch (IllegalArgumentException exception) {
+            } catch (IllegalArgumentException exception) {
                 log.warn("Assurance Level: " + serviceRequiredAssuranceLevel + " is not valid value");
                 return false;
             }
         }
         var userAssuranceLevel = userService.getPrincipalAssuranceLevel();
-        if (userAssuranceLevel.getLevel() < requiredAssuranceLevel.getLevel()) {
-            return false;
-        }
-        return true;
+        return userAssuranceLevel.getLevel() >= requiredAssuranceLevel.getLevel();
     }
 
 }

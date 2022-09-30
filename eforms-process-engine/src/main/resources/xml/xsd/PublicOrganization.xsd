@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        targetNamespace="http://eform.e-gov.bg/dictionary/PublicOrganization"
+        xmlns="http://eform.e-gov.bg/dictionary/PublicOrganization"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        xmlns:code="http://eform.e-gov.bg/dictionary/Code"
+        xmlns:ident="http://eform.e-gov.bg/dictionary/Identifier"
+        xmlns:loc="http://eform.e-gov.bg/dictionary/Location"
+        xmlns:contact="http://eform.e-gov.bg/dictionary/ContactPoint"
+		xmlns:img="http://eform.e-gov.bg/dictionary/ImageObject">
+
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Code" schemaLocation="Code.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Identifier" schemaLocation="Identifier.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/Location" schemaLocation="Location.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ContactPoint" schemaLocation="ContactPoint.xsd"/>
+    <xsd:import namespace="http://eform.e-gov.bg/dictionary/ImageObject" schemaLocation="ImageObject.xsd"/>
+
+	<xsd:complexType name="PublicOrganization">
+		<xsd:annotation>
+			<xsd:documentation xml:lang="bg">
+                Публична организация (администрация), която може да предоставя ЕАУ
+			</xsd:documentation>
+		</xsd:annotation>
+		<xsd:sequence>
+			<xsd:element name="legalIdentifier" type="ident:Identifier" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+				  Уникален правен идентификатор, идентифициращ само едно юридическо лице (БУЛСТАТ)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="identifier" type="ident:Identifier" minOccurs="1" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Други идентификатори на публичната организация.
+                        В Модела като основен идентификатор се ползва БУЛСТАТ номера на организацията, който е задължителен и се поддържа в legalIdentifier.
+                        Друг вид идентификатор, който е задължителен, ако администрацията предоставя електронни услуги е този, с който тя се идентифицира при предоставяне на услугата и участва в интеграцията с хоризонталните системи на електронното правителство.
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="preferredLabel" type="xsd:string" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Основно, законно признато име на организацията
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="alternativeLabel" type="xsd:string" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Алтернативно или неофициално име на организацията
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="description" type="xsd:string" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Текстово описание на организацията
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="spatial" type="loc:Location" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Административни райони, които публичната организация обхваща
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="organizationType" type="code:Code" minOccurs="1" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Функции на организацията.
+                        Номенклатура „Вид функция на публична организация“ („Вид администрация“)
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="homepage" type="xsd:anyURI" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Началната страница на интернет страницата на организацията
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="logo" type="img:ImageObject" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Лого – графичен символ на публичната организация
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="subOrganizations" type="PublicOrganization" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Подчинени органицации, ако публичната организация е част по-сложна система от организации
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="administrativeUnits" type="PublicOrganization" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Звена на публичната организация
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="contactPoint" type="contact:ContactPoint" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Данни за контакт, по-специално такива, различни от адресите – като телефон и електронна поща
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="address" type="loc:Location" minOccurs="0" maxOccurs="unbounded">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Адреси на обществената организация
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="activeFrom" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Дата, от която е активна организацията
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+			<xsd:element name="activeTo" type="xsd:dateTime" minOccurs="0" maxOccurs="1">
+				<xsd:annotation>
+					<xsd:documentation xml:lang="bg">
+                        Дата, до която организацията е била активна. За активните организации в полето няма стойност
+					</xsd:documentation>
+				</xsd:annotation>
+			</xsd:element>
+		</xsd:sequence>
+	</xsd:complexType>
+  
+</xsd:schema>

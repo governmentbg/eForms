@@ -1,0 +1,22 @@
+<div class="w-100">
+    <div class="row align-items-center">
+        <div class="back-button" (click)="back()">
+            <mat-icon>arrow_back_ios</mat-icon>
+            <span>{{ 'BACK' | translate }}</span>
+        </div>
+        <h2 id="home-header" class="heading-wrapper w-100">
+            {{ 'ADMIN_PANEL_MENU' | translate }}
+        </h2>
+    </div>
+    <div class="row">
+        <div id="home-left-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="admin-services-conf" serviceIcon="conf-forms" serviceLabel="{{ 'SERVICES.ADMIN.FORMS_NOMENCLATURES_NOTIFICATIONS_CONFIGURATION' | translate }}" [serviceLink]="environment.formIoUrl" [onNewTab]="true"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="admin-services-proc" serviceIcon="conf-proc" serviceLabel="{{ 'SERVICES.ADMIN.PROCESS_CONFIGURATION' | translate }}" [serviceLink]="environment.processEngineUrl" [onNewTab]="true"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="report-main-menu" serviceIcon="report-main-menu" serviceLabel="{{ 'REPORTS' | translate }}" serviceLink="admin-panel/report-panel"></app-action-card>
+        </div>
+        <div id="home-right-row" class="offset-md-1 col-md-4 col-sm-12 mb-0">
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="admin-services-publish" serviceIcon="dev-publish" serviceLabel="{{ 'SERVICES.ADMIN.SERVICES_PUBLISHING' | translate }}" [serviceLink]="environment.keycloak" [onNewTab]="true"></app-action-card>
+            <app-action-card *ngIf="userProfileService.checkUserRolesAndType([roles.admin],[profileTypes.administration])" id="languages-and-translations" serviceIcon="icon-big-translation" serviceLabel="{{ 'TRANSLATIONS.LANGUAGES_AND_TRANSLATIONS_BUTTON' | translate }}" serviceLink="admin-panel/translation"></app-action-card>
+        </div>
+    </div>
+</div>

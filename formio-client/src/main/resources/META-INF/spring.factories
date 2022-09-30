@@ -1,0 +1,1 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.bulpros.formio.config.SharedConfigurationReference

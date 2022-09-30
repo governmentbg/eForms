@@ -6,7 +6,7 @@ export const NotificationBarType = {
   Info: 'info',
   New: 'new',
   Success: 'success',
-  Attention: 'attention',
+  Warn: 'attention',
   Error: 'error',
 }
 
@@ -30,4 +30,5 @@ export interface NotificationBarModel {
   message?: string;
   type?: string;
   placeholders?: {};
+  additionalMessage?: string;
 }

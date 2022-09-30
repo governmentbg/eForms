@@ -10,6 +10,9 @@ import { prepareColumns, initRows, filterRows, sortRows } from "./utils";
 
 import "./renderer.less";
 import { t } from "@/locales";
+import ConfigProvider from "antd/lib/config-provider";
+import bgBG from "antd/lib/locale/bg_BG";
+import enUS from "antd/lib/locale/en_US";
 
 function joinColumns(array: any, separator = ", ") {
   return reduce(
@@ -78,7 +81,7 @@ function SearchInput({ searchColumns, ...props }: SearchInputProps) {
 }
 
 SearchInput.defaultProps = {
-  onChange: () => {},
+  onChange: () => { },
 };
 
 export default function Renderer({ options, data }: any) {
@@ -119,24 +122,26 @@ export default function Renderer({ options, data }: any) {
 
   return (
     <div className="table-visualization-container">
-      <Table
-        locale={{ emptyText: t('No Data') }}
-        className="table-fixed-header"
-        data-percy="show-scrollbars"
-        data-test="TableVisualization"
-        // @ts-expect-error ts-migrate(2322) FIXME: Type '{ key: any; dataIndex: string; align: any; s... Remove this comment to see the full error message
-        columns={tableColumns}
-        dataSource={preparedRows}
-        pagination={{
-          size: get(options, "paginationSize", ""),
-          // @ts-expect-error ts-migrate(2322) FIXME: Type 'string' is not assignable to type 'TablePagi... Remove this comment to see the full error message
-          position: "bottom",
-          pageSize: options.itemsPerPage,
-          hideOnSinglePage: true,
-          showSizeChanger: false,
-        }}
-        showSorterTooltip={false}
-      />
+      <ConfigProvider locale={(navigator.language) === 'bg' ? bgBG : enUS}>
+        <Table
+          locale={{ emptyText: t('No Data') }}
+          className="table-fixed-header"
+          data-percy="show-scrollbars"
+          data-test="TableVisualization"
+          // @ts-expect-error ts-migrate(2322) FIXME: Type '{ key: any; dataIndex: string; align: any; s... Remove this comment to see the full error message
+          columns={tableColumns}
+          dataSource={preparedRows}
+          pagination={{
+            size: get(options, "paginationSize", ""),
+            // @ts-expect-error ts-migrate(2322) FIXME: Type 'string' is not assignable to type 'TablePagi... Remove this comment to see the full error message
+            position: "bottom",
+            pageSize: options.itemsPerPage,
+            hideOnSinglePage: true,
+            showSizeChanger: false,
+          }}
+          showSorterTooltip={false}
+        />
+      </ConfigProvider>
     </div>
   );
 }

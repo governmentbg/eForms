@@ -1,0 +1,114 @@
+<div class="background-wrapper w-100"></div>
+<div class="row h-100">
+    <app-loader></app-loader>
+    <app-breadcrumbs></app-breadcrumbs>
+    <div class="translate-container col-12 p-0">
+        <div class="row align-items-center">
+            <div class="back-button" (click)="back()">
+                <mat-icon>arrow_back_ios</mat-icon>
+                <span>{{ 'BACK' | translate }}</span>
+            </div>
+            <h2 class="heading-wrapper w-100">
+                {{ 'TRANSLATION.EDIT' | translate }}
+            </h2>
+        </div>
+
+        <div class="translate-inner-container">
+
+            <div class="row">
+                <div class="col-md-2">
+                    {{ 'TRANSLATION.LANGUAGE' | translate }}
+                </div>
+                <div class="col">
+                    <strong>{{ targetLanguage?.languageLong }}</strong>
+                </div>
+            </div> <!-- .row -->
+            <div class="row">
+                <div class="col-md-2">
+                    {{ 'TRANSLATION.STATUS' | translate }}
+                </div>
+                <div class="col">
+                    <strong *ngIf="translationData?.targetTranslation?.status == 'hidden'">{{ 'TRANSLATION.hidden' | translate }}</strong>
+                    <strong *ngIf="translationData?.targetTranslation?.status == 'public'">{{ 'TRANSLATION.public' | translate }}</strong>
+                    <strong *ngIf="!translationData?.targetTranslation?.status">{{ 'TRANSLATION.undefined' | translate }}</strong>
+                </div>
+            </div> <!-- .row -->
+            <div class="row">
+                <div class="col-md-2">
+                    {{ 'TRANSLATION.KEY' | translate }}
+                </div>
+                <div class="col">
+                    <strong>{{ key }}</strong>
+                </div>
+            </div> <!-- .row -->
+            <div class="row" *ngIf="translationData?.targetTranslation?.status">
+                <div class="col">
+                    <button mat-button class="btn-primary-medium" 
+                    *ngIf="targetLanguageCode != environment.defaultLanguage || translationData.targetTranslation.status == 'hidden'" 
+                    (click)="setTranslationStatus(translationData.targetTranslation.status == 'public' ? 'hidden' : 'public')">
+                    {{ (translationData.targetTranslation.status == 'hidden' ? 'TRANSLATION.PUBLISH' : 'TRANSLATION.HIDE') | translate }}
+                    </button>
+                </div>
+            </div> <!-- .row -->
+
+            <div class="separator"></div>
+
+            <div class="row" *ngIf="targetLanguageCode != environment.defaultLanguage">
+                <div class="col">
+                    <label>{{ 'TRANSLATION.BULGARIAN_TEXT' | translate }}
+                        <textarea disabled="disabled" >{{ translationData?.translation }}</textarea>
+                    </label>
+                </div>
+                <div class="col"></div>
+            </div> <!-- .row -->
+            <div class="row" *ngIf="targetLanguageCode != environment.defaultLanguage">
+                <div class="col">
+                    <label>{{ 'TRANSLATION.AUTO_TRANSLATION' | translate }}:
+                        <span 
+                        [class.text-warning]="lastIssuedAutoTranslation.status == 'SENT'" 
+                        [class.text-success]="lastIssuedAutoTranslation.status == 'RECEIVED'" 
+                        [class.text-danger]="lastIssuedAutoTranslation.status == 'ERROR'" 
+                        *ngIf="lastIssuedAutoTranslation.status">
+                            ({{ ('TRANSLATION.AUTO_TRANSLATION_REQUEST_STATUS_' + lastIssuedAutoTranslation.status) | translate }})
+                        </span>
+                        <div *ngIf="lastSuccessfulAutoTranslation.translatedText">{{'TRANSLATION.DATE_OF_LAST_SUCCESSFUL_TRANSLATION' | translate}} {{ lastSuccessfulAutoTranslation.modified | date:'d.MM.y'}}</div>
+                        <textarea disabled="disabled" >{{ lastSuccessfulAutoTranslation?.translatedText }}</textarea>
+                    </label>
+                </div>
+                <div class="col"></div>
+            </div> <!-- .row -->
+            <div class="row" *ngIf="targetLanguageCode != environment.defaultLanguage">
+                <div class="col">
+                    <button mat-button class="btn-secondary-medium" (click)="requestAutoTranslation()">{{ 'TRANSLATION.AUTO_TRANSLATION_BUTTON' | translate }}</button>
+                    <button mat-button class="btn-secondary-medium float-right" *ngIf="lastIssuedAutoTranslation?.status == 'SENT'" (click)="setAutoTranslationData()">{{ 'TRANSLATION.CHECK_FOR_TRANSLATION' | translate }}</button>
+                </div>
+                <div class="col"></div>
+            </div> <!-- .row -->
+
+            <div class="separator" *ngIf="targetLanguageCode != environment.defaultLanguage"></div>
+            
+            <div class="row">
+                <div class="col">
+                    <label>{{ ((targetLanguageCode != environment.defaultLanguage)? 'TRANSLATION.SELECTED_LANGUAGE_TRANSLATION' : 'TRANSLATION.BULGARIAN_TEXT') | translate }}
+                        <textarea name="manualTranslationValue"
+                        [(ngModel)]="translationData.targetTranslation.translation"></textarea>
+                    </label>
+                </div>
+                <div class="col"></div>
+            </div> <!-- .row -->
+
+            <div class="row">
+                <div class="col">
+                    <button mat-button class="btn-secondary-medium" *ngIf="targetLanguageCode != environment.defaultLanguage && lastSuccessfulAutoTranslation.translatedText" (click)="useAutoTranslation()">{{ 'TRANSLATION.USE_AUTO_TRANSLATION' | translate }}</button>
+                    <button mat-button class="btn-primary-medium float-right" 
+                    (click)="editTranslation()" 
+                    [class.disabled-clickable]="!translationData?.targetTranslation?.translation"
+                    [disabled]="!translationData?.targetTranslation?.translation">{{ 'TRANSLATION.SAVE' | translate }}</button>
+                </div>
+                <div class="col"></div>
+            </div> <!-- .row -->
+
+        </div><!-- .translate-inner-container -->
+
+    </div>
+</div>
